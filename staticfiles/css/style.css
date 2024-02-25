@@ -142,6 +142,10 @@ a:focus {
   background: linear-gradient(130deg, #190f6e, #170996);
 }
 
+.color101 {
+  color: #170996;
+}
+
 .sub_page .hero_area .hero_bg_box {
   display: none;
 }
@@ -560,7 +564,7 @@ a:focus {
   min-width: 120px;
   min-height: 120px;
   border-radius: 100%;
-  border: 5px solid #00204a;
+  border: 5px solid #170996;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -615,7 +619,7 @@ a:focus {
 /*team section */
 .team_section {
   text-align: center;
-  background-color: #00204a;
+  background: linear-gradient(130deg, #190f6e, #170996);
   color: #ffffff;
 }
 
@@ -788,7 +792,7 @@ a:focus {
 
 /* client section end */
 .info_section {
-  background-color: #00204a;
+  background: linear-gradient(130deg, #190f6e, #170996);
   color: #ffffff;
   padding: 45px 0 15px 0;
 }
@@ -962,4 +966,8 @@ a:focus {
 textarea {
   resize: none;
 }
-/*# sourceMappingURL=style.css.map */
+
+.our_service .col-md-4 a {
+  text-decoration: none;
+  color: #190f6e;
+}
