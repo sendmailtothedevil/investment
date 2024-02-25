@@ -1,3 +1,19 @@
-from django.shortcuts import render
+from django.core.checks import messages
+from django.shortcuts import redirect, render
+from .models import *
+from django.http import JsonResponse
+
 
 # Create your views here.
+def index(request):
+
+    context = {}
+    return render(request, 'home/index.html', context)
+
+
+def handler404(request, exception):
+    context = {}
+    response = render(request, "home/error_404.html", context=context)
+    response.status_code = 404
+    return response
+

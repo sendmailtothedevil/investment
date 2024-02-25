@@ -1,0 +1,288 @@
+{% load static %} 
+{% static 'images' as baseUrl %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no" />
+        <meta name="description" content="Investment Invest and get a reasonable percentage for your money, let your money work for you">
+        <meta name="author" content="Investment Developers">
+        <title>Affluence Investment Company</title>
+        <link rel="shortcut icon" href="{{baseUrl}}/{{'logo.png'}}" type="image/x-icon">
+
+        <!-- all css -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css" integrity="sha384-jLKHWM3JRmfMU0A5x5AkjWkw/EYfGUAGagvnfryNV3F9VqM98XiIH7VBGVoxVSc7" crossorigin="anonymous">
+
+        {% comment %} Font style {% endcomment %}
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+
+        <!-- Icon Font Stylesheet -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+
+         <!--owl slider stylesheet -->
+        {% comment %} <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" /> {% endcomment %}
+
+        <!-- font awesome style -->
+        <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" />
+
+        <!-- Custom styles for this template -->
+        <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+        <!-- responsive style -->
+        <link href="{% static 'css/custom-responsive.css' %}" rel="stylesheet" />
+        <!-- Customized Bootstrap Stylesheet -->
+        <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+
+        <script type="text/javascript">
+            var user = '{{request.user}}'
+
+            function getToken(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+            const csrftoken = getToken('csrftoken');
+        </script>
+    </head>
+
+    {% comment %} {% include 'alerts.html' %} {% endcomment %}
+
+    <body class="sub_page" style="overflow-x:hidden;">
+        <!-- MESSAGES -->
+        {% for message in messages %}
+            <div class="msgs_info py-2">
+                <p class="dj_err_msg">{{message}}</p>
+                <div class="close_error position-absolute text-light fs-5" style="top:5px;right:5px;cursor:pointer;"><i class="fas fa-times"></i></div>
+            </div>
+        {% endfor %}
+
+
+        {% comment %} {% block preloader %}
+            <!-- Preloader -->
+            <div class="preloader">
+                <hr><hr><hr><hr><hr>
+            </div>
+        {% endblock %} {% endcomment %}
+
+        <!-- Navbar -->
+
+
+            <div class="hero_area">
+          
+              <div class="hero_bg_box">
+                <div class="bg_img_box">
+                </div>
+              </div>
+        
+                <!-- header section strats -->
+                <header class="header_section">
+                    <div class="container-fluid">
+                        <nav class="navbar navbar-expand-lg custom_nav-container ">
+                        <a class="navbar-brand" href="index.html">
+                            <div class="aic_logo">
+                                <img class="d-none d-lg-block" width="80" src="{{baseUrl}}/{{'logo.png'}}" alt="logo">
+                                <img class="d-lg-none" width="50" src="{{baseUrl}}/{{'logo.png'}}" alt="logo">
+                            </div>
+                        </a>
+                
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class=""> </span>
+                        </button>
+                
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav  ">
+                            <li class="nav-item ">
+                                <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="invest.html"> Invest</a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" href="about.html"> About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="contact.html">Contact</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"> <i class="fa fa-user" aria-hidden="true"></i> Signup / Login</a>
+                            </li>
+                            </ul>
+                        </div>
+                        </nav>
+                    </div>
+                    {% block hero %}
+                        <section class="slider_section mb-0 pb-0">
+                            <div class="container ">
+                            <div class="row">
+                                <div class="col-md-6 ">
+                                <div class="detail-box">
+                                    <h1 class="fs-1">
+                                    Affluence<br>
+                                    Investment Company
+                                    </h1>
+                                    <p>
+                                        Seize the opportunity to be part of a venture that not only promises financial gains but also aligns with your investment goals.
+                                        Our track record demonstrates consistent returns, showcasing the profitability and stability of our investment model.
+                                        We have a clear roadmap for growth and expansion, leveraging market trends and innovative strategies to maximize returns for our investors.
+                                    </p>
+                                </div>
+                                </div>
+                                <div class="col-md-6">
+                                <div class="img-box ">
+                                    <img src="{{baseUrl}}/{{'about_img.png'}}" alt="invest">
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                        </section>
+                    {% endblock %}
+                </header>
+
+                
+                <!-- end header section -->
+            </div>
+
+
+        {% block content %}
+        
+        {% endblock %}
+
+            
+        <section class="info_section layout_padding2">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-6 col-lg-3 info_col">
+                  <div class="info_contact">
+                    <h4>
+                      Address
+                    </h4>
+                    <div class="contact_link_box">
+                      <a href="">
+                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                        <span>
+                          Texas, United States
+                        </span>
+                      </a>
+                      <a href="">
+                        <i class="fa fa-phone" aria-hidden="true"></i>
+                        <span>
+                          Call +01 1234567890
+                        </span>
+                      </a>
+                      <a href="">
+                        <i class="fa fa-envelope" aria-hidden="true"></i>
+                        <span>
+                          investinme@gmail.com
+                        </span>
+                      </a>
+                    </div>
+                  </div>
+                  {% comment %} <div class="info_social">
+                    <a href="">
+                      <i class="fa fa-facebook" aria-hidden="true"></i>
+                    </a>
+                    <a href="">
+                      <i class="fa fa-twitter" aria-hidden="true"></i>
+                    </a>
+                    <a href="">
+                      <i class="fa fa-linkedin" aria-hidden="true"></i>
+                    </a>
+                    <a href="">
+                      <i class="fa fa-instagram" aria-hidden="true"></i>
+                    </a>
+                  </div> {% endcomment %}
+                </div>
+                <div class="col-md-6 col-lg-2 mx-auto info_col">
+                  <div class="info_link_box">
+                    <h4>
+                      Links
+                    </h4>
+                    <div class="info_links">
+                      <a class="active" href="index.html">
+                        Home
+                      </a>
+                      <a class="" href="invest.html">
+                        Invest
+                      </a>
+                      <a class="" href="about.html">
+                        About
+                      </a>
+                      <a class="" href="contact.html">
+                        Contact
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-3 info_col ">
+                  <h4>
+                    Subscribe
+                  </h4>
+                  <form action="#">
+                    <input type="text" placeholder="Enter email" />
+                    <button type="submit">
+                      Subscribe
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+        </section>
+
+        <!-- chat section -->
+        <div class="chat_btn">
+            <i class="fas fa-comment-dots text-primary"></i>
+        </div>
+        <!-- chat section -->
+
+
+        <!-- all js -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js "></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js "></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/htmx/1.6.1/htmx.min.js " integrity="sha512-aUGLiEPPd4KYAKmXba1ZeH3JCtPEo3F8Ay1C7sRpSnOcfsczlP1j14jo3abBaMqJu9QC4pbh8TyKy9ekZ6j7Pw==" crossorigin=" anonymous " referrerpolicy="no-referrer "></script>
+        <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js" integrity="sha512-Eak/29OTpb36LLo2r47IpVzPBLXnAMPAVypbSZiZ4Qkf8p/7S/XRG5xp7OKWPPYfJT6metI+IORkR5G8F900+g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
+        
+        <!-- popper js -->
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+        </script>
+        <!-- bootstrap js -->
+        <script type="text/javascript" src="{% static 'js/bootstrap.js' %}%"></script>
+        <!-- owl slider -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
+        </script>
+        <!-- custom js -->
+            <script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
+        <!-- Google Map -->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap">
+        </script>
+        <!-- End Google Map -->
+
+
+    </body>
+</html>
+
+
+

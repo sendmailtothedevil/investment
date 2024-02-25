@@ -33,8 +33,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'phonenumber_field',
     'django_cleanup.apps.CleanupConfig',
-    'geoip2',
     'widget_tweaks',
+
+    'account.apps.AccountConfig',
+    'home.apps.HomeConfig',
+    'about.apps.AboutConfig',
+    'contact.apps.ContactConfig',
+
 ]
 
 MIDDLEWARE = [
@@ -122,8 +127,6 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/') 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'staticfiles')]
-
-GEOIP_PATH =os.path.join('geoip')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
