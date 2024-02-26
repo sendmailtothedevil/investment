@@ -22,8 +22,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('home.urls')),
-    # path('account/', include('account.urls')),
-    # path('about/', include('about.urls')),
+    path('invest/', include('invest.urls')),
+    path('about/', include('about.urls')),
     # path('contact/', include('contact.urls')),
     # path('faveth@admin@7513596980/', include('favethadmin.urls')),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

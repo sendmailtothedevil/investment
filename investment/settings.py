@@ -37,6 +37,7 @@ INSTALLED_APPS = [
 
     'account.apps.AccountConfig',
     'home.apps.HomeConfig',
+    'invest.apps.InvestConfig',
     'about.apps.AboutConfig',
     'contact.apps.ContactConfig',
 
