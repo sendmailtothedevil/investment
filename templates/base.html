@@ -122,10 +122,10 @@
                                 <a class="nav-link" href="{% url 'about' %}"> About</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="contact.html">Contact</a>
+                                <a class="nav-link" href="{% url 'contact' %}">Contact</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#"> <i class="fa fa-user" aria-hidden="true"></i> Signup / Login</a>
+                                <a class="nav-link" href="{% url 'signup_signin' %}"> <i class="fa fa-user" aria-hidden="true"></i> Signup / Login</a>
                             </li>
                             </ul>
                         </div>
@@ -193,7 +193,7 @@
                       <p>
                         <i class="fa fa-envelope" aria-hidden="true"></i>
                         <span>
-                          investinme@gmail.com
+                          support@affluenceIC.com
                         </span>
                     </p>
                     </div>
@@ -265,23 +265,25 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js" integrity="sha512-Eak/29OTpb36LLo2r47IpVzPBLXnAMPAVypbSZiZ4Qkf8p/7S/XRG5xp7OKWPPYfJT6metI+IORkR5G8F900+g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
         
+        
         <!-- popper js -->
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
         </script>
         <!-- bootstrap js -->
-        <script type="text/javascript" src="{% static 'js/bootstrap.js' %}%"></script>
+        <script type="text/javascript" src="{% static 'js/bootstrap.js' %}"></script>
         <!-- owl slider -->
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
         </script>
         <!-- custom js -->
-            <script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
+        <script src="{% static 'js/custom.js' %}"></script>
         <!-- Google Map -->
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap">
-        </script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap"></script>
         <!-- End Google Map -->
-
-
+        
+        {% block js %}
+        {% endblock %}
     </body>
+
 </html>
 
 

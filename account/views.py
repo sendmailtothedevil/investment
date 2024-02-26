@@ -5,9 +5,10 @@ from django.http import JsonResponse
 
 
 # Create your views here.
-def about(request):
-
+def signup_signin(request):
     context = {}
-    return render(request, 'about/about.html', context)
+    return render(request, 'account/signup-signin.html', context)
 
-
+def dashboard(request):
+    context = {}
+    return render(request, 'account/dashboard.html', context)

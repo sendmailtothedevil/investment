@@ -146,6 +146,19 @@ a:focus {
   color: #170996;
 }
 
+.invest-bg101 {
+  color: #fff;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color:#170996;
+  border-radius: 8px;
+  /* background: linear-gradient(130deg, #170996, #170996); */
+}
+
+.amount-inp {
+  padding: 5px;
+}
+
 .sub_page .hero_area .hero_bg_box {
   display: none;
 }
@@ -802,6 +815,10 @@ a:focus {
   margin-bottom: 20px;
 }
 
+.planTitle {
+  font-size: 2rem;
+}
+
 .info_section .info_col {
   margin-bottom: 30px;
 }
@@ -970,4 +987,11 @@ textarea {
 .our_service .col-md-4 a {
   text-decoration: none;
   color: #190f6e;
+}
+
+form input, 
+form textarea {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  outline: none;
+  border-radius: 5px;
 }

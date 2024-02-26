@@ -3,7 +3,8 @@ from django.urls.resolvers import URLPattern
 from . import views
 
 urlpatterns = [
-    # path('about', views.about, name='about'),
+    path('signup-signin', views.signup_signin, name='signup_signin'),
+    path('dashboard', views.dashboard, name='dashboard'),
 ]
 
 

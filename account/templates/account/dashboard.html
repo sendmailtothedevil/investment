@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block hero %}
+{% endblock hero %}
+
+{% block content %}
+  <div class="container-fluid my-2">
+    <div class="row">
+      <div class="d-none d-md-block col-md-2 bg-danger py-3">
+        
+      </div>
+      <div class="col-12 col-md-10 bg-info py-3">
+        <div class="d-block d-md-none"><i class="fas fa-bars fs-1 "></i></div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+
+{% block js %}
+<script>
+
+  $('#signInForm').hide()
+
+  let toSignIn = document.getElementsByClassName('toSignIn')
+  let toSignUp = document.getElementsByClassName('toSignUp')
+    
+  for (let si = 0; si < toSignIn.length; si++) {
+    toSignIn[si].addEventListener('click', function() {
+      $('#signUpForm').hide("slide", { direction: "right" }, 1000);
+      $('#signInForm').show("slide", { direction: "right" }, 1000);
+    })
+  }
+  
+  for (let su = 0; su < toSignUp.length; su++) {
+    toSignUp[su].addEventListener('click', function() {
+      $('#signInForm').hide("slide", { direction: "left" }, 1000);
+      $('#signUpForm').show("slide", { direction: "right" }, 1000);
+    })
+  }
+</script>
+{% endblock %}
