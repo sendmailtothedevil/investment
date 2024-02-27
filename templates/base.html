@@ -125,7 +125,11 @@
                                 <a class="nav-link" href="{% url 'contact' %}">Contact</a>
                             </li>
                             <li class="nav-item">
+                              {% if request.user.is_authenticated %}
+                                <a class="nav-link" href="{% url 'dashboard' %}"> <i class="fa fa-user"></i> dashboard</a>
+                              {% else %}
                                 <a class="nav-link" href="{% url 'signup_signin' %}"> <i class="fa fa-user" aria-hidden="true"></i> Signup / Login</a>
+                              {% endif %}
                             </li>
                             </ul>
                         </div>
@@ -168,7 +172,7 @@
         
         {% endblock %}
 
-            
+        {% block footer %}
         <section class="info_section layout_padding2">
             <div class="container">
               <div class="row">
@@ -248,6 +252,7 @@
               </div>
             </div>
         </section>
+        {% endblock footer %} 
 
         <!-- chat section -->
         <div class="chat_btn">
@@ -270,15 +275,12 @@
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
         </script>
         <!-- bootstrap js -->
-        <script type="text/javascript" src="{% static 'js/bootstrap.js' %}"></script>
+        {% comment %} <script type="text/javascript" src="{% static 'js/bootstrap.js' %}"></script> {% endcomment %}
         <!-- owl slider -->
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
         </script>
         <!-- custom js -->
-        <script src="{% static 'js/custom.js' %}"></script>
-        <!-- Google Map -->
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap"></script>
-        <!-- End Google Map -->
+        <script src="{% static 'js/app.js' %} "></script>
         
         {% block js %}
         {% endblock %}

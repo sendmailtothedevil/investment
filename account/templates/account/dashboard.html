@@ -3,38 +3,256 @@
 {% endblock hero %}
 
 {% block content %}
-  <div class="container-fluid my-2">
+  <div class="container-fluid mt-4 position-relative">
+    <div class="d-md-none oms"><i class="fas fa-bars fs-1 color101"></i></div>
+    <div class="d-md-none cms"><i class="fas fa-times fs-1 color101"></i></div>
+    
     <div class="row">
-      <div class="d-none d-md-block col-md-2 bg-danger py-3">
-        
+      <div class="d-none d-md-block col-md-2 text-light p-0 sideLinks bg-light">
+        <div class="openM d-flex align-items-center fs-5 py-3 px-2 px-lg-4 bg101 mb-1"><i class="fas fa-chalkboard-teacher"></i> &nbsp; Dashboard</div>
+        <div class="openM d-flex align-items-center fs-5 py-3 px-2 px-lg-4 bg101 mb-1"><i class="fas fa-users"></i> &nbsp; Users</div>
+        <div class="openM d-flex align-items-center fs-5 py-3 px-2 px-lg-4 bg101 mb-1"><i class="fas fa-cubes"></i> &nbsp; Packages</div>
+        <div class="openM d-flex align-items-center fs-5 py-3 px-2 px-lg-4 bg101 mb-1"><i class="fas fa-money-check-alt"></i> &nbsp; Gateway</div>
+        <div class="openM d-flex align-items-center fs-5 py-3 px-2 px-lg-4 bg101 mb-1"><i class="fas fa-hand-holding-usd"></i> &nbsp;Transactions</div>
+        <div class="openM d-flex align-items-center fs-5 py-3 px-2 px-lg-4 bg101 mb-1"><i class="fas fa-mail-bulk"></i> &nbsp; Messages</div>
+        <div class="openM d-flex align-items-center fs-5 py-3 px-2 px-lg-4 bg101 mb-1"><i class="fas fa-cogs"></i> &nbsp; Settings</div>
+        <div class="openM d-flex align-items-center fs-5 py-3 px-2 px-lg-4 bg101"><a href="{% url 'logout' %}" style="text-decoration:none;color:#fff;"><i class="fas fa-sign-out-alt"></i> &nbsp; Logout</a></div>
       </div>
-      <div class="col-12 col-md-10 bg-info py-3">
-        <div class="d-block d-md-none"><i class="fas fa-bars fs-1 "></i></div>
+      <div class="mobileSide d-md-none  text-light p-0 sideLinks position-absolute bg-light" style="width:250px;z-index:999;">
+        <div class="openM d-flex align-items-center fs-5 py-3 px-4 bg101 mb-1"><i class="fas fa-chalkboard-teacher"></i> &nbsp; Dashboard</div>
+        <div class="openM d-flex align-items-center fs-5 py-3 px-4 bg101 mb-1"><i class="fas fa-users"></i> &nbsp; Users</div>
+        <div class="openM d-flex align-items-center fs-5 py-3 px-4 bg101 mb-1"><i class="fas fa-cubes"></i> &nbsp; Packages</div>
+        <div class="openM d-flex align-items-center fs-5 py-3 px-4 bg101 mb-1"><i class="fas fa-money-check-alt"></i> &nbsp; Gateway</div>
+        <div class="openM d-flex align-items-center fs-5 py-3 px-4 bg101 mb-1"><i class="fas fa-hand-holding-usd"></i> &nbsp;Transactions</div>
+        <div class="openM d-flex align-items-center fs-5 py-3 px-4 bg101 mb-1"><i class="fas fa-mail-bulk"></i> &nbsp; Messages</div>
+        <div class="openM d-flex align-items-center fs-5 py-3 px-4 bg101 mb-1"><i class="fas fa-cogs"></i> &nbsp; Settings</div>
+        <div class="openM d-flex align-items-center fs-5 py-3 px-4 bg101"><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> &nbsp; Logout</a></div>
+      </div>
+      <div class="col-12 col-md-10 pt-0 mt-3 mt-md-0">
+        <div class="SHOW show1">
+          <div class="">
+            <h4  class="fs-3 text-center fw-bold mb-5">General Data</h4>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Title</th>
+                  <th scope="col">Active</th>
+                  <th scope="col">Inactive</th>
+                  <th scope="col">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="">
+                  <th scope="row">1</th>
+                  <td class="fw-bold">Users</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+                <tr class="py-5">
+                  <th scope="row">2</th>
+                  <td class="fw-bold">Packages</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+                <tr class="py-5">
+                  <th scope="row">3</th>
+                  <td class="fw-bold">Gateway</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+                <tr class="py-5">
+                  <th scope="row">4</th>
+                  <td class="fw-bold">Transactions</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+                <tr class="py-5">
+                  <th scope="row">4</th>
+                  <td class="fw-bold">Messages</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="SHOW">
+          <div class="">
+            <h4  class="fs-3 text-center fw-bold mb-5">Users Management</h4>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Date Joined</th>
+                  <th scope="col">Active Packages</th>
+                  <th scope="col">Inactive Packages</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>Mark</td>
+                  <td>Otto</td>
+                  <td>@mdo</td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td>Jacob</td>
+                  <td>Thornton</td>
+                  <td>okenneth009@gmail.com</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="SHOW">
+          <div class="">
+            <h4  class="fs-3 text-center fw-bold mb-5">Packages Management</h4>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Title</th>
+                  <th scope="col">Daily Increase</th>
+                  <th scope="col">Min</th>
+                  <th scope="col">Max</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Duration</th>
+                  <th scope="col">Modify</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>Mark</td>
+                  <td>Otto</td>
+                  <td>@mdo</td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td>Jacob</td>
+                  <td>Thornton</td>
+                  <td>okenneth009@gmail.com</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="SHOW">
+          <div class="">
+            <h4  class="fs-3 text-center fw-bold mb-5">Gateway Management</h4>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Title</th>
+                  <th scope="col">Wallet</th>
+                  <th scope="col">Icon</th>
+                  <th scope="col">Modify</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>Mark</td>
+                  <td>Otto</td>
+                  <td>@mdo</td>
+                  <td>@mdo</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="SHOW">
+          <div class="">
+            <h4  class="fs-3 text-center fw-bold mb-5">Transactions</h4>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">User Name</th>
+                  <th scope="col">Package name</th>
+                  <th scope="col">Amount</th>
+                  <th scope="col">Duration</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Action Buttons</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>Mark</td>
+                  <td>Otto</td>
+                  <td>@mdo</td>
+                  <td>@mdo</td>
+                  <td>@mdo</td>
+                  <td>@mdo</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="SHOW">
+          <div class="">
+            <h4  class="fs-3 text-center fw-bold mb-5">Messages</h4>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Sender name</th>
+                  <th scope="col">Subject</th>
+                  <th scope="col">Body</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Action Button</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>Mark</td>
+                  <td>Otto</td>
+                  <td>@mdo</td>
+                  <td>@mdo</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="SHOW">Settings</div>
       </div>
     </div>
   </div>
+  {% block footer %}{% endblock footer %}
 {% endblock content %}
 
 {% block js %}
 <script>
-
-  $('#signInForm').hide()
-
-  let toSignIn = document.getElementsByClassName('toSignIn')
-  let toSignUp = document.getElementsByClassName('toSignUp')
-    
-  for (let si = 0; si < toSignIn.length; si++) {
-    toSignIn[si].addEventListener('click', function() {
-      $('#signUpForm').hide("slide", { direction: "right" }, 1000);
-      $('#signInForm').show("slide", { direction: "right" }, 1000);
-    })
-  }
   
-  for (let su = 0; su < toSignUp.length; su++) {
-    toSignUp[su].addEventListener('click', function() {
-      $('#signInForm').hide("slide", { direction: "left" }, 1000);
-      $('#signUpForm').show("slide", { direction: "right" }, 1000);
-    })
-  }
+  $('.oms').click(function() {
+    $('.mobileSide').show("slide", { direction: "left" }, 500);
+    $('.cms').show()
+    $('.oms').hide()
+  })
+
+  $('.cms').click(function() {
+    $('.mobileSide').hide("slide", { direction: "left" }, 500);
+    $('.oms').show()
+    $('.cms').hide()
+  })  
+  
 </script>
 {% endblock %}

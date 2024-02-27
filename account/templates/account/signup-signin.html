@@ -10,7 +10,8 @@
         <div class="fs-6 text-center mt-3">
           <p class="p-0 m-0">Already have an account? <span class="color101 fs-5 text-decoration-underline toSignIn" style="cursor:pointer;"> Login</span></p>
         </div>
-        <form action="" id="contactForm" class="mx-auto mt-5 shadow p-4" style="width: 350px;">
+        <form action="" method="POST" id="registerForm" class="mx-auto mt-5 shadow p-4" style="width: 350px;">
+          {% csrf_token %}
           <div class="text-center mt-3">
             <h2 class="mb-4 fs-2">
               <span>Create an Account</span>
@@ -21,19 +22,21 @@
             <input type="text" name="full_name" id="f_name" class="w-100 p-2" placeholder="enter your full name" required>
           </div>
 
-          <div class="mb-4">
+          <div class="mb-4 ">
             <label for="">Email</label><br>
-            <input type="email" name="email" id="email" class="w-100 p-2" placeholder="enter your email" required>
+            <div class="reloademail"><input type="email" name="email" id="email" class="w-100 p-2" placeholder="enter your email" required></div>
+            <span class="text-danger fs-6" id="emerr"></span>
           </div>
 
           <div class="mb-4">
             <label for="">Password</label><br>
-            <input type="password" name="pass1" id="pass1" class="w-100 p-2" placeholder="enter password" required>
+            <input type="password" name="password" id="password" class="w-100 p-2 pass" placeholder="enter password" required>
           </div>
 
           <div class="mb-4">
             <label for="">Confirm assword</label><br>
-            <input type="password" name="pass2" id="pass2" class="w-100 p-2" placeholder="confirm password" required>
+            <input type="password" name="password2" id="password2" class="w-100 p-2 pass" placeholder="confirm password" required>
+            <span class="fs-6 text-danger" id="passerr2"></span>
           </div>
 
           <div class="form-check mb-3">
@@ -57,7 +60,8 @@
         <div class="toSignin fs-6 text-center mt-3">
           <p class="p-0 m-0">Don't have an account? <span class="color101 fs-5 text-decoration-underline toSignUp" style="cursor:pointer;"> Signup</span></p>
         </div>
-        <form action="" id="contactForm" class="mx-auto mt-5 shadow p-4" style="width: 350px;">
+        <form action="" id="loginForm" class="mx-auto mt-5 shadow p-4" style="width: 350px;">
+          {% csrf_token %}
           <div class="text-center mt-3">
             <h2 class="mb-4 fs-2">
               <span>Welcome Back</span>
@@ -65,12 +69,14 @@
           </div>
           <div class="mb-4">
             <label for="">Email</label><br>
-            <input type="email" name="email" id="email" class="w-100 p-2" placeholder="enter your email" required>
+            <div class="emailreload"><input type="email" name="log_email" id="log_email" class="w-100 p-2" placeholder="enter your email" required></div>
+            <span class="text-danger fs-6" id="emerr2"></span>
           </div>
 
           <div class="mb-4">
             <label for="">Password</label><br>
-            <input type="password" name="pass1" id="pass1" class="w-100 p-2" placeholder="enter password" required>
+            <div class="passwordreload"><input type="password" name="log_password" id="log_password" class="w-100 p-2" placeholder="enter password" required></div>
+            <span class="text-danger fs-6" id="passerr"></span>
           </div>
 
           <div class="mb-4 text-center">
@@ -86,13 +92,30 @@
     </div>
   </section>
   <!-- end team section -->
+
+  <div id="myModal" class="mymodal">
+
+    <!-- Modal content -->
+    <div class="mymodal-content p-4">
+      <div class="mymodal-header mb-3">
+        {% comment %} <span class="close">&times;</span> {% endcomment %}
+        <h4 class="fs-4 border-bottom fw-bold">Verify your email</h4>
+      </div>
+      <div class="mymodal-body pb-3">
+        <p class="lh-sm fs-5">
+          An email with a verification link have been sent to
+          <b id="reg_email"></b>, please check your email and click on the
+          link to complete your registration.
+        </p>
+      </div>
+    </div>
+  
+  </div>
+  {% comment %} <button id="myBtn">Open Modal</button> {% endcomment %}
   {% endblock content %}
 
   {% block js %}
   <script>
-
-    $('#signInForm').hide()
-
     let toSignIn = document.getElementsByClassName('toSignIn')
     let toSignUp = document.getElementsByClassName('toSignUp')
       

@@ -1,15 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Open+Sans:wght@300;400;600;700&display=swap");
 
 /* Hide scrollbar for Chrome, Safari and Opera */
-*::-webkit-scrollbar {
+/* *::-webkit-scrollbar {
   display: none;
 }
 
-/* Hide scrollbar for IE, Edge and Firefox */
 * {
-  -ms-overflow-style: none;  /*IE and Edge*/
+  -ms-overflow-style: none;
   scrollbar-width: none;
-}
+} */
 
 body {
   font-family: "Open Sans", sans-serif;
@@ -144,6 +143,10 @@ a:focus {
 
 .color101 {
   color: #170996;
+}
+
+.bg101 {
+  background-color: #170996;
 }
 
 .invest-bg101 {
@@ -994,4 +997,126 @@ form textarea {
   border: 1px solid rgba(0, 0, 0, 0.2);
   outline: none;
   border-radius: 5px;
+}
+
+.sideLinks div {
+  cursor: pointer;
+}
+
+.sideLinks div:hover {
+  background-color: #1c07da;
+}
+
+.openM:active {
+  background-color: #1c07da;
+}
+
+.SHOW b,
+.SHOW p {
+  color: #5a5a5a;
+}
+
+.cms {
+  display: none;
+}
+
+.row .mobileSide {
+  width: 100px;
+  display: none;
+}
+
+.row .SHOW {
+  display: none;
+}
+
+.row .show1 {
+  display: block;
+}
+
+tr {
+  line-height: 35px;
+}
+
+#signInForm {
+  display: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.mymodal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.mymodal-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  border: 1px solid #888;
+  width: 380px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+  from {top:-300px; opacity:0} 
+  to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+  from {top:-300px; opacity:0}
+  to {top:0; opacity:1}
+}
+
+/* The Close Button */
+.close {
+  color: white;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
 }
