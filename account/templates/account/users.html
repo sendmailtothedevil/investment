@@ -1,0 +1,53 @@
+{% extends "account/dashboard.html" %}
+{% block css %}
+  <style>
+    .usrs {background-color:#1c07da;}
+  </style>
+{% endblock %}
+
+    {% block data %}
+      <div class="d-none d-md-block col-md-2"></div>
+      <div class="col-12 col-md-10 pt-0 mt-3 mt-md-0">
+        <div class="SHOW">
+          <div class="position-relative ">
+            <h4  class="fs-3 text-center fw-bold mb-5">Users Management</h4>
+            <table class="table table-striped package_reload package_reload2">
+              <thead>
+                <tr class="text-center">
+                  <th scope="col" class="border">#</th>
+                  <th scope="col" class="border">Name</th>
+                  <th scope="col" class="border">Email</th>
+                  <th scope="col" class="border">Status</th>
+                  <th scope="col" class="border">Active package</th>
+                  <th scope="col" class="border">Inactive Package</th>
+                  <th scope="col" class="border" colspan="2">Delete</th>
+                </tr>
+              </thead>
+              <tbody class="text-center">
+                {% for user in users %}
+                  {% csrf_token %}
+                  <tr class="userList position-relative">
+                    <th scope="row" class="border-right">{{ forloop.counter }}</th>
+                    <td class="border-right">{{user.full_name}}</td>
+                    <td class="border-right">{{user.email}}</td>
+                    <td class="border-right">{% if user.is_active %}Active{% else %}Inactive{% endif %}</td>
+                    <td class="border-right">{% for pkg in pkgs %}{% if pkg.user == user and pkg.status %}{{ pkg.title }}, {% endif %}{% endfor %}</td>
+                    <td class="border-right">{% for pkg in pkgs %}{% if pkg.user == user and not pkg.status %}{{ pkg.title }}, {% endif %}{% endfor %}</td>
+                    <td class="text-center actbtn ps-0 border-right">
+                      <span><i class="d-block fas fa-trash-alt text-danger fs-5 mb-3 deluser"></i></span>
+                    </td>
+                    <td class="position-absolute border-0" style="left:0;top:0;"><input type="hidden" value="{{ user.id }}" class="user_id"></td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endblock %}
+
+    {% block modal %}
+    
+    {% endblock %}
+

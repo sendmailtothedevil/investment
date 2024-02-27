@@ -3,33 +3,40 @@
 {% endblock hero %}
 
 {% block content %}
+{% block css %}
+  <style>
+    .dboard {background-color:#1c07da;}
+  </style>
+{% endblock %}
   <div class="container-fluid mt-4 position-relative">
-    <div class="d-md-none oms"><i class="fas fa-bars fs-1 color101"></i></div>
-    <div class="d-md-none cms"><i class="fas fa-times fs-1 color101"></i></div>
+    <div class="d-lg-none oms"><i class="fas fa-bars fs-1 color101"></i></div>
+    <div class="d-lg-none cms"><i class="fas fa-times fs-1 color101"></i></div>
     
-    <div class="row">
-      <div class="d-none d-md-block col-md-2 text-light p-0 sideLinks bg-light">
-        <div class="openM d-flex align-items-center fs-5 py-3 px-2 px-lg-4 bg101 mb-1"><i class="fas fa-chalkboard-teacher"></i> &nbsp; Dashboard</div>
-        <div class="openM d-flex align-items-center fs-5 py-3 px-2 px-lg-4 bg101 mb-1"><i class="fas fa-users"></i> &nbsp; Users</div>
-        <div class="openM d-flex align-items-center fs-5 py-3 px-2 px-lg-4 bg101 mb-1"><i class="fas fa-cubes"></i> &nbsp; Packages</div>
-        <div class="openM d-flex align-items-center fs-5 py-3 px-2 px-lg-4 bg101 mb-1"><i class="fas fa-money-check-alt"></i> &nbsp; Gateway</div>
-        <div class="openM d-flex align-items-center fs-5 py-3 px-2 px-lg-4 bg101 mb-1"><i class="fas fa-hand-holding-usd"></i> &nbsp;Transactions</div>
-        <div class="openM d-flex align-items-center fs-5 py-3 px-2 px-lg-4 bg101 mb-1"><i class="fas fa-mail-bulk"></i> &nbsp; Messages</div>
-        <div class="openM d-flex align-items-center fs-5 py-3 px-2 px-lg-4 bg101 mb-1"><i class="fas fa-cogs"></i> &nbsp; Settings</div>
-        <div class="openM d-flex align-items-center fs-5 py-3 px-2 px-lg-4 bg101"><a href="{% url 'logout' %}" style="text-decoration:none;color:#fff;"><i class="fas fa-sign-out-alt"></i> &nbsp; Logout</a></div>
+    <div class="row position-relative">
+      <div class="d-none d-lg-block col-lg-2 text-light p-0 py-3 bg101 sideLinks position-fixed" style="z-index:99999;">
+        <a href="{% url 'dashboard' %}" class="dboard"><i class="fas fa-chalkboard-teacher"></i> &nbsp; Dashboard</a>
+        <a href="{% url 'users' %}" class="usrs"><i class="fas fa-users"></i> &nbsp; Users</a>
+        <a href="{% url 'packages' %}" class="pkgs"><i class="fas fa-cubes"></i> &nbsp; Packages</a></a>
+        <a href="" class="gtwy"><i class="fas fa-money-check-alt"></i> &nbsp; Gateway</a>
+        <a href="" class="trnsc"><i class="fas fa-hand-holding-usd"></i> &nbsp;Transactions</a>
+        <a href="" class="msgs"><i class="fas fa-mail-bulk"></i> &nbsp; Messages</a>
+        <a href="" class="stgs"><i class="fas fa-cogs"></i> &nbsp; Settings</a>
+        <a href="{% url 'logout' %}" class=""><i class="fas fa-sign-out-alt"></i> &nbsp; Logout</a>
       </div>
-      <div class="mobileSide d-md-none  text-light p-0 sideLinks position-absolute bg-light" style="width:250px;z-index:999;">
-        <div class="openM d-flex align-items-center fs-5 py-3 px-4 bg101 mb-1"><i class="fas fa-chalkboard-teacher"></i> &nbsp; Dashboard</div>
-        <div class="openM d-flex align-items-center fs-5 py-3 px-4 bg101 mb-1"><i class="fas fa-users"></i> &nbsp; Users</div>
-        <div class="openM d-flex align-items-center fs-5 py-3 px-4 bg101 mb-1"><i class="fas fa-cubes"></i> &nbsp; Packages</div>
-        <div class="openM d-flex align-items-center fs-5 py-3 px-4 bg101 mb-1"><i class="fas fa-money-check-alt"></i> &nbsp; Gateway</div>
-        <div class="openM d-flex align-items-center fs-5 py-3 px-4 bg101 mb-1"><i class="fas fa-hand-holding-usd"></i> &nbsp;Transactions</div>
-        <div class="openM d-flex align-items-center fs-5 py-3 px-4 bg101 mb-1"><i class="fas fa-mail-bulk"></i> &nbsp; Messages</div>
-        <div class="openM d-flex align-items-center fs-5 py-3 px-4 bg101 mb-1"><i class="fas fa-cogs"></i> &nbsp; Settings</div>
-        <div class="openM d-flex align-items-center fs-5 py-3 px-4 bg101"><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> &nbsp; Logout</a></div>
+      <div class="mobileSide d-lg-none  text-light p-0 sideLinks position-absolute bg-light" style="width:250px;z-index:999;">
+        <div class="d-flex align-items-center fs-5 py-3 px-4 bg101 mb-1"><i class="fas fa-chalkboard-teacher"></i> &nbsp; Dashboard</div>
+        <div class="d-flex align-items-center fs-5 py-3 px-4 bg101 mb-1"><i class="fas fa-users"></i> &nbsp; Users</div>
+        <div class="d-flex align-items-center fs-5 py-3 px-4 bg101 mb-1"><i class="fas fa-cubes"></i> &nbsp; Packages</div>
+        <div class="d-flex align-items-center fs-5 py-3 px-4 bg101 mb-1"><i class="fas fa-money-check-alt"></i> &nbsp; Gateway</div>
+        <div class="d-flex align-items-center fs-5 py-3 px-4 bg101 mb-1"><i class="fas fa-hand-holding-usd"></i> &nbsp;Transactions</div>
+        <div class="d-flex align-items-center fs-5 py-3 px-4 bg101 mb-1"><i class="fas fa-mail-bulk"></i> &nbsp; Messages</div>
+        <div class="d-flex align-items-center fs-5 py-3 px-4 bg101 mb-1"><i class="fas fa-cogs"></i> &nbsp; Settings</div>
+        <div class="d-flex align-items-center fs-5 py-3 px-4 bg101"><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> &nbsp; Logout</a></div>
       </div>
-      <div class="col-12 col-md-10 pt-0 mt-3 mt-md-0">
-        <div class="SHOW show1">
+      {% block data %}
+      <div class="d-none d-lg-block col-lg-2"></div>
+      <div class="col-12 col-lg-10 pt-0 mt-3 mt-lg-0">
+        <div class="SHOW">
           <div class="">
             <h4  class="fs-3 text-center fw-bold mb-5">General Data</h4>
             <table class="table table-striped">
@@ -60,6 +67,62 @@
                 <tr class="py-5">
                   <th scope="row">3</th>
                   <td class="fw-bold">Gateway</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+                <tr class="py-5">
+                  <th scope="row">4</th>
+                  <td class="fw-bold">Transactions</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+                <tr class="py-5">
+                  <th scope="row">4</th>
+                  <td class="fw-bold">Messages</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+                <tr class="py-5">
+                  <th scope="row">4</th>
+                  <td class="fw-bold">Transactions</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+                <tr class="py-5">
+                  <th scope="row">4</th>
+                  <td class="fw-bold">Messages</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+                <tr class="py-5">
+                  <th scope="row">4</th>
+                  <td class="fw-bold">Transactions</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+                <tr class="py-5">
+                  <th scope="row">4</th>
+                  <td class="fw-bold">Messages</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+                <tr class="py-5">
+                  <th scope="row">4</th>
+                  <td class="fw-bold">Transactions</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+                <tr class="py-5">
+                  <th scope="row">4</th>
+                  <td class="fw-bold">Messages</td>
                   <td>0</td>
                   <td>0</td>
                   <td>0</td>
@@ -116,34 +179,45 @@
         </div>
 
         <div class="SHOW">
-          <div class="">
+          <div class="position-relative ">
             <h4  class="fs-3 text-center fw-bold mb-5">Packages Management</h4>
-            <table class="table table-striped">
+            <div class="position-absolute" style="top:25px;right:10px;"><button class="btn btn-primary btn-round btn-sm fs-6 border-0 outline-0" id="addPackage">Add package</button></div>
+            <table class="table table-striped package_reload package_reload2">
               <thead>
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">Title</th>
-                  <th scope="col">Daily Increase</th>
+                  <th scope="col">Profits</th>
+                  <th scope="col">Days</th>
+                  <th scope="col">Bonus</th>
                   <th scope="col">Min</th>
                   <th scope="col">Max</th>
+                  <th scope="col">Amount</th>
                   <th scope="col">Status</th>
-                  <th scope="col">Duration</th>
-                  <th scope="col">Modify</th>
+                  <th scope="col">Action Buttons</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
-                  <td>okenneth009@gmail.com</td>
-                </tr>
+              <tbody class="">
+                {% for pk in packages %}
+                  <tr class="packageList">
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{pk.title}}</td>
+                    <td>{{pk.profit}}</td>
+                    <td>{{pk.days}}</td>
+                    <td>{{pk.bonus}}</td>
+                    <td>{{pk.min}}</td>
+                    <td>{{pk.max}}</td>
+                    <td>{{pk.amount}}</td>
+                    <td>{% if pk.status %}Active{% else %}Inactive{% endif %}</td>
+                    <td class="mx-auto actbtn">
+                      <span><i class="fas fa-check-circle text-active fs-5 mx-1 activate"></i></span>
+                      <span><i class="fas fa-times-circle text-warn fs-5 mx-1 deactivate"></i></span>
+                      <span><i class="fas fa-edit text-primary fs-5 mx-1"></i></span>
+                      <span><i class="fas fa-trash-alt text-danger fs-5 mx-1 delpkg"></i></span>
+                    </td>
+                    <td><input type="hidden" value="{{ pk.id }}" class="package_id"></td>
+                  </tr>
+                {% endfor %}
               </tbody>
             </table>
           </div>
@@ -234,8 +308,13 @@
 
         <div class="SHOW">Settings</div>
       </div>
+      {% endblock %}
     </div>
   </div>
+
+  {% block modal %}
+  
+  {% endblock %}
   {% block footer %}{% endblock footer %}
 {% endblock content %}
 

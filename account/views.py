@@ -4,6 +4,7 @@ from django.contrib.auth.models import auth
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
 from .models import *
+from invest.models import *
 from django.db.models import Q
 from django.http import JsonResponse
 from django.core.exceptions import ValidationError
@@ -117,5 +118,38 @@ def signup_signin(request):
 
 @login_required(login_url='login')
 def dashboard(request):
+    
     context = {}
     return render(request, 'account/dashboard.html', context)
+
+
+@login_required(login_url='login')
+def packages(request):
+    packages = Package.objects.all().order_by('-recent', '-post_date')
+    
+    context = {'packages':packages}
+    return render(request, 'account/packages.html', context)
+
+
+@login_required(login_url='login')
+def users(request):
+    users = User.objects.all()
+    pkgs = Package.objects.all()
+    
+    context = {'users':users, 'pkgs':pkgs}
+    return render(request, 'account/users.html', context)
+
+
+@login_required(login_url='login')
+def delete_user(request):
+    if request.method == 'POST':
+        user_id = int(request.POST.get('user_id'))
+        if request.user.is_admin:
+            User.objects.filter(id=user_id).delete()
+        
+        return JsonResponse({'status':"User deleted successfully"})
+    else:
+        return JsonResponse({'status':"An error occured"})
+
+
+

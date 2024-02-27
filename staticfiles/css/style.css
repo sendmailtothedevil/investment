@@ -1003,8 +1003,19 @@ form textarea {
   cursor: pointer;
 }
 
-.sideLinks div:hover {
+.sideLinks a:hover {
   background-color: #1c07da;
+  color: #fff;
+  text-decoration: none;
+}
+
+.sideLinks a {
+  display: block;
+  text-decoration: none;
+  color: #fff;
+  /* background-color: #190f6e; */
+  padding: 20px;
+  font-size: 1.1rem;
 }
 
 .openM:active {
@@ -1025,22 +1036,25 @@ form textarea {
   display: none;
 }
 
-.row .SHOW {
-  display: none;
-}
-
-.row .show1 {
-  display: block;
-}
-
 tr {
-  line-height: 35px;
+  line-height: 18px;
 }
 
 #signInForm {
   display: none;
 }
 
+.text-active {
+  color: rgb(26, 172, 0);
+}
+
+.text-warn {
+  color: rgb(228, 118, 0);
+}
+
+.actbtn i {
+  cursor: pointer;
+}
 
 
 
@@ -1119,4 +1133,8 @@ tr {
   color: #000;
   text-decoration: none;
   cursor: pointer;
+}
+
+#addPackageForm label {
+  font-weight: 600;
 }

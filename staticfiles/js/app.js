@@ -45,7 +45,6 @@
     })
 
 
-
     $(document).on('submit', '#loginForm', function(e){
         e.preventDefault()
         var email = $('input[name=log_email]').val()
@@ -77,276 +76,233 @@
     })
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    var openM = document.getElementsByClassName('openM')
-    var SHOW = document.getElementsByClassName('SHOW')
-
-    openM[0].addEventListener('click', function() {
-        SHOW[0].style.display = 'block';
-        $('.mobileSide').hide("slide", { direction: "left" }, 500);
-        $('.oms').show()
-        $('.cms').hide()
-
-        for (let sw = 0; sw < SHOW.length; sw++) {
-            if (SHOW[sw] != SHOW[0]) {
-                SHOW[sw].style.display = 'none';
-            }
-        }
+    $('#addPackage').click(function() {
+        $('#myModal2').css({ display: 'block' })
+        $('.addpkg').css({ display: 'block' })
+        $('.editsec').css({ display: 'none' })
     })
 
-    openM[1].addEventListener('click', function() {
-        SHOW[1].style.display = 'block';
-        $('.mobileSide').hide("slide", { direction: "left" }, 500);
-        $('.oms').show()
-        $('.cms').hide()
-        for (let sw = 0; sw < SHOW.length; sw++) {
-            if (SHOW[sw] != SHOW[1]) {
-                SHOW[sw].style.display = 'none';
+    $('#closeModal').click(function() {
+        $('#myModal2').css({ display: 'none' })
+    })
+    
+    $(document).on('submit', '#addPackageForm', function(e){
+        e.preventDefault()      
+        var packages = $('#package').val()
+        var daily_profit = $('#daily_profit').val()
+        var no_of_days = $('#no_of_days').val()
+        var pur_bonus = $('#pur_bonus').val()
+        var min = $('#min').val()
+        var max = $('#max').val()
+        var token = $('input[name=csrfmiddlewaretoken]').val()
+
+        $.ajax({
+            method: 'POST',
+            url: '/invest/add-package/',
+            data: {'packages':packages, 'daily_profit':daily_profit, 'no_of_days':no_of_days,
+                    'pur_bonus':pur_bonus, 'min':min, 'max':max,  csrfmiddlewaretoken: token
+            },
+            success: function(response) {
+                alertify.message(response.status)
+                // $('#myModal2').css({ display: 'none' })
+                window.location.reload()
             }
-        }
+        })
     })
 
-    openM[2].addEventListener('click', function() {
-        SHOW[2].style.display = 'block';
-        $('.mobileSide').hide("slide", { direction: "left" }, 500);
-        $('.oms').show()
-        $('.cms').hide()
-        for (let sw = 0; sw < SHOW.length; sw++) {
-            if (SHOW[sw] != SHOW[2]) {
-                SHOW[sw].style.display = 'none';
+    $('.delpkg').click(function(e){
+        e.preventDefault()      
+        var package_id1 = $(this).closest('.packageList').find('.package_id').val()
+        var token = $('input[name=csrfmiddlewaretoken]').val()
+        let package_id = Number(package_id1)
+
+        $.ajax({
+            method: 'POST',
+            url: '/invest/delete-package/',
+            data: {'package_id':package_id, csrfmiddlewaretoken: token},
+            success: function(response) {
+                alertify.message(response.status)
+                window.location.reload()
             }
-        }
+        })
     })
 
-    openM[3].addEventListener('click', function() {
-        SHOW[3].style.display = 'block';
-        $('.mobileSide').hide("slide", { direction: "left" }, 500);
-        $('.oms').show()
-        $('.cms').hide()
-        for (let sw = 0; sw < SHOW.length; sw++) {
-            if (SHOW[sw] != SHOW[3]) {
-                SHOW[sw].style.display = 'none';
+    $('.activate').click(function(e){
+        e.preventDefault()      
+        var package_id1 = $(this).closest('.packageList').find('.package_id').val()
+        var token = $('input[name=csrfmiddlewaretoken]').val()
+        let package_id = Number(package_id1)
+
+        $.ajax({
+            method: 'POST',
+            url: '/invest/activate-package/',
+            data: {'package_id':package_id, csrfmiddlewaretoken: token},
+            success: function(response) {
+                alertify.message(response.status)
+                window.location.reload()
             }
-        }
+        })
     })
 
-    openM[4].addEventListener('click', function() {
-        SHOW[4].style.display = 'block';
-        $('.mobileSide').hide("slide", { direction: "left" }, 500);
-        $('.oms').show()
-        $('.cms').hide()
-        for (let sw = 0; sw < SHOW.length; sw++) {
-            if (SHOW[sw] != SHOW[4]) {
-                SHOW[sw].style.display = 'none';
+    $('.deactivate').click(function(e){
+        e.preventDefault()      
+        var package_id1 = $(this).closest('.packageList').find('.package_id').val()
+        var token = $('input[name=csrfmiddlewaretoken]').val()
+        let package_id = Number(package_id1)
+
+        $.ajax({
+            method: 'POST',
+            url: '/invest/deactivate-package/',
+            data: {'package_id':package_id, csrfmiddlewaretoken: token},
+            success: function(response) {
+                alertify.message(response.status)
+                window.location.reload()
             }
-        }
+        })
     })
 
-    openM[5].addEventListener('click', function() {
-        SHOW[5].style.display = 'block';
-        $('.mobileSide').hide("slide", { direction: "left" }, 500);
-        $('.oms').show()
-        $('.cms').hide()
-        for (let sw = 0; sw < SHOW.length; sw++) {
-            if (SHOW[sw] != SHOW[5]) {
-                SHOW[sw].style.display = 'none';
-            }
-        }
+
+    $('.editpkg').click(function() {
+        $('#myModal2').css({ display: 'block' })
+        $('.addpkg').css({ display: 'none' })
+        $('.editsec').css({ display: 'block' })
+        document.getElementById('addPackageForm').id = 'editPackageForm'
+
+        var pkg_id = $(this).closest('.packageList').find('.package_id').val()
+        var pkg_title = $(this).closest('.packageList').find('.pkg_title').prop("innerText")
+        var pkg_profit = $(this).closest('.packageList').find('.pkg_profit').prop("innerText")
+        var pkg_days = $(this).closest('.packageList').find('.pkg_days').prop("innerText")
+        var pkg_bonus = $(this).closest('.packageList').find('.pkg_bonus').prop("innerText")
+        var pkg_min = $(this).closest('.packageList').find('.pkg_min').prop("innerText")
+        var pkg_max = $(this).closest('.packageList').find('.pkg_max').prop("innerText")
+        var pkg_amount = $(this).closest('.packageList').find('.pkg_amount').prop("innerText")
+        
+        document.getElementById('pkg_id').value = pkg_id
+        document.getElementById('pkginp').value = pkg_title
+        document.getElementById('dpinp').value = pkg_profit
+        document.getElementById('nodinp').value = pkg_days
+        document.getElementById('pbinp').value = pkg_bonus
+        document.getElementById('mininp').value = pkg_min
+        document.getElementById('maxinp').value = pkg_max
+        document.getElementById('numinp').value = pkg_amount
+
+
+        $(document).on('submit', '#editPackageForm', function(e){
+            e.preventDefault()      
+            var pkg_id1 = $('#pkg_id').val()
+            var pkg_title = $('#pkginp').val()
+            var daily_profit = $('#dpinp').val()
+            var no_of_days = $('#nodinp').val()
+            var pur_bonus = $('#pbinp').val()
+            var min = $('#mininp').val()
+            var max = $('#maxinp').val()
+            var amount = $('#numinp').val()
+            let pkg_id = Number(pkg_id1)
+            var token = $('input[name=csrfmiddlewaretoken]').val()
+    
+            $.ajax({
+                method: 'POST',
+                url: '/invest/edit-package/',
+                data: {'pkg_id':pkg_id, 'pkg_title':pkg_title, 'daily_profit':daily_profit, 'no_of_days':no_of_days,
+                        'amount':amount, 'pur_bonus':pur_bonus, 'min':min, 'max':max,  csrfmiddlewaretoken: token
+                },
+                success: function(response) {
+                    alertify.message(response.status)
+                    // $('#myModal2').css({ display: 'none' })
+                    window.location.reload()
+                }
+            })
+        })    
     })
 
-    openM[6].addEventListener('click', function() {
-        SHOW[6].style.display = 'block';
-        $('.mobileSide').hide("slide", { direction: "left" }, 500);
-        $('.oms').show()
-        $('.cms').hide()
-        for (let sw = 0; sw < SHOW.length; sw++) {
-            if (SHOW[sw] != SHOW[6]) {
-                SHOW[sw].style.display = 'none';
+    
+    $('.deluser').click(function(e){
+        e.preventDefault()      
+        var user_id1 = $(this).closest('.userList').find('.user_id').val()
+        var token = $('input[name=csrfmiddlewaretoken]').val()
+        let user_id = Number(user_id1)
+
+        $.ajax({
+            method: 'POST',
+            url: '/account/delete-user/',
+            data: {'user_id':user_id, csrfmiddlewaretoken: token},
+            success: function(response) {
+                alertify.message(response.status)
+                window.location.reload()
             }
+        })
+    })
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    $(document).on('click', function(e) {
+        if (e.target.id === 'myModal2') {
+            $('#myModal2').css({ display: 'none' })
         }
+
+        // if (e.target.id === 'cls_comment_modal') {
+            
+        // }
+        
     })
 
-    openM[7].addEventListener('click', function() {
-        SHOW[7].style.display = 'block';
-        $('.mobileSide').hide("slide", { direction: "left" }, 500);
-        $('.oms').show()
-        $('.cms').hide()
-        for (let sw = 0; sw < SHOW.length; sw++) {
-            if (SHOW[sw] != SHOW[7]) {
-                SHOW[sw].style.display = 'none';
-            }
-        }
-    })
-
-    openM[8].addEventListener('click', function() {
-        SHOW[0].style.display = 'block';
-        $('.mobileSide').hide("slide", { direction: "left" }, 500);
-        $('.oms').show()
-        $('.cms').hide()
-
-        for (let sw = 0; sw < SHOW.length; sw++) {
-            if (SHOW[sw] != SHOW[0]) {
-                SHOW[sw].style.display = 'none';
-            }
-        }
-    })
-
-    openM[9].addEventListener('click', function() {
-        SHOW[1].style.display = 'block';
-        $('.mobileSide').hide("slide", { direction: "left" }, 500);
-        $('.oms').show()
-        $('.cms').hide()
-        for (let sw = 0; sw < SHOW.length; sw++) {
-            if (SHOW[sw] != SHOW[1]) {
-                SHOW[sw].style.display = 'none';
-            }
-        }
-    })
-
-    openM[10].addEventListener('click', function() {
-        SHOW[2].style.display = 'block';
-        $('.mobileSide').hide("slide", { direction: "left" }, 500);
-        $('.oms').show()
-        $('.cms').hide()
-        for (let sw = 0; sw < SHOW.length; sw++) {
-            if (SHOW[sw] != SHOW[2]) {
-                SHOW[sw].style.display = 'none';
-            }
-        }
-    })
-
-    openM[11].addEventListener('click', function() {
-        SHOW[3].style.display = 'block';
-        $('.mobileSide').hide("slide", { direction: "left" }, 500);
-        $('.oms').show()
-        $('.cms').hide()
-        for (let sw = 0; sw < SHOW.length; sw++) {
-            if (SHOW[sw] != SHOW[3]) {
-                SHOW[sw].style.display = 'none';
-            }
-        }
-    })
-
-    openM[12].addEventListener('click', function() {
-        SHOW[4].style.display = 'block';
-        $('.mobileSide').hide("slide", { direction: "left" }, 500);
-        $('.oms').show()
-        $('.cms').hide()
-        for (let sw = 0; sw < SHOW.length; sw++) {
-            if (SHOW[sw] != SHOW[4]) {
-                SHOW[sw].style.display = 'none';
-            }
-        }
-    })
-
-    openM[13].addEventListener('click', function() {
-        SHOW[5].style.display = 'block';
-        $('.mobileSide').hide("slide", { direction: "left" }, 500);
-        $('.oms').show()
-        $('.cms').hide()
-        for (let sw = 0; sw < SHOW.length; sw++) {
-            if (SHOW[sw] != SHOW[5]) {
-                SHOW[sw].style.display = 'none';
-            }
-        }
-    })
-
-    openM[14].addEventListener('click', function() {
-        SHOW[6].style.display = 'block';
-        $('.mobileSide').hide("slide", { direction: "left" }, 500);
-        $('.oms').show()
-        $('.cms').hide()
-        for (let sw = 0; sw < SHOW.length; sw++) {
-            if (SHOW[sw] != SHOW[6]) {
-                SHOW[sw].style.display = 'none';
-            }
-        }
-    })
-
-    openM[15].addEventListener('click', function() {
-        SHOW[7].style.display = 'block';
-        $('.mobileSide').hide("slide", { direction: "left" }, 500);
-        $('.oms').show()
-        $('.cms').hide()
-        for (let sw = 0; sw < SHOW.length; sw++) {
-            if (SHOW[sw] != SHOW[7]) {
-                SHOW[sw].style.display = 'none';
-            }
-        }
-    })
 
 })(jQuery);
