@@ -1,0 +1,55 @@
+{% extends "account/dashboard.html" %}
+{% block css %}
+  <style>
+    .trnsc {background-color:#1c07da;}
+  </style>
+{% endblock %}
+
+{% block data %}
+  <div class="d-none d-lg-block col-lg-2"></div>
+  <div class="col-12 col-lg-10 pt-0 mt-3 mt-lg-0">
+    <div class="SHOW">
+      <div class="position-relative ">
+        <h4  class="fs-3 text-center fw-bold mb-5">Messages</h4>
+        <table class="table table-striped package_reload">
+          <thead>
+            <tr class="text-center">
+              <th scope="col" class="border">#</th>
+              <th scope="col" class="border">Sender email</th>
+              <th scope="col" class="border">Subject</th>
+              <th scope="col" class="border">Message</th>
+              <th scope="col" class="border">sent_date</th>
+              <th scope="col" class="border" colspan="2">Delete</th>
+            </tr>
+          </thead>
+          <tbody class="text-center">
+            {% for msg in message %}
+            {% csrf_token %}
+              <tr class="messageList position-relative">
+                <th scope="row" class="pb-0 border-right">{{ forloop.counter }}</th>
+                <td class="pb-0 border-right">{{msg.sender_email}}</td>
+                <td class="pb-0 border-right">{{msg.subject}}</td>
+                <td class="pb-0 border-right">{{msg.message}}</td>
+                <td class="pb-0 border-right">{{msg.sent_date}}</td>
+                <td class="text-center actbtn pe-0 pb-0 border-right">
+                  <span><i class=" fas fa-trash-alt text-danger fs-5 mb-3 mx-1 delmsg"></i></span>
+                </td>
+                <td class="position-absolute border-0 pb-0" style="left:0;top:0;"><input type="hidden" value="{{ msg.id }}" class="msg_id"></td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block modal %}
+
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}
+

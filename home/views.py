@@ -1,13 +1,14 @@
 from django.core.checks import messages
 from django.shortcuts import redirect, render
 from .models import *
+from invest.models import Package
 from django.http import JsonResponse
 
 
 # Create your views here.
 def index(request):
-
-    context = {}
+    package = Package.objects.all()[:4]
+    context = {'package':package}
     return render(request, 'home/index.html', context)
 
 

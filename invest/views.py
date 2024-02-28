@@ -6,8 +6,8 @@ from django.http import JsonResponse
 
 # Create your views here.
 def investment_plan(request):
-    
-    context = {}
+    package = Package.objects.all()[:4]
+    context = {'package':package}
     return render(request, 'invest/investment-plan.html', context)
 
 

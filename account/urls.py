@@ -12,6 +12,7 @@ urlpatterns = [
     path('dashboard/message', views.message, name='message'),
     path('dashboard/users', views.users, name='users'),
     path('dashboard/gateway', views.gateway, name='gateway'),
+    path('dashboard/transactions', views.transactions, name='transactions'),
     path('dashboard/settings', views.settings, name='settings'),
 
     path('delete-user/', views.delete_user, name='delete_user'),

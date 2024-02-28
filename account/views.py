@@ -104,14 +104,6 @@ def logout(request):
 
 
 
-
-
-
-
-
-
-
-
 # Create your views here.
 def signup_signin(request):
     context = {}
@@ -120,9 +112,12 @@ def signup_signin(request):
 
 @login_required(login_url='login')
 def dashboard(request):
+    if request.user.is_admin:
     
-    context = {}
-    return render(request, 'account/dashboard.html', context)
+        context = {}
+        return render(request, 'account/dashboard.html', context)
+    else:
+        return redirect('index')
 
 
 @login_required(login_url='login')
@@ -254,6 +249,16 @@ def settings(request):
 
         context = {}
         return render(request, 'account/settings.html', context)
+    else:
+        return redirect('index')
+
+
+@login_required(login_url='login')
+def transactions(request):
+    if request.user.is_admin:
+
+        context = {}
+        return render(request, 'account/transactions.html', context)
     else:
         return redirect('index')
 

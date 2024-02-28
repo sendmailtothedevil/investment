@@ -2,6 +2,12 @@
 {% block hero %}
 {% endblock hero %}
 
+{% block css1 %}
+  <style>
+    .custom_nav-container .navbar-nav .nav-item .dashLink {color:#00bbf0;}
+  </style>
+{% endblock %}
+
 {% block content %}
 {% block css %}
   <style>
@@ -18,7 +24,7 @@
         <a href="{% url 'users' %}" class="usrs"><i class="fas fa-users"></i> &nbsp; Users</a>
         <a href="{% url 'packages' %}" class="pkgs"><i class="fas fa-cubes"></i> &nbsp; Packages</a></a>
         <a href="{% url 'gateway' %}" class="gtwy"><i class="fas fa-money-check-alt"></i> &nbsp; Gateway</a>
-        <a href="" class="trnsc"><i class="fas fa-hand-holding-usd"></i> &nbsp;Transactions</a>
+        <a href="{% url 'transactions' %}" class="trnsc"><i class="fas fa-hand-holding-usd"></i> &nbsp;Transactions</a>
         <a href="{% url 'message' %}" class="msgs"><i class="fas fa-mail-bulk"></i> &nbsp; Messages</a>
         <a href="{% url 'settings' %}" class="stgs"><i class="fas fa-cogs"></i> &nbsp; Settings</a>
         <a href="{% url 'logout' %}" class=""><i class="fas fa-sign-out-alt"></i> &nbsp; Logout</a>
@@ -39,274 +45,38 @@
         <div class="SHOW">
           <div class="">
             <h4  class="fs-3 text-center fw-bold mb-5">General Data</h4>
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Title</th>
-                  <th scope="col">Active</th>
-                  <th scope="col">Inactive</th>
-                  <th scope="col">Total</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="">
-                  <th scope="row">1</th>
-                  <td class="fw-bold">Users</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                </tr>
-                <tr class="py-5">
-                  <th scope="row">2</th>
-                  <td class="fw-bold">Packages</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                </tr>
-                <tr class="py-5">
-                  <th scope="row">3</th>
-                  <td class="fw-bold">Gateway</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                </tr>
-                <tr class="py-5">
-                  <th scope="row">4</th>
-                  <td class="fw-bold">Transactions</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                </tr>
-                <tr class="py-5">
-                  <th scope="row">4</th>
-                  <td class="fw-bold">Messages</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                </tr>
-                <tr class="py-5">
-                  <th scope="row">4</th>
-                  <td class="fw-bold">Transactions</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                </tr>
-                <tr class="py-5">
-                  <th scope="row">4</th>
-                  <td class="fw-bold">Messages</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                </tr>
-                <tr class="py-5">
-                  <th scope="row">4</th>
-                  <td class="fw-bold">Transactions</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                </tr>
-                <tr class="py-5">
-                  <th scope="row">4</th>
-                  <td class="fw-bold">Messages</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                </tr>
-                <tr class="py-5">
-                  <th scope="row">4</th>
-                  <td class="fw-bold">Transactions</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                </tr>
-                <tr class="py-5">
-                  <th scope="row">4</th>
-                  <td class="fw-bold">Messages</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                </tr>
-                <tr class="py-5">
-                  <th scope="row">4</th>
-                  <td class="fw-bold">Transactions</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                </tr>
-                <tr class="py-5">
-                  <th scope="row">4</th>
-                  <td class="fw-bold">Messages</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <div class="SHOW">
-          <div class="">
-            <h4  class="fs-3 text-center fw-bold mb-5">Users Management</h4>
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">Date Joined</th>
-                  <th scope="col">Active Packages</th>
-                  <th scope="col">Inactive Packages</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
-                  <td>okenneth009@gmail.com</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <div class="SHOW">
-          <div class="position-relative ">
-            <h4  class="fs-3 text-center fw-bold mb-5">Packages Management</h4>
-            <div class="position-absolute" style="top:25px;right:10px;"><button class="btn btn-primary btn-round btn-sm fs-6 border-0 outline-0" id="addPackage">Add package</button></div>
             <table class="table table-striped package_reload package_reload2">
               <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Title</th>
-                  <th scope="col">Profits</th>
-                  <th scope="col">Days</th>
-                  <th scope="col">Bonus</th>
-                  <th scope="col">Min</th>
-                  <th scope="col">Max</th>
-                  <th scope="col">Amount</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Action Buttons</th>
+                <tr class="text-center">
+                  <th scope="col" class="border">#</th>
+                  <th scope="col" class="border">Name</th>
+                  <th scope="col" class="border">Email</th>
+                  <th scope="col" class="border">Status</th>
+                  <th scope="col" class="border">Active package</th>
+                  <th scope="col" class="border">Inactive Package</th>
+                  <th scope="col" class="border" colspan="2">Delete</th>
                 </tr>
               </thead>
-              <tbody class="">
-                {% for pk in packages %}
-                  <tr class="packageList">
-                    <th scope="row">{{ forloop.counter }}</th>
-                    <td>{{pk.title}}</td>
-                    <td>{{pk.profit}}</td>
-                    <td>{{pk.days}}</td>
-                    <td>{{pk.bonus}}</td>
-                    <td>{{pk.min}}</td>
-                    <td>{{pk.max}}</td>
-                    <td>{{pk.amount}}</td>
-                    <td>{% if pk.status %}Active{% else %}Inactive{% endif %}</td>
-                    <td class="mx-auto actbtn">
-                      <span><i class="fas fa-check-circle text-active fs-5 mx-1 activate"></i></span>
-                      <span><i class="fas fa-times-circle text-warn fs-5 mx-1 deactivate"></i></span>
-                      <span><i class="fas fa-edit text-primary fs-5 mx-1"></i></span>
-                      <span><i class="fas fa-trash-alt text-danger fs-5 mx-1 delpkg"></i></span>
+              <tbody class="text-center">
+                {% for user in users %}
+                  {% csrf_token %}
+                  <tr class="userList position-relative">
+                    <th scope="row" class="border-right">{{ forloop.counter }}</th>
+                    <td class="border-right">{{user.full_name}}</td>
+                    <td class="border-right">{{user.email}}</td>
+                    <td class="border-right">{% if user.is_active %}Active{% else %}Inactive{% endif %}</td>
+                    <td class="border-right">{% for pkg in pkgs %}{% if pkg.user == user and pkg.status %}{{ pkg.title }}, {% endif %}{% endfor %}</td>
+                    <td class="border-right">{% for pkg in pkgs %}{% if pkg.user == user and not pkg.status %}{{ pkg.title }}, {% endif %}{% endfor %}</td>
+                    <td class="text-center actbtn ps-0 border-right">
+                      <span><i class="d-block fas fa-trash-alt text-danger fs-5 mb-3 deluser"></i></span>
                     </td>
-                    <td><input type="hidden" value="{{ pk.id }}" class="package_id"></td>
+                    <td class="position-absolute border-0" style="left:0;top:0;"><input type="hidden" value="{{ user.id }}" class="user_id"></td>
                   </tr>
                 {% endfor %}
               </tbody>
             </table>
           </div>
         </div>
-
-        <div class="SHOW">
-          <div class="">
-            <h4  class="fs-3 text-center fw-bold mb-5">Gateway Management</h4>
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Title</th>
-                  <th scope="col">Wallet</th>
-                  <th scope="col">Icon</th>
-                  <th scope="col">Modify</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
-                  <td>@mdo</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <div class="SHOW">
-          <div class="">
-            <h4  class="fs-3 text-center fw-bold mb-5">Transactions</h4>
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">User Name</th>
-                  <th scope="col">Package name</th>
-                  <th scope="col">Amount</th>
-                  <th scope="col">Duration</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Action Buttons</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
-                  <td>@mdo</td>
-                  <td>@mdo</td>
-                  <td>@mdo</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <div class="SHOW">
-          <div class="">
-            <h4  class="fs-3 text-center fw-bold mb-5">Messages</h4>
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Sender name</th>
-                  <th scope="col">Subject</th>
-                  <th scope="col">Body</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Action Button</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
-                  <td>@mdo</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <div class="SHOW">Settings</div>
       </div>
       {% endblock %}
     </div>
