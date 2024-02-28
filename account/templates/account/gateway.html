@@ -18,27 +18,23 @@
               <th scope="col" class="border">#</th>
               <th scope="col" class="border">Payment method</th>
               <th scope="col" class="border">Payment address</th>
-              <th scope="col" class="border">Icon</th>
+              <th scope="col" class="border">Payment Icon</th>
               <th scope="col" class="border">Status</th>
               <th scope="col" class="border" colspan="2">Delete</th>
             </tr>
           </thead>
           <tbody class="text-center">
-            {% for pk in packages %}
+            {% for gw in gateway %}
               <tr class="packageList position-relative">
                 <th scope="row" class="pb-0 border-right">{{ forloop.counter }}</th>
-                <td class="pkg_title pb-0 border-right">{{pk.title}}</td>
-                <td class="pkg_profit pb-0 border-right">{{pk.profit}}</td>
-                <td class="pkg_days pb-0 border-right">{{pk.days}}</td>
-                <td class="pkg_bonus pb-0 border-right">{{pk.bonus}}</td>
-                <td class="pkg_min pb-0 mb-0 border-right">{{pk.min}}</td>
-                <td class="pkg_max pb-0 mb-0 border-right">{{pk.max}}</td>
-                <td class="pkg_amount pb-0 mb-0 border-right">{{pk.amount}}</td>
-                <td class="pb-0 border-right">{% if pk.status %}Active{% else %}Inactive{% endif %}</td>
+                <td class="pkg_title pb-0 border-right">{{gw.pay_method}}</td>
+                <td class="pkg_profit pb-0 border-right">{{gw.pay_address}}</td>
+                <td class="pkg_days py-2 border-right"><img width="35" src="{{gw.pay_icon.url}}" alt="icon"></td>                
+                <td class="pb-0 border-right">{% if gw.status %}Active{% else %}Inactive{% endif %}</td>
                 <td class="text-center actbtn pe-0 pb-0 border-right">
-                  <span><i class="d-block fas fa-check-circle text-active fs-5 mb-3 activate"></i></span>
-                  <span><i class="d-block fas fa-times-circle text-warn fs-5 mb-3 deactivate"></i></span>
-                  <span><i class="d-block fas fa-trash-alt text-danger fs-5 mb-3 delgw"></i></span>
+                  <span><i class=" fas fa-check-circle text-active fs-5 mb-3 mx-1 activate"></i></span>
+                  <span><i class=" fas fa-times-circle text-warn fs-5 mb-3 mx-1 deactivate"></i></span>
+                  <span><i class=" fas fa-trash-alt text-danger fs-5 mb-3 mx-1 delgw"></i></span>
                 </td>
                 <td class="position-absolute border-0 pb-0" style="left:0;top:0;"><input type="hidden" value="{{ gw.id }}" class="gw_id"></td>
               </tr>
