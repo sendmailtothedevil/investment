@@ -1135,6 +1135,94 @@ tr {
   cursor: pointer;
 }
 
-#addPackageForm label {
+.mymodal label {
   font-weight: 600;
+}
+
+
+.single_billing_inp .img_upload {
+  background-color: #fff;
+  width: 100%;
+  position: relative;
+  margin: 10 auto;
+  padding: 10px;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.single_billing_inp .img_upload label {
+  display: block;
+  position: relative;
+  background-color: #1c07da;
+  color: #fff;
+  font-size: 13px;
+  text-align: center;
+  width: 150px;
+  padding: 8px 2px;
+  margin: auto;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.single_billing_inp .img_upload2 label {
+  display: block;
+  position: relative;
+  background-color: #1c07da;
+  color: #fff;
+  font-size: 13px;
+  text-align: center;
+  width: 150px;
+  padding: 8px 2px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.single_billing_inp .img_upload p {
+  text-align: center;
+  margin: 20px 0;
+  padding: 0;
+  margin: 5px;
+  font-size: 14px;
+  line-height: 14px;
+}
+
+.single_billing_inp .img_upload #img_preview {
+  width: 100%;
+  position: relative;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.single_billing_inp .img_upload figure {
+  width: auto;
+  padding: 5px;
+  margin: 5px;
+}
+
+.single_billing_inp .img_upload img {
+  max-width: 70px;
+  max-height: 70px;
+}
+
+.single_billing_inp .img_upload figcaption {
+  /* text-align: center;
+  font-size: 12px;
+  margin-top: 5px;
+  padding: 0;
+  margin: 0;
+  line-height: 14px; */
+  display: none;
+}
+
+.single_billing_inp .img_upload .fas {
+  position: relative;
+  top: 0;
+  font-size: 14px;
+  color: #fff;
+  padding: 0;
 }

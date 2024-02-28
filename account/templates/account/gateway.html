@@ -10,21 +10,17 @@
   <div class="col-12 col-lg-10 pt-0 mt-3 mt-lg-0">
     <div class="SHOW">
       <div class="position-relative ">
-        <h4  class="fs-3 text-center fw-bold mb-5">Packages Management</h4>
-        <div class="position-absolute" style="top:25px;right:10px;"><button class="btn btn-primary btn-round btn-sm fs-6 border-0 outline-0" id="addPackage">Add package</button></div>
+        <h4  class="fs-3 text-center fw-bold mb-5">Gateway Management</h4>
+        <div class="position-absolute" style="top:25px;right:10px;"><button class="btn btn-primary btn-round btn-sm fs-6 border-0 outline-0" id="addGateway">Add payment</button></div>
         <table class="table table-striped package_reload package_reload2">
           <thead>
             <tr class="text-center">
               <th scope="col" class="border">#</th>
-              <th scope="col" class="border">Title</th>
-              <th scope="col" class="border">Profits</th>
-              <th scope="col" class="border">Days</th>
-              <th scope="col" class="border">Bonus</th>
-              <th scope="col" class="border">Min</th>
-              <th scope="col" class="border">Max</th>
-              <th scope="col" class="border">Amount</th>
+              <th scope="col" class="border">Payment method</th>
+              <th scope="col" class="border">Payment address</th>
+              <th scope="col" class="border">Icon</th>
               <th scope="col" class="border">Status</th>
-              <th scope="col" class="border" colspan="2">Action Buttons</th>
+              <th scope="col" class="border" colspan="2">Delete</th>
             </tr>
           </thead>
           <tbody class="text-center">
@@ -42,12 +38,9 @@
                 <td class="text-center actbtn pe-0 pb-0 border-right">
                   <span><i class="d-block fas fa-check-circle text-active fs-5 mb-3 activate"></i></span>
                   <span><i class="d-block fas fa-times-circle text-warn fs-5 mb-3 deactivate"></i></span>
+                  <span><i class="d-block fas fa-trash-alt text-danger fs-5 mb-3 delgw"></i></span>
                 </td>
-                <td class="text-center actbtn ps-0 pb-0 border-right">
-                  <span><i class="d-block fas fa-edit text-primary fs-5 mb-3 editpkg"></i></span>
-                  <span><i class="d-block fas fa-trash-alt text-danger fs-5 mb-3 delpkg"></i></span>
-                </td>
-                <td class="position-absolute border-0 pb-0" style="left:0;top:0;"><input type="hidden" value="{{ pk.id }}" class="package_id"></td>
+                <td class="position-absolute border-0 pb-0" style="left:0;top:0;"><input type="hidden" value="{{ gw.id }}" class="gw_id"></td>
               </tr>
             {% endfor %}
           </tbody>
@@ -59,103 +52,73 @@
 {% endblock %}
 
 {% block modal %}
-<div id="myModal2" class="mymodal">
+<div id="myModal4" class="mymodal">
   <!-- Modal content -->
   <div class="mymodal-content p-1">
     <div class="mymodal-header mb-3">
       <span id="closeModal" class=" close fs-4">&times;</span>
-      <h4 class="fs-5 border-bottom fw-bold pt-4 pb-2 px-4 addpkg">Add Package</h4>
-      <h4 class="fs-5 border-bottom fw-bold pt-4 pb-2 px-4 editsec">Edit Package</h4>
+      <h4 class="fs-5 border-bottom fw-bold pt-4 pb-2 px-4">Add payment method</h4>
     </div>
     <div class="mymodal-body px-4 pb-4 pt-0">
-      <form method="POST" id="addPackageForm">
+      <form method="POST" id="addGatewayForm" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="mb-4">
           <div class="mb-3">
-            <label>Package </label><br>
-            <select class="addpkg bg-light w-100 p-2 outline-0 border" id="package">
-              <option value="Select Package">Select Package</option>
-              <option value="Basic">Basic</option>
-              <option value="Standard">Standard</option>
-              <option value="Premium">Premium</option>
-              <option value="Ultimate">Ultimate</option>
-            </select>
-            <input type="text" class="w-100 p-2 editsec" value="" id="pkginp" name="pkginp">
+            <label>Payment method </label><br>
+            <input type="text" class="w-100 p-2" value="" id="methd" name="pay_method" placeholder="enter payment method" required>
           </div>
 
           <div class="mb-3">
-            <label>Daily Profits </label><br>
-            <select class="addpkg bg-light w-100 p-2 outline-0 border" id="daily_profit">
-              <option value="Select daily profits">Select daily profits</option>
-              <option value="6% daily profits">6% daily profits</option>
-              <option value="10% daily profits">10% daily profits</option>
-              <option value="20% daily profits">20% daily profits</option>
-              <option value="31% daily profits">31% daily profits</option>
-            </select>
-            <input type="text" class="w-100 p-2 editsec" value="" id="dpinp" name="dp_inp">
+            <label>Payment address </label><br>
+            <input type="text" class="w-100 p-2" value="" id="addr" name="pay_address" placeholder="enter payment address" required>
           </div>
 
-          <div class="mb-3">
-            <label>Number of days </label><br>
-            <select class="addpkg bg-light w-100 p-2 outline-0 border" id="no_of_days">
-              <option value="Select Number of days">Select number of days</option>
-              <option value="15 days Investment">15 days Investment</option>
-              <option value="22 days Investment">22 days Investment</option>
-              <option value="30 days Investment">30 days Investment</option>
-              <option value="365 days Investment">365 days Investment</option>
-            </select>
-            <input type="text" class="w-100 p-2 editsec" value="" id="nodinp" name="no_dinp">
+          <div class="single_billing_inp mx-auto mb-3">
+            <div class="img_upload edit_upload p-0">
+              <input id="uploadImg2" type="file" name="pay_icon" value="" onchange="preview2()" accept="image/png, image/gif, image/jpeg, image/jpg" required>
+              <label for="uploadImg2"><img src="https://img.icons8.com/metro/14/ffffff/upload.png" alt="upload"/>&nbsp; Choose Image</label>
+              <p id="no_of_files2">Choose payment icon</p>
+              <div id="img_preview2" class="d-flex justify-content-start align-items-center"></div>
+            </div>
           </div>
-
-          <div class="mb-3">
-            <label>Purchase bonus </label><br>
-            <select class="addpkg bg-light w-100 p-2 outline-0 border" id="pur_bonus">
-              <option value="Select purchase bonus">Select purchase bonus</option>
-              <option value="$100 purchase bonus">$100 purchase bonus</option>
-              <option value="$500 purchase bonus">$500 purchase bonus</option>
-              <option value="$1500 purchase bonus">$1500 purchase bonus</option>
-              <option value="$2500 purchase bonus">$2500 purchase bonus</option>
-            </select>
-            <input type="text" class="w-100 p-2 editsec" value="" id="pbinp" name="pb_inp">
-          </div>
-
-          <div class="mb-3">
-            <label>Min </label><br>
-            <select class="addpkg bg-light w-100 p-2 outline-0 border" id="min">
-              <option value="Select minimum">Select minimum</option>
-              <option value="$20,000">$20,000</option>
-              <option value="$30,000">$30,000</option>
-              <option value="$50,000">$50,000</option>
-              <option value="$120,000">$120,000</option>
-            </select>
-            <input type="text" class="w-100 p-2 editsec" value="" id="mininp" name="min_inp">
-          </div>
-
-          <div class="mb-3">
-            <label>Max </label><br>
-            <select class="addpkg bg-light w-100 p-2 outline-0 border" id="max">
-              <option value="Select maximum">Select maximum</option>
-              <option value="$15,000">$15,000</option>
-              <option value="$50,000">$50,000</option>
-              <option value="$100,000">$100,000</option>
-              <option value="$1,000,000">$1,000,000</option>
-            </select>
-            <input type="text" class="w-100 p-2 editsec" value="" id="maxinp" name="max_inp">
-          </div>
-
-          <div class="mb-3 editsec">
-            <label>Amount </label><br>
-            <input type="number" class="w-100 p-2" value="" id="numinp" name="num_inp">
-          </div>            
-          
-          <input type="hidden" class="editsec" value="" id="pkg_id" name="pkg_id">
 
           <div class="mb-3 mt-4 text-center">
-            <button class="invest-bg101 border-0 outline-0 w-100">Submit</button>
+            <button class="invest-bg101 border-0 outline-0 w-100">Add payment method</button>
           </div>
       </form>
     </div>
   </div>
 </div>
+{% endblock %}
+
+{% block js %}
+<script>
+  // image preview
+  let fileInput2 = document.getElementById('uploadImg2')
+  let imageContainer2 = document.getElementById('img_preview2')
+  let noOfFiles2 = document.getElementById('no_of_files2')
+
+  function preview2() {
+      imageContainer2.innerHTML = ''
+      noOfFiles2.textContent = `${fileInput2.files.length} File(s) selected`;
+
+      for(i of fileInput2.files) {
+          let reader = new FileReader();
+          let figure = document.createElement('figure');
+          figure.className += "figimgwrp";
+          let figCap = document.createElement('figcaption');
+          figCap.innerText = i.name;
+          figure.appendChild(figCap);
+          reader.onload=()=>{
+              let img = document.createElement('img');
+              img.setAttribute('src', reader.result);
+              figure.insertBefore(img, figCap);
+          }
+          imageContainer2.appendChild(figure);
+          reader.readAsDataURL(i);
+      }
+
+  }
+</script>
 {% endblock %}
 

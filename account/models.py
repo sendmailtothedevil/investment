@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+from autoslug import AutoSlugField
 
 class CustomUserManager(BaseUserManager):
     def _create_user(self, full_name, email, password, **extra_fields):
@@ -61,4 +62,22 @@ class User(AbstractBaseUser, PermissionsMixin):
     
     class Meta:
         ordering = ['-is_superuser', '-is_admin', '-is_active']
+
+
+
+
+    
+class Gateway(models.Model):
+    slug = AutoSlugField(populate_from='pay_method', unique=True, null=False, default=None)
+    pay_method = models.CharField(max_length=200, null=False, blank=False)
+    pay_address = models.CharField(max_length=200, null=False, blank=False)
+    pay_icon = models.ImageField(upload_to='payment_icon', blank=True, null=True)
+    recent = models.DateField(auto_now=True)
+    status = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['-recent']
+
+    def __str__(self):
+        return self.pay_method + ' ' ' -- ' ' ' + self.address
 

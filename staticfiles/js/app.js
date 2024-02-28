@@ -233,6 +233,10 @@
         })
     })
     
+
+    $('#addGateway').click(function() {
+        $('#myModal4').css({ display: 'block' })
+    })
     
 
 
@@ -298,9 +302,9 @@
             $('#myModal2').css({ display: 'none' })
         }
 
-        // if (e.target.id === 'cls_comment_modal') {
-            
-        // }
+        if (e.target.id === 'myModal4') {
+            $('#myModal4').css({ display: 'none' })
+        }
         
     })
 

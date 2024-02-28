@@ -152,4 +152,26 @@ def delete_user(request):
         return JsonResponse({'status':"An error occured"})
 
 
-
+@login_required(login_url='login')
+def gateway(request):
+    gateway = Gateway.objects.all().order_by('-recent')
+    if request.method == "POST":
+        if request.user.is_admin:
+            pay_method = request.POST.get('pay_method')
+            pay_address = request.POST.get('pay_address')
+            pay_icon = request.FILES['pay_icon']
+            
+            new_gateway = Gateway.objects.create(
+                pay_method = pay_method,
+                pay_address = pay_address,
+                pay_icon = pay_icon
+            )
+            new_gateway.save()
+            messages.success(request, "Wallet added Successfully")
+            return redirect('gateway')
+        else:
+            messages.success(request, "Only ADMIN can add Payment")
+            return redirect('dashboard')
+    else:
+        context = {'gateway':gateway}
+        return render(request, 'account/gateway.html', context)
