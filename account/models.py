@@ -79,5 +79,4 @@ class Gateway(models.Model):
         ordering = ['-recent']
 
     def __str__(self):
-        return self.pay_method + ' ' ' -- ' ' ' + self.address
-
+        return self.pay_method + ' ' ' -- ' ' ' + self.pay_address

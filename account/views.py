@@ -4,6 +4,7 @@ from django.contrib.auth.models import auth
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
 from .models import *
+from contact.models import ContactUsMessage
 from invest.models import *
 from django.db.models import Q
 from django.http import JsonResponse
@@ -116,6 +117,7 @@ def signup_signin(request):
     context = {}
     return render(request, 'account/signup-signin.html', context)
 
+
 @login_required(login_url='login')
 def dashboard(request):
     
@@ -125,19 +127,25 @@ def dashboard(request):
 
 @login_required(login_url='login')
 def packages(request):
-    packages = Package.objects.all().order_by('-recent', '-post_date')
-    
-    context = {'packages':packages}
-    return render(request, 'account/packages.html', context)
+    if request.user.is_admin:
+        packages = Package.objects.all().order_by('-recent', '-post_date')
+        
+        context = {'packages':packages}
+        return render(request, 'account/packages.html', context)
+    else:
+        return redirect('index')
 
 
 @login_required(login_url='login')
 def users(request):
-    users = User.objects.all()
-    pkgs = Package.objects.all()
-    
-    context = {'users':users, 'pkgs':pkgs}
-    return render(request, 'account/users.html', context)
+    if request.user.is_admin:
+        users = User.objects.all()
+        pkgs = Package.objects.all()
+        
+        context = {'users':users, 'pkgs':pkgs}
+        return render(request, 'account/users.html', context)
+    else:
+        return redirect('index')
 
 
 @login_required(login_url='login')
@@ -154,24 +162,98 @@ def delete_user(request):
 
 @login_required(login_url='login')
 def gateway(request):
-    gateway = Gateway.objects.all().order_by('-recent')
-    if request.method == "POST":
-        if request.user.is_admin:
-            pay_method = request.POST.get('pay_method')
-            pay_address = request.POST.get('pay_address')
-            pay_icon = request.FILES['pay_icon']
-            
-            new_gateway = Gateway.objects.create(
-                pay_method = pay_method,
-                pay_address = pay_address,
-                pay_icon = pay_icon
-            )
-            new_gateway.save()
-            messages.success(request, "Wallet added Successfully")
-            return redirect('gateway')
+    if request.user.is_admin:
+        gateway = Gateway.objects.all().order_by('-recent')
+        if request.method == "POST":
+            if request.user.is_admin:
+                pay_method = request.POST.get('pay_method')
+                pay_address = request.POST.get('pay_address')
+                pay_icon = request.FILES['pay_icon']
+                
+                new_gateway = Gateway.objects.create(
+                    pay_method = pay_method,
+                    pay_address = pay_address,
+                    pay_icon = pay_icon
+                )
+                new_gateway.save()
+                messages.success(request, "Wallet added Successfully")
+                return redirect('gateway')
+            else:
+                messages.success(request, "Only ADMIN can add Payment")
+                return redirect('dashboard')
         else:
-            messages.success(request, "Only ADMIN can add Payment")
-            return redirect('dashboard')
+            context = {'gateway':gateway}
+            return render(request, 'account/gateway.html', context)
     else:
-        context = {'gateway':gateway}
-        return render(request, 'account/gateway.html', context)
+        return redirect('index')
+
+
+def delete_gateway(request):
+    if request.user.is_admin:
+        if request.method == 'POST':
+            gw_id = request.POST.get('gw_id')
+            Gateway.objects.get(pk=gw_id).delete()
+            
+            return JsonResponse({'status':"Gateway deleted successfully"})
+        else:
+            return JsonResponse({'status':"An error occured"})
+
+
+def activate_gateway(request):
+    if request.user.is_admin:
+        if request.method == 'POST':
+            if request.user.is_admin:
+                id = request.POST.get("gw_id")
+                gw = Gateway.objects.get(pk=id)
+                gw.status = True
+                gw.save()
+            
+            return JsonResponse({'status':"Gateway activated successfully"})
+        else:
+            return JsonResponse({'status':"An error occured"})
+    
+
+def deactivate_gateway(request):
+    if request.user.is_admin:
+        if request.method == 'POST':
+            id = request.POST.get("gw_id")
+            gw = Gateway.objects.get(pk=id)
+            gw.status = False
+            gw.save()
+        
+            return JsonResponse({'status':"Gateway deactivated successfully"})
+        else:
+            return JsonResponse({'status':"An error occured"})
+
+
+@login_required(login_url='login')
+def message(request):
+    if request.user.is_admin:
+        message = ContactUsMessage.objects.all()
+
+        context = {'message':message}
+        return render(request, 'account/message.html', context)
+    else:
+        return redirect('index')
+
+
+def delete_message(request):
+    if request.user.is_admin:
+        if request.method == 'POST':
+            msg_id = request.POST.get('msg_id')
+            ContactUsMessage.objects.get(pk=msg_id).delete()
+            
+            return JsonResponse({'status':"Messages deleted successfully"})
+        else:
+            return JsonResponse({'status':"An error occured"})
+
+
+@login_required(login_url='login')
+def settings(request):
+    if request.user.is_admin:
+
+        context = {}
+        return render(request, 'account/settings.html', context)
+    else:
+        return redirect('index')
+

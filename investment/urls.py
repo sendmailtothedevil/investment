@@ -24,7 +24,7 @@ urlpatterns = [
     path('', include('home.urls')),
     path('invest/', include('invest.urls')),
     path('about', include('about.urls')),
-    path('contact', include('contact.urls')),
+    path('contact/', include('contact.urls')),
     path('account/', include('account.urls')),
     # path('faveth@admin@7513596980/', include('favethadmin.urls')),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

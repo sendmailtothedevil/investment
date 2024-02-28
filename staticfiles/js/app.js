@@ -214,7 +214,6 @@
             })
         })    
     })
-
     
     $('.deluser').click(function(e){
         e.preventDefault()      
@@ -233,11 +232,82 @@
         })
     })
     
-
     $('#addGateway').click(function() {
         $('#myModal4').css({ display: 'block' })
     })
+
+    $('.delgw').click(function(e){
+        e.preventDefault()      
+        var gw_id1 = $(this).closest('.gatewayList').find('.gw_id').val()
+        var token = $('input[name=csrfmiddlewaretoken]').val()
+        let gw_id = Number(gw_id1)
+
+        console.log(gw_id)
+
+        $.ajax({
+            method: 'POST',
+            url: '/account/delete-gateway/',
+            data: {'gw_id':gw_id, csrfmiddlewaretoken: token},
+            success: function(response) {
+                alertify.message(response.status)
+                window.location.reload()
+            }
+        })
+    })
+
+    $('.activategw').click(function(e){
+        e.preventDefault()      
+        var gw_id1 = $(this).closest('.gatewayList').find('.gw_id').val()
+        var token = $('input[name=csrfmiddlewaretoken]').val()
+        let gw_id = Number(gw_id1)
+
+        $.ajax({
+            method: 'POST',
+            url: '/account/activate-gateway/',
+            data: {'gw_id':gw_id, csrfmiddlewaretoken: token},
+            success: function(response) {
+                alertify.message(response.status)
+                window.location.reload()
+            }
+        })
+    })
+
+    $('.deactivategw').click(function(e){
+        e.preventDefault()      
+        var gw_id1 = $(this).closest('.gatewayList').find('.gw_id').val()
+        var token = $('input[name=csrfmiddlewaretoken]').val()
+        let gw_id = Number(gw_id1)
+
+        $.ajax({
+            method: 'POST',
+            url: '/account/deactivate-gateway/',
+            data: {'gw_id':gw_id, csrfmiddlewaretoken: token},
+            success: function(response) {
+                alertify.message(response.status)
+                window.location.reload()
+            }
+        })
+    })
     
+    $('.delmsg').click(function(e){
+        e.preventDefault()      
+        var msg_id1 = $(this).closest('.messageList').find('.msg_id').val()
+        var token = $('input[name=csrfmiddlewaretoken]').val()
+        let msg_id = Number(msg_id1)
+
+        console.log(msg_id)
+
+        $.ajax({
+            method: 'POST',
+            url: '/account/delete-message/',
+            data: {'msg_id':msg_id, csrfmiddlewaretoken: token},
+            success: function(response) {
+                alertify.message(response.status)
+                window.location.reload()
+            }
+        })
+    })
+
 
 
 

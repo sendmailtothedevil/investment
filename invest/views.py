@@ -57,14 +57,11 @@ def edit_package(request):
             return JsonResponse({'status':"An error occured"})
 
 
-
-
 def delete_package(request):
     if request.user.is_admin:
         if request.method == 'POST':
             package_id = int(request.POST.get('package_id'))
-            if request.user.is_admin:
-                Package.objects.filter(user=request.user, id=package_id).delete()
+            Package.objects.filter(id=package_id).delete()
             
             return JsonResponse({'status':"Package deleted successfully"})
         else:
