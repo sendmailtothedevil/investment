@@ -1,7 +1,7 @@
 from django.core.checks import messages
 from django.shortcuts import redirect, render
 from .models import *
-from account .models import Gateway
+from account .models import *
 from django.http import JsonResponse
 
 
@@ -9,9 +9,36 @@ from django.http import JsonResponse
 def investment_plan(request):
     package = Package.objects.all()
     gateway = Gateway.objects.filter(status=True)
+            
     context = {'package':package, 'gateway':gateway}
     return render(request, 'invest/investment-plan.html', context)
 
+
+def transaction(request):
+    if request.method == "POST":
+        user = request.user
+        trans_plan = request.POST.get('trans_plan')
+        trans_profit = request.POST.get('trans_profit')
+        trans_days = request.POST.get('trans_days')
+        trans_bonus = request.POST.get('trans_bonus')
+        trans_amount = request.POST.get('trans_amount')
+        trans_paym = request.POST.get('trans_paym')
+        trans_paya = request.POST.get('trans_paya')
+        trans_paid = request.POST.get('trans_paid')
+
+        new_transaction = Transaction.objects.create(
+            user = user, trans_plan = trans_plan, trans_profit = trans_profit, trans_days = trans_days, trans_bonus = trans_bonus,
+            trans_amount = trans_amount, trans_paym = trans_paym, trans_paya = trans_paya, trans_paid = trans_paid
+        )
+        new_transaction.save()
+        
+        new_user_package = UserPackage.objects.create(
+            user = user, title = trans_plan, profit = trans_profit, days = trans_days, bonus = trans_bonus,
+            amount = trans_amount
+        )
+        new_user_package.save()
+        
+        return JsonResponse({'status':"Confirming your plan..."})
 
 def add_package(request):
     if request.user.is_admin:

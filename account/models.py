@@ -64,8 +64,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         ordering = ['-is_superuser', '-is_admin', '-is_active']
 
 
-
-
     
 class Gateway(models.Model):
     slug = AutoSlugField(populate_from='pay_method', unique=True, null=False, default=None)
@@ -80,3 +78,26 @@ class Gateway(models.Model):
 
     def __str__(self):
         return self.pay_method + ' ' ' -- ' ' ' + self.pay_address
+
+
+class Transaction(models.Model):
+    slug = AutoSlugField(populate_from='trans_plan', unique=True, null=False, default=None)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    trans_plan = models.CharField(max_length=200, null=False, blank=False)
+    trans_profit = models.CharField(max_length=200, null=False, blank=False)
+    trans_days = models.CharField(max_length=200, null=False, blank=False)
+    trans_bonus = models.CharField(max_length=200, null=False, blank=False)
+    trans_amount = models.CharField(max_length=200, null=False, blank=False)
+    trans_paym = models.CharField(max_length=200, null=False, blank=False)
+    trans_paya = models.CharField(max_length=200, null=False, blank=False)
+    trans_paid = models.CharField(max_length=200, null=False, blank=False)
+    recent = models.DateField(auto_now=True)
+    status = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['-recent']
+
+    def __str__(self):
+        return self.user.full_name + ' ' ' -- ' ' ' + self.trans_plan
+
+

@@ -314,7 +314,7 @@
 
     for (let sp = 0; sp < selplan.length; sp++) {
         selplan[sp].addEventListener('click', function() {
-            if(amount1[sp].value.length < 3) {
+            if(amount1[sp].value < 100) {
                 $(amount1[sp]).css('border','1.5px solid red')
                 amounterr[sp].innerHTML = 'Invalid amount...' 
             } else{
@@ -339,10 +339,11 @@
 
 
     $('.copiedInfo').css({ display: 'none' })
+    var input
     $('.copyAddr').click(function() {
         var gw_pay_addr = $(this).closest('.copyAddrList').find('.toCopy').val()
         var gw_addr_copied = $(this).closest('.copyAddrList').find('.copiedInfo')
-        var input = document.createElement("textarea");
+        input = document.createElement("textarea");
         input.value = gw_pay_addr
 
         input.setSelectionRange(0, 99999);
@@ -359,8 +360,36 @@
     }) 
 
     
+    $(document).on('submit', '#transactionForm', function(e){
+        e.preventDefault()
+        var trans_plan = $(this).closest('.transactionForm').find('.trans_plan').text()
+        var trans_profit = $(this).closest('.transactionForm').find('.trans_profit').text()
+        var trans_days = $(this).closest('.transactionForm').find('.trans_days').text()
+        var trans_bonus = $(this).closest('.transactionForm').find('.trans_bonus').text()
+        var trans_amount = $(this).closest('.transactionForm').find('.trans_amount').text()
+        var trans_paym = $(this).closest('.transactionForm').find('.trans_paym').text()
+        var trans_paya = $(this).closest('.transactionForm').find('.trans_paya').text()
+        var trans_paid = input.value
+        var token = $('input[name=csrfmiddlewaretoken]').val()
 
 
+        $.ajax({
+            method: 'POST',
+            url: '/invest/transaction/',
+            data: {'trans_plan':trans_plan, trans_paid, 
+                    'trans_profit':trans_profit, 'trans_days':trans_days,
+                    'trans_bonus':trans_bonus, 'trans_amount':trans_amount, 
+                    'trans_paym':trans_paym, 'trans_paya':trans_paya,
+                    csrfmiddlewaretoken: token
+            },
+            success: function(response) {
+                alertify.message(response.status)
+                // $('#myModal2').css({ display: 'none' })
+                location.href = "/account/dashboard/transactions"
+            }
+        })
+
+    })
 
 
 

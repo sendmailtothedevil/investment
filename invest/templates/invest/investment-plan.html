@@ -35,7 +35,11 @@
                 <p class="text-left py-0 my-2 planMax"><i class="fas fa-check"></i> &nbsp; {{ pkg.max }} max</p>
                 <div class="mt-4"><input type="number" name="amount" placeholder="Amount to invest" class="amount-inp w-100 fs-5 planAmount" required></div>
                 <span class="amounterr fs-6 text-danger"></span>
-                <button class="w-100 invest-bg101 border-0 outline-0 mt-3 fw-bold selectPlan">Select plan</button>
+                {% if request.user.is_authenticated %}
+                  <button class="w-100 invest-bg101 border-0 outline-0 mt-3 fw-bold selectPlan">Select plan</button>
+                {% else %}
+                  <a href="{% url 'signup_signin' %}"><button class="w-100 invest-bg101 border-0 outline-0 mt-3 fw-bold selectPlan">Select plan</button></a>
+                {% endif %}
               </div>
             </div>
             {% endif %}
@@ -55,33 +59,33 @@
               <h4 class="fs-4 border-bottom fw-bold pt-4 pb-2 px-4">Confirmation &amp; Payment</h4>
             </div>
             <div class="mymodal-body px-4 pb-4 pt-0 candpmodal">
-              <form method="POST" id="addGatewayForm" enctype="multipart/form-data">
-                <input type="hidden" value="{{ pk.id }}" class="selPlan_id">
+              <form method="POST" id="transactionForm" class="transactionForm">
+                <input type="hidden" value="{{ pk.id }}" class="selPlan_id trans_id">
                 <input type="hidden" value="{{ pk.id }}" class="selPlan_modal_id">
                 {% csrf_token %}
                 <div class="d-flex border-bottom p-2">
                   <h5 class="fw-bold p-0 m-0">Investment plan </h5>
-                  <p class="p-0 m-0" id-"plan">{{ pk.title }}</p>
+                  <p class="p-0 m-0 trans_plan" id-"plan">{{ pk.title }}</p>
                 </div>
 
                 <div class="d-flex border-bottom p-2">
                   <h5 class="fw-bold p-0 m-0">Daily profit </h5>
-                  <p class="p-0 m-0" id="profit"><span class="d-inline fs-5">{{ pk.profit }} daily profit</span> </p>
+                  <p class="p-0 m-0 trans_profit" id="profit"><span class="d-inline fs-5">{{ pk.profit }} daily profit</span> </p>
                 </div>
 
                 <div class="d-flex border-bottom p-2">
                   <h5 class="fw-bold p-0 m-0">Investment days </h5>
-                  <p class="p-0 m-0" id="days">{{ pk.days }}</p>
+                  <p class="p-0 m-0 trans_days" id="days">{{ pk.days }}</p>
                 </div>
 
                 <div class="d-flex border-bottom p-2">
                   <h5 class="fw-bold p-0 m-0">Purchase bonus </h5>
-                  <p class="p-0 m-0" id="bonus">{{ pk.bonus }}</p>
+                  <p class="p-0 m-0 trans_bonus" id="bonus">{{ pk.bonus }}</p>
                 </div>
 
                 <div class="mb-5 d-flex border-bottom p-2">
                   <h5 class="fw-bold p-0 m-0">Amount </h5>
-                  <p class="p-0 m-0" id="amount">$<span class="a3"></spa></p>
+                  <p class="p-0 m-0 trans_amount" id="amount">$<span class="a3"></spa></p>
                 </div>
 
                 <div class="p-2">
@@ -89,11 +93,11 @@
                     <div class="d-flex mb-5 copyAddrList border-bottom">
                       <input type="hidden" value="{{gw.id}}">
                       <div class="text-left me-4 text-center" style="flex-1">
-                        <h5 class="fw-bold p-0 m-0 mb-1">{{ gw.pay_method }} </h5>
+                        <h5 class="fw-bold p-0 m-0 mb-1 trans_paym">{{ gw.pay_method }} </h5>
                         <img width="40px" src="{{ gw.pay_icon.url }}">
                       </div>
                       <div class="position-relative w-100" >
-                        <textarea class="toCopy border-0 outline-0 lh-sm text-dark" rows="3.5" cols="25" style="resize:none;">{{ gw.pay_address }} </textarea>
+                        <textarea class="toCopy border-0 outline-0 lh-sm text-dark trans_paya" rows="3.5" cols="25" style="resize:none;">{{ gw.pay_address }} </textarea>
                         <span class="btn btn-primary btn-small fs-6 p-0 pb-1 px-2 btn-round position-absolute copyAddr" style="right:0;bottom:0;">copy</span>
                         <span class="position-absolute text-info copiedInfo" style="right:55px;bottom:0;">Copied to clipboard</span>
                       </div>
