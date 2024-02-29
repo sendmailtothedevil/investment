@@ -78,13 +78,8 @@
 
     $('#addPackage').click(function() {
         $('#myModal2').css({ display: 'block' })
-        $('.addpkg').css({ display: 'block' })
-        $('.editsec').css({ display: 'none' })
     })
 
-    $('#closeModal').click(function() {
-        $('#myModal2').css({ display: 'none' })
-    })
     
     $(document).on('submit', '#addPackageForm', function(e){
         e.preventDefault()      
@@ -162,58 +157,57 @@
     })
 
 
-    $('.editpkg').click(function() {
-        $('#myModal2').css({ display: 'block' })
-        $('.addpkg').css({ display: 'none' })
-        $('.editsec').css({ display: 'block' })
-        document.getElementById('addPackageForm').id = 'editPackageForm'
-
-        var pkg_id = $(this).closest('.packageList').find('.package_id').val()
-        var pkg_title = $(this).closest('.packageList').find('.pkg_title').prop("innerText")
-        var pkg_profit = $(this).closest('.packageList').find('.pkg_profit').prop("innerText")
-        var pkg_days = $(this).closest('.packageList').find('.pkg_days').prop("innerText")
-        var pkg_bonus = $(this).closest('.packageList').find('.pkg_bonus').prop("innerText")
-        var pkg_min = $(this).closest('.packageList').find('.pkg_min').prop("innerText")
-        var pkg_max = $(this).closest('.packageList').find('.pkg_max').prop("innerText")
-        var pkg_amount = $(this).closest('.packageList').find('.pkg_amount').prop("innerText")
-        
-        document.getElementById('pkg_id').value = pkg_id
-        document.getElementById('pkginp').value = pkg_title
-        document.getElementById('dpinp').value = pkg_profit
-        document.getElementById('nodinp').value = pkg_days
-        document.getElementById('pbinp').value = pkg_bonus
-        document.getElementById('mininp').value = pkg_min
-        document.getElementById('maxinp').value = pkg_max
-        document.getElementById('numinp').value = pkg_amount
-
-
-        $(document).on('submit', '#editPackageForm', function(e){
-            e.preventDefault()      
-            var pkg_id1 = $('#pkg_id').val()
-            var pkg_title = $('#pkginp').val()
-            var daily_profit = $('#dpinp').val()
-            var no_of_days = $('#nodinp').val()
-            var pur_bonus = $('#pbinp').val()
-            var min = $('#mininp').val()
-            var max = $('#maxinp').val()
-            var amount = $('#numinp').val()
-            let pkg_id = Number(pkg_id1)
-            var token = $('input[name=csrfmiddlewaretoken]').val()
+    let editpkg = document.getElementsByClassName('editpkg')
+    let pkg_id = document.getElementsByClassName('pkg_id')
+    let modal_id = document.getElementsByClassName('pkg_modal_id')
+    let pkgmodal = document.getElementsByClassName('pkgmodal')
+    let cmd = document.getElementsByClassName('cmd')
     
-            $.ajax({
-                method: 'POST',
-                url: '/invest/edit-package/',
-                data: {'pkg_id':pkg_id, 'pkg_title':pkg_title, 'daily_profit':daily_profit, 'no_of_days':no_of_days,
-                        'amount':amount, 'pur_bonus':pur_bonus, 'min':min, 'max':max,  csrfmiddlewaretoken: token
-                },
-                success: function(response) {
-                    alertify.message(response.status)
-                    // $('#myModal2').css({ display: 'none' })
-                    window.location.reload()
-                }
-            })
-        })    
-    })
+    for (let om = 0; om < editpkg.length; om++) {
+        editpkg[om].addEventListener('click', function(e) {
+            e.stopImmediatePropagation()
+            if (pkg_id[om].value == modal_id[om].value) {
+                $(pkgmodal[om]).css({ display: 'block' })
+
+                console.log(pkg_id[om].value)
+                console.log(modal_id[om].value)
+            }
+        })
+    }
+
+    for (let c = 0; c < cmd.length; c++) {
+        cmd[c].addEventListener('click', function() {
+            $(pkgmodal[c]).css({ display: 'none' })
+        })
+        
+    }
+
+    $(document).on('submit', '#editPackageForm', function(e){
+        e.preventDefault()
+        var pkg_id1 = $(this).closest('.editPackageForm').find('.pkg_id').val()
+        var pkg_title = $(this).closest('.editPackageForm').find('#pkg_title_edit').val()
+        var daily_profit = $(this).closest('.editPackageForm').find('#pkg_profit_edit').val()
+        var no_of_days = $(this).closest('.editPackageForm').find('#pkg_days_edit').val()
+        var pur_bonus = $(this).closest('.editPackageForm').find('#pkg_bonus_edit').val()
+        var min = $(this).closest('.editPackageForm').find('#pkg_min_edit').val()
+        var max = $(this).closest('.editPackageForm').find('#pkg_max_edit').val()
+        var amount = $(this).closest('.editPackageForm').find('#pkg_amount_edit').val()
+        var token = $('input[name=csrfmiddlewaretoken]').val()
+        let pkg_id = Number(pkg_id1)
+
+        $.ajax({
+            method: 'POST',
+            url: '/invest/edit-package/',
+            data: {'pkg_id':pkg_id, 'pkg_title':pkg_title, 'daily_profit':daily_profit, 'no_of_days':no_of_days,
+                    'amount':amount, 'pur_bonus':pur_bonus, 'min':min, 'max':max,  csrfmiddlewaretoken: token
+            },
+            success: function(response) {
+                alertify.message(response.status)
+                // $('#myModal2').css({ display: 'none' })
+                window.location.reload()
+            }
+        })
+    }) 
     
     $('.deluser').click(function(e){
         e.preventDefault()      
@@ -309,6 +303,62 @@
     })
 
 
+    let selplan = document.getElementsByClassName('selectPlan')
+    let sp_id = document.getElementsByClassName('selPlan_id')
+    let spm_id = document.getElementsByClassName('selPlan_modal_id')
+    let spm = document.getElementsByClassName('selPlanModal')
+    let cspmd = document.getElementsByClassName('cspmd')
+    let amount1 = document.getElementsByClassName('planAmount')
+    let a3 = document.getElementsByClassName('a3')
+    let amounterr = document.getElementsByClassName('amounterr')
+
+    for (let sp = 0; sp < selplan.length; sp++) {
+        selplan[sp].addEventListener('click', function() {
+            if(amount1[sp].value.length < 3) {
+                $(amount1[sp]).css('border','1.5px solid red')
+                amounterr[sp].innerHTML = 'Invalid amount...' 
+            } else{
+                if (sp_id[sp].value == spm_id[sp].value) {
+                    $(spm[sp]).css({ display: 'block' })
+                    a3[sp].innerHTML = amount1[sp].value           
+                } else{
+                    $(spm[0]).css({ display: 'none' })
+                }
+                $(amount1[sp]).css('border','1px solid grey')
+                amounterr[sp].innerHTML = ''
+            }
+        })
+    }
+
+
+    for (let c = 0; c < cspmd.length; c++) {
+        cspmd[c].addEventListener('click', function() {
+            $(spm[c]).css({ display: 'none' })
+        })
+    }
+
+
+    $('.copiedInfo').css({ display: 'none' })
+    $('.copyAddr').click(function() {
+        var gw_pay_addr = $(this).closest('.copyAddrList').find('.toCopy').val()
+        var gw_addr_copied = $(this).closest('.copyAddrList').find('.copiedInfo')
+        var input = document.createElement("textarea");
+        input.value = gw_pay_addr
+
+        input.setSelectionRange(0, 99999);
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(input.value);
+            $(gw_addr_copied).css({ display: 'block' })
+          } else {
+            document.body.appendChild(input)
+            input.select();
+            document.execCommand('copy')
+            document.body.removeChild(input)
+            $(gw_addr_copied).css({ display: 'block' })
+          }
+    }) 
+
+    
 
 
 
@@ -358,12 +408,13 @@
 
 
 
-
-
-
-
-
-
+ 
+    
+    $('#closeModal').click(function() {
+        $('#myModal2').css({ display: 'none' })
+        $('#myModal4').css({ display: 'none' })
+        $('#myModal5').css({ display: 'none' })
+    })
 
 
 
@@ -375,6 +426,12 @@
         if (e.target.id === 'myModal4') {
             $('#myModal4').css({ display: 'none' })
         }
+
+        // for (let p = 0; p < pkgmodal.length; p++) {
+        //     if (pkgmodal[p].style.display == 'block') {
+        //         $(pkgmodal[p]).css({ display: 'none' })
+        //     }
+        // }
         
     })
 

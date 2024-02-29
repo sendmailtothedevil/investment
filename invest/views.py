@@ -1,13 +1,15 @@
 from django.core.checks import messages
 from django.shortcuts import redirect, render
 from .models import *
+from account .models import Gateway
 from django.http import JsonResponse
 
 
 # Create your views here.
 def investment_plan(request):
-    package = Package.objects.all()[:4]
-    context = {'package':package}
+    package = Package.objects.all()
+    gateway = Gateway.objects.filter(status=True)
+    context = {'package':package, 'gateway':gateway}
     return render(request, 'invest/investment-plan.html', context)
 
 
@@ -42,6 +44,7 @@ def edit_package(request):
         if request.method == 'POST':
             pkg_id = int(request.POST.get('pkg_id'))
             spec_pkg = Package.objects.get(id=pkg_id)
+            
             spec_pkg.title = request.POST.get('pkg_title')
             spec_pkg.profit = request.POST.get('daily_profit')
             spec_pkg.days = request.POST.get('no_of_days')
@@ -49,7 +52,7 @@ def edit_package(request):
             spec_pkg.min = request.POST.get('min')
             spec_pkg.max = request.POST.get('max')
             spec_pkg.amount = request.POST.get('amount')
-            
+                        
             spec_pkg.save()
             
             return JsonResponse({'status':"Package Edited successfully"})

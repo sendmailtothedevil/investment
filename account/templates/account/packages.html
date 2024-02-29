@@ -59,97 +59,82 @@
 {% endblock %}
 
 {% block modal %}
-<div id="myModal2" class="mymodal">
+<div id="myModal2" class="mymodal" style="padding-top:60px;">
   <!-- Modal content -->
   <div class="mymodal-content p-1">
     <div class="mymodal-header mb-3">
-      <span id="closeModal" class=" close fs-4">&times;</span>
-      <h4 class="fs-5 border-bottom fw-bold pt-4 pb-2 px-4 addpkg">Add Package</h4>
-      <h4 class="fs-5 border-bottom fw-bold pt-4 pb-2 px-4 editsec">Edit Package</h4>
+      <span id="closeModal" class=" close fs-3">&times;</span>
+      <h4 class="fs-5 border-bottom fw-bold pt-4 pb-2 px-4">Add Package</h4>
     </div>
     <div class="mymodal-body px-4 pb-4 pt-0">
       <form method="POST" id="addPackageForm">
         {% csrf_token %}
-        <div class="mb-4">
           <div class="mb-3">
             <label>Package </label><br>
-            <select class="addpkg bg-light w-100 p-2 outline-0 border" id="package">
+            <select class=" bg-light w-100 p-2 outline-0 border" id="package">
               <option value="Select Package">Select Package</option>
               <option value="Basic">Basic</option>
               <option value="Standard">Standard</option>
               <option value="Premium">Premium</option>
               <option value="Ultimate">Ultimate</option>
             </select>
-            <input type="text" class="w-100 p-2 editsec" value="" id="pkginp" name="pkginp">
           </div>
 
           <div class="mb-3">
             <label>Daily Profits </label><br>
-            <select class="addpkg bg-light w-100 p-2 outline-0 border" id="daily_profit">
+            <select class=" bg-light w-100 p-2 outline-0 border" id="daily_profit">
               <option value="Select daily profits">Select daily profits</option>
               <option value="6%">6%</option>
               <option value="10%">10%</option>
               <option value="20%">20%</option>
               <option value="31%">31%</option>
             </select>
-            <input type="text" class="w-100 p-2 editsec" value="" id="dpinp" name="dp_inp">
           </div>
 
           <div class="mb-3">
             <label>Number of days </label><br>
-            <select class="addpkg bg-light w-100 p-2 outline-0 border" id="no_of_days">
+            <select class=" bg-light w-100 p-2 outline-0 border" id="no_of_days">
               <option value="Select Number of days">Select number of days</option>
               <option value="15 days Investment">15 days Investment</option>
               <option value="22 days Investment">22 days Investment</option>
               <option value="30 days Investment">30 days Investment</option>
               <option value="365 days Investment">365 days Investment</option>
             </select>
-            <input type="text" class="w-100 p-2 editsec" value="" id="nodinp" name="no_dinp">
           </div>
 
           <div class="mb-3">
             <label>Purchase bonus </label><br>
-            <select class="addpkg bg-light w-100 p-2 outline-0 border" id="pur_bonus">
+            <select class=" bg-light w-100 p-2 outline-0 border" id="pur_bonus">
               <option value="Select purchase bonus">Select purchase bonus</option>
               <option value="$100 purchase bonus">$100 purchase bonus</option>
               <option value="$500 purchase bonus">$500 purchase bonus</option>
               <option value="$1500 purchase bonus">$1500 purchase bonus</option>
               <option value="$2500 purchase bonus">$2500 purchase bonus</option>
             </select>
-            <input type="text" class="w-100 p-2 editsec" value="" id="pbinp" name="pb_inp">
           </div>
 
           <div class="mb-3">
             <label>Min </label><br>
-            <select class="addpkg bg-light w-100 p-2 outline-0 border" id="min">
+            <select class=" bg-light w-100 p-2 outline-0 border" id="min">
               <option value="Select minimum">Select minimum</option>
               <option value="$10,000">$10,000</option>
               <option value="$30,000">$30,000</option>
               <option value="$50,000">$50,000</option>
               <option value="$120,000">$120,000</option>
             </select>
-            <input type="text" class="w-100 p-2 editsec" value="" id="mininp" name="min_inp">
           </div>
 
           <div class="mb-3">
             <label>Max </label><br>
-            <select class="addpkg bg-light w-100 p-2 outline-0 border" id="max">
+            <select class=" bg-light w-100 p-2 outline-0 border" id="max">
               <option value="Select maximum">Select maximum</option>
               <option value="$25,000">$25,000</option>
               <option value="$50,000">$50,000</option>
               <option value="$100,000">$100,000</option>
               <option value="$1,000,000">$1,000,000</option>
             </select>
-            <input type="text" class="w-100 p-2 editsec" value="" id="maxinp" name="max_inp">
-          </div>
-
-          <div class="mb-3 editsec">
-            <label>Amount </label><br>
-            <input type="number" class="w-100 p-2" value="" id="numinp" name="num_inp">
-          </div>            
+          </div>         
           
-          <input type="hidden" class="editsec" value="" id="pkg_id" name="pkg_id">
-
           <div class="mb-3 mt-4 text-center">
             <button class="invest-bg101 border-0 outline-0 w-100">Submit</button>
           </div>
@@ -157,5 +142,66 @@
     </div>
   </div>
 </div>
+{% endblock %}
+
+
+{% block modal3 %}
+{% for pk in packages %}
+  <div id="myModal3" class="mymodal pkgmodal" style="padding-top:60px;">
+    <!-- Modal content -->
+    <div class="mymodal-content p-1">
+      <div class="mymodal-header mb-3">
+        <span class="cmd close fs-3">&times;</span>
+        <h4 class="fs-5 border-bottom fw-bold pt-4 pb-2 px-4">Edit Package</h4>
+      </div>
+      <div class="mymodal-body px-4 pb-4 pt-0">
+        <form method="POST" id="editPackageForm" class="editPackageForm">
+          {% csrf_token %}
+          <input type="hidden" value="{{pk.id}}" class="pkg_id">
+          <input type="hidden" value="{{pk.id}}" class="pkg_modal_id">
+
+            <div class="mb-3">
+              <label>Package </label><br>
+              <input type="text" class="w-100 p-2" value="{{ pk.title }}" id="pkg_title_edit" name="pkginp">
+            </div>
+
+            <div class="mb-3">
+              <label>Daily Profits </label><br>
+              <input type="text" class="w-100 p-2" value="{{ pk.profit }}" id="pkg_profit_edit" name="dp_inp">
+            </div>
+
+            <div class="mb-3">
+              <label>Number of days </label><br>
+              <input type="text" class="w-100 p-2" value="{{ pk.days }}" id="pkg_days_edit" name="no_dinp">
+            </div>
+
+            <div class="mb-3">
+              <label>Purchase bonus </label><br>
+              <input type="text" class="w-100 p-2" value="{{ pk.bonus }}" id="pkg_bonus_edit" name="pb_inp">
+            </div>
+
+            <div class="mb-3">
+              <label>Min </label><br>
+              <input type="text" class="w-100 p-2" value="{{ pk.min }}" id="pkg_min_edit" name="min_inp">
+            </div>
+
+            <div class="mb-3">
+              <label>Max </label><br>
+              <input type="text" class="w-100 p-2" value="{{ pk.max }}" id="pkg_max_edit" name="max_inp">
+            </div>
+
+            <div class="mb-3">
+              <label>Amount </label><br>
+              <input type="number" class="w-100 p-2" value="{{ pk.amount }}" id="pkg_amount_edit" name="num_inp">
+            </div>            
+            
+            <div class="mb-3 mt-4 text-center">
+              <button class="invest-bg101 border-0 outline-0 w-100">Submit</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endfor %}
 {% endblock %}
 

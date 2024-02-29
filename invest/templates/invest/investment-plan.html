@@ -21,20 +21,21 @@
         </h2>
       </div>
 
-      <div class="team_container" style="color: #00204a;opacity:.9;">
+      <div class="team_container" style="color:#00204a;opacity:.9;">
         <div class="row mx-auto text-dark">
           {% for pkg in package %}
           {% if pkg.status %}
             <div class="col-lg-3 col-sm-6 mx-auto mb-5">
-              <div class="bg-white px-4 py-4 shadow">
+              <div class="bg-white px-4 py-4 shadow planList">
                 <h3 class="color101 text-center py-3 planTitle"><b>{{ pkg.title }}</b></h3>
                 <h6 class="mb-3 planProfit"><b><h3 class="d-inline"><b>{{ pkg.profit }} </b></h3> daily profit </b></h6>
                 <p class="text-left py-0 my-2 planDays"><i class="fas fa-check"></i> &nbsp; {{ pkg.days }}</p>
                 <p class="text-left py-0 my-2 planBonus"><i class="fas fa-check"></i> &nbsp; {{ pkg.bonus }}</p>
                 <p class="text-left py-0 my-2 planMin"><i class="fas fa-check"></i> &nbsp; {{ pkg.min }} min</p>
                 <p class="text-left py-0 my-2 planMax"><i class="fas fa-check"></i> &nbsp; {{ pkg.max }} max</p>
-                <div class="mt-4"><input type="number" name="amount" placeholder="Amount to invest" class="amount-inp w-100 fs-5" id="planAmount" required></div>
-                <div class="mt-3"><input type="submit" name="amount" value="Select plan" class="w-100 invest-bg101 border-0 outline-0 text-white" style="font-weight:bold;"></div>
+                <div class="mt-4"><input type="number" name="amount" placeholder="Amount to invest" class="amount-inp w-100 fs-5 planAmount" required></div>
+                <span class="amounterr fs-6 text-danger"></span>
+                <button class="w-100 invest-bg101 border-0 outline-0 mt-3 fw-bold selectPlan">Select plan</button>
               </div>
             </div>
             {% endif %}
@@ -44,84 +45,78 @@
     </div>
 
 
-
-    <div id="myModal4" class="mymodal d-block">
-      <!-- Modal content -->
-      <div class="mymodal-content p-1">
-        <div class="mymodal-header mb-3">
-          <span id="closeModal" class=" close fs-4">&times;</span>
-          <h4 class="fs-4 border-bottom fw-bold pt-4 pb-2 px-4">Confirmation &amp; Payment</h4>
-        </div>
-        <div class="mymodal-body px-4 pb-4 pt-0 candpmodal">
-          <form method="POST" id="addGatewayForm" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="mb-4">
-              <div class="d-flex border-bottom p-2">
-                <h5 class="fw-bold p-0 m-0">Investment plan </h5>
-                <p class="p-0 m-0">Basic</p>
-              </div>
-
-              <div class="d-flex border-bottom p-2">
-                <h5 class="fw-bold p-0 m-0">Daily profit </h5>
-                <p class="p-0 m-0"><span class="d-inline fs-5">6% </span> daily profit</p>
-              </div>
-
-              <div class="d-flex border-bottom p-2">
-                <h5 class="fw-bold p-0 m-0">Investment days </h5>
-                <p class="p-0 m-0">30 day investment</p>
-              </div>
-
-              <div class="d-flex border-bottom p-2">
-                <h5 class="fw-bold p-0 m-0">Purchase bonus </h5>
-                <p class="p-0 m-0">$2500 purchase bonus</p>
-              </div>
-
-              <div class="mb-4 d-flex border-bottom p-2">
-                <h5 class="fw-bold p-0 m-0">Amount </h5>
-                <p class="p-0 m-0">$5000</p>
-              </div>
-
-              <div class="mb-5 border-top p-2">
-                <div class="d-flex  mb-4">
-                  <div class="text-left me-5" style="flex-1">
-                    <h5 class="fw-bold p-0 m-0 mb-1">Paypal </h5>
-                    <img width="40px" src="{{baseUrl}}/{{'logo.png'}}">
-                  </div>
-                  <div class="text-left position-relative" style="width: 230px;word-wrap:break-word;">
-                    <p class="" style="word-wrap:break-word;">@tommy_paypal</p>
-                    <button class="btn btn-primary btn-small fs-6 p-0 pb-1 px-2 btn-round position-absolute" style="right:0;bottom:0;">copy</button>
-                  </div>
+    {% for pk in package %}
+      {% if pk.status %}
+        <div id="myModal5" class="mymodal selPlanModal" style="padding-top:50px;">
+          <!-- Modal content -->
+          <div class="mymodal-content p-1">
+            <div class="mymodal-header mb-3">
+              <span id="closeModal" class="cspmd close fs-3">&times;</span>
+              <h4 class="fs-4 border-bottom fw-bold pt-4 pb-2 px-4">Confirmation &amp; Payment</h4>
+            </div>
+            <div class="mymodal-body px-4 pb-4 pt-0 candpmodal">
+              <form method="POST" id="addGatewayForm" enctype="multipart/form-data">
+                <input type="hidden" value="{{ pk.id }}" class="selPlan_id">
+                <input type="hidden" value="{{ pk.id }}" class="selPlan_modal_id">
+                {% csrf_token %}
+                <div class="d-flex border-bottom p-2">
+                  <h5 class="fw-bold p-0 m-0">Investment plan </h5>
+                  <p class="p-0 m-0" id-"plan">{{ pk.title }}</p>
                 </div>
 
-                <div class="d-flex  mb-4">
-                  <div class="text-left me-5" style="flex-1">
-                    <h5 class="fw-bold p-0 m-0 mb-1">Bitcoin </h5>
-                    <img width="40px" src="{{baseUrl}}/{{'logo.png'}}">
-                  </div>
-                  <div class="text-left position-relative" style="width: 230px;word-wrap:break-word;">
-                    <p class="" style="word-wrap:break-word;">bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh</p>
-                    <button class="btn btn-primary btn-small fs-6 p-0 pb-1 px-2 btn-round position-absolute" style="right:0;bottom:0;">copy</button>
-                  </div>
+                <div class="d-flex border-bottom p-2">
+                  <h5 class="fw-bold p-0 m-0">Daily profit </h5>
+                  <p class="p-0 m-0" id="profit"><span class="d-inline fs-5">{{ pk.profit }} daily profit</span> </p>
                 </div>
-              </div>
-    
-              
 
+                <div class="d-flex border-bottom p-2">
+                  <h5 class="fw-bold p-0 m-0">Investment days </h5>
+                  <p class="p-0 m-0" id="days">{{ pk.days }}</p>
+                </div>
 
+                <div class="d-flex border-bottom p-2">
+                  <h5 class="fw-bold p-0 m-0">Purchase bonus </h5>
+                  <p class="p-0 m-0" id="bonus">{{ pk.bonus }}</p>
+                </div>
 
+                <div class="mb-5 d-flex border-bottom p-2">
+                  <h5 class="fw-bold p-0 m-0">Amount </h5>
+                  <p class="p-0 m-0" id="amount">$<span class="a3"></spa></p>
+                </div>
 
-    
-              <div class="mb-3 mt-4 text-center">
-                <button class="invest-bg101 border-0 outline-0 w-100">I have paid</button>
-                <p class="text-danger lh-sm fs-6 fw-bold">Do not click the button if you have not made payment</p>
-              </div>
-          </form>
+                <div class="p-2">
+                  {% for gw in gateway %}
+                    <div class="d-flex mb-5 copyAddrList border-bottom">
+                      <input type="hidden" value="{{gw.id}}">
+                      <div class="text-left me-4 text-center" style="flex-1">
+                        <h5 class="fw-bold p-0 m-0 mb-1">{{ gw.pay_method }} </h5>
+                        <img width="40px" src="{{ gw.pay_icon.url }}">
+                      </div>
+                      <div class="position-relative w-100" >
+                        <textarea class="toCopy border-0 outline-0 lh-sm text-dark" rows="3.5" cols="25" style="resize:none;">{{ gw.pay_address }} </textarea>
+                        <span class="btn btn-primary btn-small fs-6 p-0 pb-1 px-2 btn-round position-absolute copyAddr" style="right:0;bottom:0;">copy</span>
+                        <span class="position-absolute text-info copiedInfo" style="right:55px;bottom:0;">Copied to clipboard</span>
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
+      
+                <div class="mb-3 mt-1 text-center">
+                  <button class="invest-bg101 border-0 outline-0 w-100">I have paid</button>
+                  <p class="text-danger lh-sm fs-6 fw-bold">Do not click the button if you have not made payment</p>
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      {% endif %}
+    {% endfor %}
   </section>
 
 
   <!-- end invest section -->
+{% endblock %}
+
+{% block js %}
 {% endblock %}
  
