@@ -80,8 +80,8 @@
                 <p class="text-left py-0 my-2 planBonus"><i class="fas fa-check"></i> &nbsp; {{ pkg.bonus }}</p>
                 <p class="text-left py-0 my-2 planMin"><i class="fas fa-check"></i> &nbsp; {{ pkg.min }} min</p>
                 <p class="text-left py-0 my-2 planMax"><i class="fas fa-check"></i> &nbsp; {{ pkg.max }} max</p>
-                <div class="mt-4"><input type="number" name="amount" placeholder="Amount to invest" class="amount-inp w-100 fs-5" id="planAmount" required></div>
-                <div class="mt-3"><input type="submit" name="amount" value="Select plan" class="w-100 invest-bg101 border-0 outline-0 text-white" style="font-weight:bold;"></div>
+                {% comment %} <div class="mt-4"><input type="number" name="amount" placeholder="Amount to invest" class="amount-inp w-100 fs-5" id="planAmount" required></div> {% endcomment %}
+                <a href="{% url 'investment_plan' %}"><div class="mt-5 pt-3"><input type="submit" name="amount" value="Choose plan" class="w-100 invest-bg101 border-0 outline-0 text-white" style="font-weight:bold;"></div></a>
               </div>
             </div>
             {% endif %}

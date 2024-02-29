@@ -339,6 +339,7 @@
 
 
     $('.copiedInfo').css({ display: 'none' })
+    $('.iHavePaid').css({ display: 'none' })
     var input
     $('.copyAddr').click(function() {
         var gw_pay_addr = $(this).closest('.copyAddrList').find('.toCopy').val()
@@ -357,6 +358,9 @@
             document.body.removeChild(input)
             $(gw_addr_copied).css({ display: 'block' })
           }
+
+          $('.iHavePaid').css({ display: 'block' })
+          $('.iPaid').css({ display: 'none' })
     }) 
 
     
@@ -392,6 +396,42 @@
     })
 
 
+    $('.deltrans').click(function(e){
+        e.preventDefault()      
+        var trans_id1 = $(this).closest('.transactionList').find('.trans_id').val()
+        var token = $('input[name=csrfmiddlewaretoken]').val()
+        let trans_id = Number(trans_id1)
+
+        console.log(trans_id)
+
+        $.ajax({
+            method: 'POST',
+            url: '/account/delete-trans/',
+            data: {'trans_id':trans_id, csrfmiddlewaretoken: token},
+            success: function(response) {
+                alertify.message(response.status)
+                window.location.reload()
+            }
+        })
+    })
+
+
+    $('.confirmtrans').click(function(e){
+        e.preventDefault()      
+        var trans_id1 = $(this).closest('.transactionList').find('.trans_id').val()
+        var token = $('input[name=csrfmiddlewaretoken]').val()
+        let trans_id = Number(trans_id1)
+
+        $.ajax({
+            method: 'POST',
+            url: '/account/confirm-trans/',
+            data: {'trans_id':trans_id, csrfmiddlewaretoken: token},
+            success: function(response) {
+                alertify.message(response.status)
+                window.location.reload()
+            }
+        })
+    })
 
 
 

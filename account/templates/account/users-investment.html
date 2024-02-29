@@ -1,0 +1,64 @@
+{% extends "account/dashboard.html" %}
+{% block css %}
+  <style>
+    .pkgs {background-color:#1c07da;}
+  </style>
+{% endblock %}
+
+{% block data %}
+  <div class="d-none d-lg-block col-lg-2"></div>
+  <div class="col-12 col-lg-10 pt-0 mt-3 mt-lg-0">
+    <div class="SHOW">
+      <div class="position-relative ">
+        <h4  class="fs-3 text-center fw-bold mb-5">Users Investment</h4>
+        <div class="position-absolute" style="top:25px;left:10px;"><a href="{% url 'packages' %}"><button class="btn btn-primary btn-round btn-sm fs-6 border-0 outline-0 pb-1">Package management</button></a></div>
+        <table class="table table-striped package_reload package_reload2">
+          <thead>
+            <tr class="text-center">
+              <th scope="col" class="border">#</th>
+              <th scope="col" class="border">User</th>
+              <th scope="col" class="border">Plan</th>
+              <th scope="col" class="border">Profits</th>
+              <th scope="col" class="border">Days</th>
+              <th scope="col" class="border">Bonus</th>
+              <th scope="col" class="border">Amount</th>
+              <th scope="col" class="border">Status</th>
+              <th scope="col" class="border" colspan="2">Action Buttons</th>
+            </tr>
+          </thead>
+          <tbody class="text-center">
+            {% for pk in users_investment %}
+              <tr class="packageList position-relative">
+                <th scope="row" class="pb-0 border-right">{{ forloop.counter }}</th>
+                <td class=" pb-0 border-right">{{pk.user}}</td>
+                <td class="pkg_title pb-0 border-right">{{pk.title}}</td>
+                <td class="pkg_profit pb-0 border-right">{{pk.profit}}</td>
+                <td class="pkg_days pb-0 border-right">{{pk.days}}</td>
+                <td class="pkg_bonus pb-0 border-right">{{pk.bonus}}</td>
+                <td class="pkg_amount pb-0 mb-0 border-right">{{pk.amount}}</td>
+                <td class="pb-0 border-right">{% if pk.status %}Active{% else %}Inactive{% endif %}</td>
+                <td class="text-center actbtn pe-0 pb-0 border-right">
+                  <span><i class="mx-1 py-2 fas fa-check-circle text-active fs-5 mb-3 activateui"></i></span>
+                  <span><i class="mx-1 py-2 fas fa-times-circle text-warn fs-5 mb-3 deactivateui"></i></span>
+                  <span><i class="mx-1 py-2 fas fa-trash-alt text-danger fs-5 mb-3 delui"></i></span>
+                </td>
+                <td class="position-absolute border-0 pb-0" style="left:0;top:0;"><input type="hidden" value="{{ pk.id }}" class="package_id"></td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block modal %}
+
+{% endblock %}
+
+
+{% block modal3 %}
+
+{% endblock %}
+

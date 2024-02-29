@@ -9,6 +9,7 @@ urlpatterns = [
     path('logout/', views.logout, name='logout'),
     path('dashboard', views.dashboard, name='dashboard'),
     path('dashboard/packages', views.packages, name='packages'),
+    path('dashboard/packages/users-investment', views.users_investment, name='users_investment'),
     path('dashboard/message', views.message, name='message'),
     path('dashboard/users', views.users, name='users'),
     path('dashboard/gateway', views.gateway, name='gateway'),
@@ -20,6 +21,8 @@ urlpatterns = [
     path('activate-gateway/', views.activate_gateway, name='activate_gateway'),
     path('deactivate-gateway/', views.deactivate_gateway, name='deactivate_gateway'),
     path('delete-message/', views.delete_message, name='delete_message'),
+    path('confirm-trans/', views.confirm_trans, name='confirm_trans'),
+    path('delete-trans/', views.delete_trans, name='delete_trans'),
 ]
 
 

@@ -29,50 +29,162 @@
         <a href="{% url 'settings' %}" class="stgs"><i class="fas fa-cogs"></i> &nbsp; Settings</a>
         <a href="{% url 'logout' %}" class=""><i class="fas fa-sign-out-alt"></i> &nbsp; Logout</a>
       </div>
-      {% comment %} <div class="mobileSide d-lg-none  text-light p-0 sideLinks position-absolute bg-light" style="width:250px;z-index:999;">
-        <div class="d-flex align-items-center fs-5 py-3 px-4 bg101 mb-1"><i class="fas fa-chalkboard-teacher"></i> &nbsp; Dashboard</div>
-        <div class="d-flex align-items-center fs-5 py-3 px-4 bg101 mb-1"><i class="fas fa-users"></i> &nbsp; Users</div>
-        <div class="d-flex align-items-center fs-5 py-3 px-4 bg101 mb-1"><i class="fas fa-cubes"></i> &nbsp; Packages</div>
-        <div class="d-flex align-items-center fs-5 py-3 px-4 bg101 mb-1"><i class="fas fa-money-check-alt"></i> &nbsp; Gateway</div>
-        <div class="d-flex align-items-center fs-5 py-3 px-4 bg101 mb-1"><i class="fas fa-hand-holding-usd"></i> &nbsp;Transactions</div>
-        <div class="d-flex align-items-center fs-5 py-3 px-4 bg101 mb-1"><i class="fas fa-mail-bulk"></i> &nbsp; Messages</div>
-        <div class="d-flex align-items-center fs-5 py-3 px-4 bg101 mb-1"><i class="fas fa-cogs"></i> &nbsp; Settings</div>
-        <div class="d-flex align-items-center fs-5 py-3 px-4 bg101"><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> &nbsp; Logout</a></div>
-      </div> {% endcomment %}
+      
       {% block data %}
       <div class="d-none d-lg-block col-lg-2"></div>
       <div class="col-12 col-lg-10 pt-0 mt-3 mt-lg-0">
-        <div class="SHOW">
-          <div class="">
-            <h4  class="fs-3 text-center fw-bold mb-5">General Data</h4>
+        <h4  class="fs-3 text-center fw-bold mb-5">General Data</h4>
+        <div class="row">
+          <div class="col-12 col-sm-6 col-md-4 mb-4">
             <table class="table table-striped package_reload package_reload2">
               <thead>
                 <tr class="text-center">
-                  <th scope="col" class="border">#</th>
-                  <th scope="col" class="border">Name</th>
-                  <th scope="col" class="border">Email</th>
-                  <th scope="col" class="border">Status</th>
-                  <th scope="col" class="border">Active package</th>
-                  <th scope="col" class="border">Inactive Package</th>
-                  <th scope="col" class="border" colspan="2">Delete</th>
+                  <th scope="col" colspan="2" class="border text-center fs-5">Users</th>
                 </tr>
               </thead>
               <tbody class="text-center">
-                {% for user in users %}
-                  {% csrf_token %}
+                <tr class="userList position-relative">
+                  <th scope="row" class="border-right">Active</th>
+                  <td class="border-right">{{ a_users }}</td>
+                </tr>
+
+                <tr class="userList position-relative">
+                  <th scope="row" class="border-right">Inactive</th>
+                  <td class="border-right">{{ i_users }}</td>
+                </tr>
+
+                <tr class="userList position-relative">
+                  <th scope="row" class="border-right">Total</th>
+                  <td class="border-right">{{ users }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-12 col-sm-6 col-md-4 mb-4">
+            <table class="table table-striped package_reload package_reload2">
+              <thead>
+                <tr class="text-center">
+                  <th scope="col" colspan="2" class="border text-center fs-5">Packages</th>
+                </tr>
+              </thead>
+              <tbody class="text-center">
+                {% comment %} {% for user in users %} {% endcomment %}
                   <tr class="userList position-relative">
-                    <th scope="row" class="border-right">{{ forloop.counter }}</th>
-                    <td class="border-right">{{user.full_name}}</td>
-                    <td class="border-right">{{user.email}}</td>
-                    <td class="border-right">{% if user.is_active %}Active{% else %}Inactive{% endif %}</td>
-                    <td class="border-right">{% for pkg in pkgs %}{% if pkg.user == user and pkg.status %}{{ pkg.title }}, {% endif %}{% endfor %}</td>
-                    <td class="border-right">{% for pkg in pkgs %}{% if pkg.user == user and not pkg.status %}{{ pkg.title }}, {% endif %}{% endfor %}</td>
-                    <td class="text-center actbtn ps-0 border-right">
-                      <span><i class="d-block fas fa-trash-alt text-danger fs-5 mb-3 deluser"></i></span>
-                    </td>
-                    <td class="position-absolute border-0" style="left:0;top:0;"><input type="hidden" value="{{ user.id }}" class="user_id"></td>
+                    <th scope="row" class="border-right">Active</th>
+                    <td class="border-right">{{ a_packages }}</td>
                   </tr>
-                {% endfor %}
+
+                  <tr class="userList position-relative">
+                    <th scope="row" class="border-right">Inactive</th>
+                    <td class="border-right">{{ i_packages }}</td>
+                  </tr>
+
+                  <tr class="userList position-relative">
+                    <th scope="row" class="border-right">Total</th>
+                    <td class="border-right">{{ packages }}</td>
+                  </tr>
+                {% comment %} {% endfor %} {% endcomment %}
+              </tbody>
+            </table>
+          </div>
+          <div class="col-12 col-sm-6 col-md-4 mb-4">
+            <table class="table table-striped package_reload package_reload2">
+              <thead>
+                <tr class="text-center">
+                  <th scope="col" colspan="2" class="border text-center fs-5">Users Investment</th>
+                </tr>
+              </thead>
+              <tbody class="text-center">
+                {% comment %} {% for user in users %} {% endcomment %}
+                  <tr class="userList position-relative">
+                    <th scope="row" class="border-right">Active</th>
+                    <td class="border-right">{{ a_user_packages }}</td>
+                  </tr>
+
+                  <tr class="userList position-relative">
+                    <th scope="row" class="border-right">Inactive</th>
+                    <td class="border-right">{{ i_user_packages }}</td>
+                  </tr>
+
+                  <tr class="userList position-relative">
+                    <th scope="row" class="border-right">Total</th>
+                    <td class="border-right">{{ user_packages }}</td>
+                  </tr>
+                {% comment %} {% endfor %} {% endcomment %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12 col-sm-6 col-md-4 mb-4">
+            <table class="table table-striped package_reload package_reload2">
+              <thead>
+                <tr class="text-center">
+                  <th scope="col" colspan="2" class="border text-center fs-5">Gateways</th>
+                </tr>
+              </thead>
+              <tbody class="text-center">
+                {% comment %} {% for user in users %} {% endcomment %}
+                  <tr class="userList position-relative">
+                    <th scope="row" class="border-right">Active</th>
+                    <td class="border-right">{{ a_gateways }}</td>
+                  </tr>
+
+                  <tr class="userList position-relative">
+                    <th scope="row" class="border-right">Inactive</th>
+                    <td class="border-right">{{ i_gateways }}</td>
+                  </tr>
+
+                  <tr class="userList position-relative">
+                    <th scope="row" class="border-right">Total</th>
+                    <td class="border-right">{{ gateways }}</td>
+                  </tr>
+                {% comment %} {% endfor %} {% endcomment %}
+              </tbody>
+            </table>
+          </div>
+          <div class="col-12 col-sm-6 col-md-4">
+            <table class="table table-striped package_reload package_reload2">
+              <thead>
+                <tr class="text-center">
+                  <th scope="col" colspan="2" class="border text-center fs-5">Transactions</th>
+                </tr>
+              </thead>
+              <tbody class="text-center">
+                {% comment %} {% for user in users %} {% endcomment %}
+                  <tr class="userList position-relative">
+                    <th scope="row" class="border-right">Confirmed</th>
+                    <td class="border-right">{{ a_trans }}</td>
+                  </tr>
+
+                  <tr class="userList position-relative">
+                    <th scope="row" class="border-right">Processing</th>
+                    <td class="border-right">{{ i_trans }}</td>
+                  </tr>
+
+                  <tr class="userList position-relative">
+                    <th scope="row" class="border-right">Total</th>
+                    <td class="border-right">{{ trans }}</td>
+                  </tr>
+                {% comment %} {% endfor %} {% endcomment %}
+              </tbody>
+            </table>
+          </div>
+          <div class="col-12 col-sm-6 col-md-4">
+            <table class="table table-striped package_reload package_reload2">
+              <thead>
+                <tr class="text-center">
+                  <th scope="col" colspan="2" class="border text-center fs-5">Messages</th>
+                </tr>
+              </thead>
+              <tbody class="text-center">
+                {% comment %} {% for user in users %} {% endcomment %}
+                  <tr class="userList position-relative">
+                    <th scope="row" class="border-right">Total</th>
+                    <td class="border-right">{{ message }}</td>
+                  </tr>
+                {% comment %} {% endfor %} {% endcomment %}
               </tbody>
             </table>
           </div>
@@ -104,3 +216,18 @@
   
 </script>
 {% endblock %}
+
+
+
+
+
+{% comment %} <div class="mobileSide d-lg-none  text-light p-0 sideLinks position-absolute bg-light" style="width:250px;z-index:999;">
+        <div class="d-flex align-items-center fs-5 py-3 px-4 bg101 mb-1"><i class="fas fa-chalkboard-teacher"></i> &nbsp; Dashboard</div>
+        <div class="d-flex align-items-center fs-5 py-3 px-4 bg101 mb-1"><i class="fas fa-users"></i> &nbsp; Users</div>
+        <div class="d-flex align-items-center fs-5 py-3 px-4 bg101 mb-1"><i class="fas fa-cubes"></i> &nbsp; Packages</div>
+        <div class="d-flex align-items-center fs-5 py-3 px-4 bg101 mb-1"><i class="fas fa-money-check-alt"></i> &nbsp; Gateway</div>
+        <div class="d-flex align-items-center fs-5 py-3 px-4 bg101 mb-1"><i class="fas fa-hand-holding-usd"></i> &nbsp;Transactions</div>
+        <div class="d-flex align-items-center fs-5 py-3 px-4 bg101 mb-1"><i class="fas fa-mail-bulk"></i> &nbsp; Messages</div>
+        <div class="d-flex align-items-center fs-5 py-3 px-4 bg101 mb-1"><i class="fas fa-cogs"></i> &nbsp; Settings</div>
+        <div class="d-flex align-items-center fs-5 py-3 px-4 bg101"><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> &nbsp; Logout</a></div>
+      </div> {% endcomment %}

@@ -40,6 +40,7 @@ def transaction(request):
         
         return JsonResponse({'status':"Confirming your plan..."})
 
+
 def add_package(request):
     if request.user.is_admin:
         if request.method == 'POST':
