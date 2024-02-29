@@ -28,7 +28,8 @@
           </thead>
           <tbody class="text-center">
             {% for pk in users_investment %}
-              <tr class="packageList position-relative">
+            {% csrf_token %}
+              <tr class="uiList position-relative">
                 <th scope="row" class="pb-0 border-right">{{ forloop.counter }}</th>
                 <td class=" pb-0 border-right">{{pk.user}}</td>
                 <td class="pkg_title pb-0 border-right">{{pk.title}}</td>
@@ -42,7 +43,7 @@
                   <span><i class="mx-1 py-2 fas fa-times-circle text-warn fs-5 mb-3 deactivateui"></i></span>
                   <span><i class="mx-1 py-2 fas fa-trash-alt text-danger fs-5 mb-3 delui"></i></span>
                 </td>
-                <td class="position-absolute border-0 pb-0" style="left:0;top:0;"><input type="hidden" value="{{ pk.id }}" class="package_id"></td>
+                <td class="position-absolute border-0 pb-0" style="left:0;top:0;"><input type="hidden" value="{{ pk.id }}" class="ui_id"></td>
               </tr>
             {% endfor %}
           </tbody>

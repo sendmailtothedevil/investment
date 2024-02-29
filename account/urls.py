@@ -23,6 +23,9 @@ urlpatterns = [
     path('delete-message/', views.delete_message, name='delete_message'),
     path('confirm-trans/', views.confirm_trans, name='confirm_trans'),
     path('delete-trans/', views.delete_trans, name='delete_trans'),
+    path('delete-ui/', views.delete_ui, name='delete_ui'),
+    path('activate-ui/', views.activate_ui, name='activate_ui'),
+    path('deactivate-ui/', views.deactivate_ui, name='deactivate_ui'),
 ]
 
 

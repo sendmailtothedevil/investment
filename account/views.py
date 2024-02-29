@@ -112,53 +112,55 @@ def signup_signin(request):
 
 @login_required(login_url='login')
 def dashboard(request):
-    if request.user.is_admin:
-        users = User.objects.all().count()
-        a_users = User.objects.filter(is_active=True).count()
-        i_users = User.objects.filter(is_active=False).count()
-        packages = Package.objects.filter().count()
-        a_packages = Package.objects.filter(status=True).count()
-        i_packages = Package.objects.filter(status=False).count()
-        user_packages = UserPackage.objects.all().count()
-        a_user_packages = UserPackage.objects.filter(status=True).count()
-        i_user_packages = UserPackage.objects.filter(status=False).count()
-        gateways = Gateway.objects.filter().count()
-        a_gateways = Gateway.objects.filter(status=True).count()
-        i_gateways = Gateway.objects.filter(status=False).count()
-        trans = Transaction.objects.filter().count()
-        a_trans = Transaction.objects.filter(status=True).count()
-        i_trans = Transaction.objects.filter(status=False).count()
-        message = ContactUsMessage.objects.filter().count()
+    users = User.objects.all().count()
+    a_users = User.objects.filter(is_active=True).count()
+    i_users = User.objects.filter(is_active=False).count()
+    packages = Package.objects.filter().count()
+    a_packages = Package.objects.filter(status=True).count()
+    i_packages = Package.objects.filter(status=False).count()
+    user_packages = UserPackage.objects.all().count()
+    a_user_packages = UserPackage.objects.filter(status=True).count()
+    i_user_packages = UserPackage.objects.filter(status=False).count()
+    gateways = Gateway.objects.filter().count()
+    a_gateways = Gateway.objects.filter(status=True).count()
+    i_gateways = Gateway.objects.filter(status=False).count()
+    trans = Transaction.objects.filter().count()
+    a_trans = Transaction.objects.filter(status=True).count()
+    i_trans = Transaction.objects.filter(status=False).count()
+    message = ContactUsMessage.objects.filter().count()
     
-        context = {'users':users, 'packages':packages, 'gateways':gateways, 'trans':trans, 'message':message,
-                   'a_users':a_users, 'i_users':i_users, 'a_packages':a_packages, 'i_packages':i_packages, 
-                   'user_packages':user_packages, 'a_user_packages':a_user_packages, 'i_user_packages':i_user_packages,
-                   'a_gateways':a_gateways, 'i_gateways':i_gateways, 'a_trans':a_trans, 'i_trans':i_trans}
-        return render(request, 'account/dashboard.html', context)
-    else:
-        return redirect('index')
+    one_ui_blnc = UserPackage.objects.filter(user=request.user, status=True)
+    one_ui = UserPackage.objects.filter(user=request.user).count()
+    a_one_ui = UserPackage.objects.filter(user=request.user, status=True).count()
+    i_one_ui = UserPackage.objects.filter(user=request.user, status=False).count()
+    one_u_trans = Transaction.objects.filter(user=request.user).count()
+    a_one_u_trans = Transaction.objects.filter(user=request.user, status=True).count()
+    i_one_u_trans = Transaction.objects.filter(user=request.user, status=False).count()
+
+    context = {'users':users, 'packages':packages, 'gateways':gateways, 'trans':trans, 'message':message,
+                'a_users':a_users, 'i_users':i_users, 'a_packages':a_packages, 'i_packages':i_packages, 
+                'user_packages':user_packages, 'a_user_packages':a_user_packages, 'i_user_packages':i_user_packages,
+                'a_gateways':a_gateways, 'i_gateways':i_gateways, 'a_trans':a_trans, 'i_trans':i_trans, 'one_ui':one_ui,
+                'a_one_ui':a_one_ui, 'i_one_ui':i_one_ui, 'one_u_trans':one_u_trans, 'a_one_u_trans':a_one_u_trans,
+                'i_one_u_trans':i_one_u_trans
+                }
+    return render(request, 'account/dashboard.html', context)
 
 
 @login_required(login_url='login')
 def packages(request):
-    if request.user.is_admin:
-        packages = Package.objects.all().order_by('-recent', '-post_date')
-        
-        context = {'packages':packages}
-        return render(request, 'account/packages.html', context)
-    else:
-        return redirect('index')
+    packages = Package.objects.all().order_by('-recent', '-post_date')
+    
+    context = {'packages':packages}
+    return render(request, 'account/packages.html', context)
 
 
 @login_required(login_url='login')
 def users_investment(request):
-    if request.user.is_admin:
-        users_investment = UserPackage.objects.all().order_by('-recent', '-post_date')
-        
-        context = {'users_investment':users_investment}
-        return render(request, 'account/users-investment.html', context)
-    else:
-        return redirect('index')
+    users_investment = UserPackage.objects.all().order_by('-recent', '-post_date')
+    
+    context = {'users_investment':users_investment}
+    return render(request, 'account/users-investment.html', context)
 
 
 
@@ -254,13 +256,10 @@ def deactivate_gateway(request):
 
 @login_required(login_url='login')
 def message(request):
-    if request.user.is_admin:
-        message = ContactUsMessage.objects.all()
+    message = ContactUsMessage.objects.all()
 
-        context = {'message':message}
-        return render(request, 'account/message.html', context)
-    else:
-        return redirect('index')
+    context = {'message':message}
+    return render(request, 'account/message.html', context)
 
 
 def delete_message(request):
@@ -276,23 +275,17 @@ def delete_message(request):
 
 @login_required(login_url='login')
 def settings(request):
-    if request.user.is_admin:
 
-        context = {}
-        return render(request, 'account/settings.html', context)
-    else:
-        return redirect('index')
+    context = {}
+    return render(request, 'account/settings.html', context)
 
 
 @login_required(login_url='login')
 def transactions(request):
-    if request.user.is_admin:
-        transactions = Transaction.objects.all()
+    transactions = Transaction.objects.all()
 
-        context = {'transactions':transactions}
-        return render(request, 'account/transactions.html', context)
-    else:
-        return redirect('index')
+    context = {'transactions':transactions}
+    return render(request, 'account/transactions.html', context)
 
 
 def confirm_trans(request):
@@ -316,6 +309,44 @@ def delete_trans(request):
             Transaction.objects.filter(id=trans_id).delete()
             
             return JsonResponse({'status':"Transaction deleted successfully"})
+        else:
+            return JsonResponse({'status':"An error occured"})
+
+
+def delete_ui(request):
+    if request.user.is_admin:
+        if request.method == 'POST':
+            ui_id = int(request.POST.get('ui_id'))
+            UserPackage.objects.filter(id=ui_id).delete()
+            
+            return JsonResponse({'status':"User Investment deleted successfully"})
+        else:
+            return JsonResponse({'status':"An error occured"})
+
+
+def activate_ui(request):
+    if request.user.is_admin:
+        if request.method == 'POST':
+            if request.user.is_admin:
+                id = request.POST.get("ui_id")
+                ui = UserPackage.objects.get(pk=id)
+                ui.status = True
+                ui.save()
+            
+            return JsonResponse({'status':"Investment activated successfully"})
+        else:
+            return JsonResponse({'status':"An error occured"})
+    
+
+def deactivate_ui(request):
+    if request.user.is_admin:
+        if request.method == 'POST':
+            id = request.POST.get("ui_id")
+            ui = UserPackage.objects.get(pk=id)
+            ui.status = False
+            ui.save()
+        
+            return JsonResponse({'status':"Investment deactivated successfully"})
         else:
             return JsonResponse({'status':"An error occured"})
 

@@ -434,7 +434,56 @@
     })
 
 
+    $('.delui').click(function(e){
+        e.preventDefault()      
+        var ui_id1 = $(this).closest('.uiList').find('.ui_id').val()
+        var token = $('input[name=csrfmiddlewaretoken]').val()
+        let ui_id = Number(ui_id1)
 
+        $.ajax({
+            method: 'POST',
+            url: '/account/delete-ui/',
+            data: {'ui_id':ui_id, csrfmiddlewaretoken: token},
+            success: function(response) {
+                alertify.message(response.status)
+                window.location.reload()
+            }
+        })
+    })
+
+    $('.activateui').click(function(e){
+        e.preventDefault()      
+        var ui_id1 = $(this).closest('.uiList').find('.ui_id').val()
+        var token = $('input[name=csrfmiddlewaretoken]').val()
+        let ui_id = Number(ui_id1)
+
+        $.ajax({
+            method: 'POST',
+            url: '/account/activate-ui/',
+            data: {'ui_id':ui_id, csrfmiddlewaretoken: token},
+            success: function(response) {
+                alertify.message(response.status)
+                window.location.reload()
+            }
+        })
+    })
+
+    $('.deactivateui').click(function(e){
+        e.preventDefault()      
+        var ui_id1 = $(this).closest('.uiList').find('.ui_id').val()
+        var token = $('input[name=csrfmiddlewaretoken]').val()
+        let ui_id = Number(ui_id1)
+
+        $.ajax({
+            method: 'POST',
+            url: '/account/deactivate-ui/',
+            data: {'ui_id':ui_id, csrfmiddlewaretoken: token},
+            success: function(response) {
+                alertify.message(response.status)
+                window.location.reload()
+            }
+        })
+    })
 
 
 

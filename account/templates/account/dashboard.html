@@ -19,11 +19,11 @@
     <div class="d-lg-none cms"><i class="fas fa-times fs-1 color101"></i></div>
     
     <div class="row position-relative">
-      <div class="d-none d-lg-block col-lg-2 text-light p-0 py-3 bg101 sideLinks position-fixed" style="z-index:99999;">
+      <div class="d-none d-lg-block col-lg-2 text-light p-0 py-3 bg101 sideLinks position-fixed" style="z-index:99999;height:100vh;">
         <a href="{% url 'dashboard' %}" class="dboard"><i class="fas fa-chalkboard-teacher"></i> &nbsp; Dashboard</a>
-        <a href="{% url 'users' %}" class="usrs"><i class="fas fa-users"></i> &nbsp; Users</a>
-        <a href="{% url 'packages' %}" class="pkgs"><i class="fas fa-cubes"></i> &nbsp; Packages</a></a>
-        <a href="{% url 'gateway' %}" class="gtwy"><i class="fas fa-money-check-alt"></i> &nbsp; Gateway</a>
+        {% if request.user.is_admin %}<a href="{% url 'users' %}" class="usrs"><i class="fas fa-users"></i> &nbsp; Users</a>{% endif %}
+        <a href="{% url 'packages' %}" class="pkgs"><i class="fas fa-cubes"></i> &nbsp; {% if request.user.is_admin %}Packages{% else %} Investments{% endif %}</a>
+        {% if request.user.is_admin %}<a href="{% url 'gateway' %}" class="gtwy"><i class="fas fa-money-check-alt"></i> &nbsp; Gateway</a>{% endif %}
         <a href="{% url 'transactions' %}" class="trnsc"><i class="fas fa-hand-holding-usd"></i> &nbsp;Transactions</a>
         <a href="{% url 'message' %}" class="msgs"><i class="fas fa-mail-bulk"></i> &nbsp; Messages</a>
         <a href="{% url 'settings' %}" class="stgs"><i class="fas fa-cogs"></i> &nbsp; Settings</a>
@@ -33,162 +33,253 @@
       {% block data %}
       <div class="d-none d-lg-block col-lg-2"></div>
       <div class="col-12 col-lg-10 pt-0 mt-3 mt-lg-0">
-        <h4  class="fs-3 text-center fw-bold mb-5">General Data</h4>
-        <div class="row">
-          <div class="col-12 col-sm-6 col-md-4 mb-4">
-            <table class="table table-striped package_reload package_reload2">
-              <thead>
-                <tr class="text-center">
-                  <th scope="col" colspan="2" class="border text-center fs-5">Users</th>
-                </tr>
-              </thead>
-              <tbody class="text-center">
-                <tr class="userList position-relative">
-                  <th scope="row" class="border-right">Active</th>
-                  <td class="border-right">{{ a_users }}</td>
-                </tr>
-
-                <tr class="userList position-relative">
-                  <th scope="row" class="border-right">Inactive</th>
-                  <td class="border-right">{{ i_users }}</td>
-                </tr>
-
-                <tr class="userList position-relative">
-                  <th scope="row" class="border-right">Total</th>
-                  <td class="border-right">{{ users }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="col-12 col-sm-6 col-md-4 mb-4">
-            <table class="table table-striped package_reload package_reload2">
-              <thead>
-                <tr class="text-center">
-                  <th scope="col" colspan="2" class="border text-center fs-5">Packages</th>
-                </tr>
-              </thead>
-              <tbody class="text-center">
-                {% comment %} {% for user in users %} {% endcomment %}
-                  <tr class="userList position-relative">
-                    <th scope="row" class="border-right">Active</th>
-                    <td class="border-right">{{ a_packages }}</td>
-                  </tr>
-
-                  <tr class="userList position-relative">
-                    <th scope="row" class="border-right">Inactive</th>
-                    <td class="border-right">{{ i_packages }}</td>
-                  </tr>
-
-                  <tr class="userList position-relative">
-                    <th scope="row" class="border-right">Total</th>
-                    <td class="border-right">{{ packages }}</td>
-                  </tr>
-                {% comment %} {% endfor %} {% endcomment %}
-              </tbody>
-            </table>
-          </div>
-          <div class="col-12 col-sm-6 col-md-4 mb-4">
-            <table class="table table-striped package_reload package_reload2">
-              <thead>
-                <tr class="text-center">
-                  <th scope="col" colspan="2" class="border text-center fs-5">Users Investment</th>
-                </tr>
-              </thead>
-              <tbody class="text-center">
-                {% comment %} {% for user in users %} {% endcomment %}
-                  <tr class="userList position-relative">
-                    <th scope="row" class="border-right">Active</th>
-                    <td class="border-right">{{ a_user_packages }}</td>
-                  </tr>
-
-                  <tr class="userList position-relative">
-                    <th scope="row" class="border-right">Inactive</th>
-                    <td class="border-right">{{ i_user_packages }}</td>
-                  </tr>
-
-                  <tr class="userList position-relative">
-                    <th scope="row" class="border-right">Total</th>
-                    <td class="border-right">{{ user_packages }}</td>
-                  </tr>
-                {% comment %} {% endfor %} {% endcomment %}
-              </tbody>
-            </table>
-          </div>
+        {% if request.user.is_admin %}
+        <div class="bg101">
+          <script defer src="https://www.livecoinwatch.com/static/lcw-widget.js"></script> 
+          <div class="livecoinwatch-widget-5" lcw-base="USD" lcw-color-tx="#999999" lcw-marquee-1="coins" lcw-marquee-2="movers" lcw-marquee-items="10" ></div>
         </div>
-
-        <div class="row">
-          <div class="col-12 col-sm-6 col-md-4 mb-4">
-            <table class="table table-striped package_reload package_reload2">
-              <thead>
-                <tr class="text-center">
-                  <th scope="col" colspan="2" class="border text-center fs-5">Gateways</th>
-                </tr>
-              </thead>
-              <tbody class="text-center">
-                {% comment %} {% for user in users %} {% endcomment %}
+          <h4  class="fs-3 text-center fw-bold my-4">General Data</h4>
+          <div class="row">
+            <div class="col-12 col-sm-6 col-md-4 mb-4">
+              <table class="table table-striped package_reload package_reload2">
+                <thead>
+                  <tr class="text-center">
+                    <th scope="col" colspan="2" class="border text-center fs-5">Users</th>
+                  </tr>
+                </thead>
+                <tbody class="text-center">
                   <tr class="userList position-relative">
                     <th scope="row" class="border-right">Active</th>
-                    <td class="border-right">{{ a_gateways }}</td>
+                    <td class="border-right">{{ a_users }}</td>
                   </tr>
 
                   <tr class="userList position-relative">
                     <th scope="row" class="border-right">Inactive</th>
-                    <td class="border-right">{{ i_gateways }}</td>
+                    <td class="border-right">{{ i_users }}</td>
                   </tr>
 
                   <tr class="userList position-relative">
                     <th scope="row" class="border-right">Total</th>
-                    <td class="border-right">{{ gateways }}</td>
+                    <td class="border-right">{{ users }}</td>
                   </tr>
-                {% comment %} {% endfor %} {% endcomment %}
-              </tbody>
-            </table>
-          </div>
-          <div class="col-12 col-sm-6 col-md-4">
-            <table class="table table-striped package_reload package_reload2">
-              <thead>
-                <tr class="text-center">
-                  <th scope="col" colspan="2" class="border text-center fs-5">Transactions</th>
-                </tr>
-              </thead>
-              <tbody class="text-center">
-                {% comment %} {% for user in users %} {% endcomment %}
-                  <tr class="userList position-relative">
-                    <th scope="row" class="border-right">Confirmed</th>
-                    <td class="border-right">{{ a_trans }}</td>
+                </tbody>
+              </table>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 mb-4">
+              <table class="table table-striped package_reload package_reload2">
+                <thead>
+                  <tr class="text-center">
+                    <th scope="col" colspan="2" class="border text-center fs-5">Packages</th>
                   </tr>
+                </thead>
+                <tbody class="text-center">
+                  {% comment %} {% for user in users %} {% endcomment %}
+                    <tr class="userList position-relative">
+                      <th scope="row" class="border-right">Active</th>
+                      <td class="border-right">{{ a_packages }}</td>
+                    </tr>
 
-                  <tr class="userList position-relative">
-                    <th scope="row" class="border-right">Processing</th>
-                    <td class="border-right">{{ i_trans }}</td>
-                  </tr>
+                    <tr class="userList position-relative">
+                      <th scope="row" class="border-right">Inactive</th>
+                      <td class="border-right">{{ i_packages }}</td>
+                    </tr>
 
-                  <tr class="userList position-relative">
-                    <th scope="row" class="border-right">Total</th>
-                    <td class="border-right">{{ trans }}</td>
+                    <tr class="userList position-relative">
+                      <th scope="row" class="border-right">Total</th>
+                      <td class="border-right">{{ packages }}</td>
+                    </tr>
+                  {% comment %} {% endfor %} {% endcomment %}
+                </tbody>
+              </table>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 mb-4">
+              <table class="table table-striped package_reload package_reload2">
+                <thead>
+                  <tr class="text-center">
+                    <th scope="col" colspan="2" class="border text-center fs-5">Users Investment</th>
                   </tr>
-                {% comment %} {% endfor %} {% endcomment %}
-              </tbody>
-            </table>
+                </thead>
+                <tbody class="text-center">
+                  {% comment %} {% for user in users %} {% endcomment %}
+                    <tr class="userList position-relative">
+                      <th scope="row" class="border-right">Active</th>
+                      <td class="border-right">{{ a_user_packages }}</td>
+                    </tr>
+
+                    <tr class="userList position-relative">
+                      <th scope="row" class="border-right">Inactive</th>
+                      <td class="border-right">{{ i_user_packages }}</td>
+                    </tr>
+
+                    <tr class="userList position-relative">
+                      <th scope="row" class="border-right">Total</th>
+                      <td class="border-right">{{ user_packages }}</td>
+                    </tr>
+                  {% comment %} {% endfor %} {% endcomment %}
+                </tbody>
+              </table>
+            </div>
           </div>
-          <div class="col-12 col-sm-6 col-md-4">
-            <table class="table table-striped package_reload package_reload2">
-              <thead>
-                <tr class="text-center">
-                  <th scope="col" colspan="2" class="border text-center fs-5">Messages</th>
-                </tr>
-              </thead>
-              <tbody class="text-center">
-                {% comment %} {% for user in users %} {% endcomment %}
-                  <tr class="userList position-relative">
-                    <th scope="row" class="border-right">Total</th>
-                    <td class="border-right">{{ message }}</td>
+          <div class="row">
+            <div class="col-12 col-sm-6 col-md-4 mb-4">
+              <table class="table table-striped package_reload package_reload2">
+                <thead>
+                  <tr class="text-center">
+                    <th scope="col" colspan="2" class="border text-center fs-5">Gateways</th>
                   </tr>
-                {% comment %} {% endfor %} {% endcomment %}
-              </tbody>
-            </table>
+                </thead>
+                <tbody class="text-center">
+                  {% comment %} {% for user in users %} {% endcomment %}
+                    <tr class="userList position-relative">
+                      <th scope="row" class="border-right">Active</th>
+                      <td class="border-right">{{ a_gateways }}</td>
+                    </tr>
+
+                    <tr class="userList position-relative">
+                      <th scope="row" class="border-right">Inactive</th>
+                      <td class="border-right">{{ i_gateways }}</td>
+                    </tr>
+
+                    <tr class="userList position-relative">
+                      <th scope="row" class="border-right">Total</th>
+                      <td class="border-right">{{ gateways }}</td>
+                    </tr>
+                  {% comment %} {% endfor %} {% endcomment %}
+                </tbody>
+              </table>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4">
+              <table class="table table-striped package_reload package_reload2">
+                <thead>
+                  <tr class="text-center">
+                    <th scope="col" colspan="2" class="border text-center fs-5">Transactions</th>
+                  </tr>
+                </thead>
+                <tbody class="text-center">
+                  {% comment %} {% for user in users %} {% endcomment %}
+                    <tr class="userList position-relative">
+                      <th scope="row" class="border-right">Confirmed</th>
+                      <td class="border-right">{{ a_trans }}</td>
+                    </tr>
+
+                    <tr class="userList position-relative">
+                      <th scope="row" class="border-right">Processing</th>
+                      <td class="border-right">{{ i_trans }}</td>
+                    </tr>
+
+                    <tr class="userList position-relative">
+                      <th scope="row" class="border-right">Total</th>
+                      <td class="border-right">{{ trans }}</td>
+                    </tr>
+                  {% comment %} {% endfor %} {% endcomment %}
+                </tbody>
+              </table>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4">
+              <table class="table table-striped package_reload package_reload2">
+                <thead>
+                  <tr class="text-center">
+                    <th scope="col" colspan="2" class="border text-center fs-5">Messages</th>
+                  </tr>
+                </thead>
+                <tbody class="text-center">
+                  {% comment %} {% for user in users %} {% endcomment %}
+                    <tr class="userList position-relative">
+                      <th scope="row" class="border-right">Total</th>
+                      <td class="border-right">{{ message }}</td>
+                    </tr>
+                  {% comment %} {% endfor %} {% endcomment %}
+                </tbody>
+              </table>
+            </div>
           </div>
+        {% else %}
+        <div class="bg101">
+          <script defer src="https://www.livecoinwatch.com/static/lcw-widget.js"></script> 
+          <div class="livecoinwatch-widget-5" lcw-base="USD" lcw-color-tx="#fff" lcw-marquee-1="coins" lcw-marquee-2="movers" lcw-marquee-items="10" ></div>
         </div>
+          <h4  class="fs-3 text-center fw-bold my-4">My Dashboard</h4>
+          <div class="row m-auto mb-2">
+            <div class="col-12 col-sm-6 col-md-4 mb-3">
+              <div class="d-flex align-items-center justify-content-center shadow w-100 m-auto" style="padding:48px 15px;" >
+                <div class="ms-0 me-3">
+                  <img width="80" src="https://img.icons8.com/papercut/80/coins.png" alt="coins"/>
+                </div>
+                <div>
+                  <h5 class="text-center fs-4">Total balance</h5>
+                  <p class="text-center fs-4">$ <span class="fw-bold fs-2">0</span></p>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 mb-3">
+              <table class="table table-striped package_reload package_reload2">
+                <thead>
+                  <tr class="text-center">
+                    <th scope="col" colspan="2" class="border text-center fs-5">My investments</th>
+                  </tr>
+                </thead>
+                <tbody class="text-center">
+                  <tr class="userList position-relative">
+                    <th scope="row" class="border-right">Active</th>
+                    <td class="border-right">{{ a_one_ui }}</td>
+                  </tr>
+
+                  <tr class="userList position-relative">
+                    <th scope="row" class="border-right">Inactive</th>
+                    <td class="border-right">{{ i_one_ui }}</td>
+                  </tr>
+
+                  <tr class="userList position-relative">
+                    <th scope="row" class="border-right">Total</th>
+                    <td class="border-right">{{ one_ui }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 mb-3">
+              <table class="table table-striped package_reload package_reload2">
+                <thead>
+                  <tr class="text-center">
+                    <th scope="col" colspan="2" class="border text-center fs-5">My transactions</th>
+                  </tr>
+                </thead>
+                <tbody class="text-center">
+                  {% comment %} {% for user in users %} {% endcomment %}
+                    <tr class="userList position-relative">
+                      <th scope="row" class="border-right">Confirmed</th>
+                      <td class="border-right">{{ a_one_u_trans }}</td>
+                    </tr>
+
+                    <tr class="userList position-relative">
+                      <th scope="row" class="border-right">Pending</th>
+                      <td class="border-right">{{ i_one_u_trans }}</td>
+                    </tr>
+
+                    <tr class="userList position-relative">
+                      <th scope="row" class="border-right">Total</th>
+                      <td class="border-right">{{ one_u_trans }}</td>
+                    </tr>
+                  {% comment %} {% endfor %} {% endcomment %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="row m-auto">
+            <div class="col-12 col-sm-6 col-md-4 mb-3">
+              <div class="d-flex align-items-center justify-content-center shadow w-100 m-auto" style="padding:48px 15px;" >
+                <div class="ms-0 me-3">
+                  <img width="80" src="https://img.icons8.com/external-itim2101-flat-itim2101/80/external-money-business-and-financial-itim2101-flat-itim2101-1.png" alt="external-money-business-and-financial-itim2101-flat-itim2101-1"/>
+                </div>
+                <div>
+                  <h5 class="text-center fs-4">Investment profits</h5>
+                  <p class="text-center fs-4">$ <span class="fw-bold fs-2">0</span></p>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-8 mb-3">
+            </div>
+          </div>
+        {% endif %}
       </div>
       {% endblock %}
     </div>
@@ -215,6 +306,7 @@
   })  
   
 </script>
+
 {% endblock %}
 
 
