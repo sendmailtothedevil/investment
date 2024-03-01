@@ -129,20 +129,36 @@ def dashboard(request):
     i_trans = Transaction.objects.filter(status=False).count()
     message = ContactUsMessage.objects.filter().count()
     
-    one_ui_blnc = UserPackage.objects.filter(user=request.user, status=True)
     one_ui = UserPackage.objects.filter(user=request.user).count()
     a_one_ui = UserPackage.objects.filter(user=request.user, status=True).count()
     i_one_ui = UserPackage.objects.filter(user=request.user, status=False).count()
     one_u_trans = Transaction.objects.filter(user=request.user).count()
     a_one_u_trans = Transaction.objects.filter(user=request.user, status=True).count()
     i_one_u_trans = Transaction.objects.filter(user=request.user, status=False).count()
+    
+    one_ui_blnc = UserPackage.objects.filter(user=request.user, status=True)
+    one_ui_pnd = UserPackage.objects.filter(user=request.user, status=False)
+    
+    u_total = 0
+    for u in one_ui_blnc:
+        u_amount = int(u.amount[1:])
+        u_total += u_amount
+    
+    u_pnd = 0
+    for u in one_ui_pnd:
+        u_amount = int(u.amount[1:])
+        u_pnd += u_amount
+        f'{u_pnd:,}'.replace('.',',')
 
+    u_total = f'{u_total:,}'.replace('.',',')
+    u_pnd = f'{u_pnd:,}'.replace('.',',')
+    
     context = {'users':users, 'packages':packages, 'gateways':gateways, 'trans':trans, 'message':message,
                 'a_users':a_users, 'i_users':i_users, 'a_packages':a_packages, 'i_packages':i_packages, 
                 'user_packages':user_packages, 'a_user_packages':a_user_packages, 'i_user_packages':i_user_packages,
                 'a_gateways':a_gateways, 'i_gateways':i_gateways, 'a_trans':a_trans, 'i_trans':i_trans, 'one_ui':one_ui,
                 'a_one_ui':a_one_ui, 'i_one_ui':i_one_ui, 'one_u_trans':one_u_trans, 'a_one_u_trans':a_one_u_trans,
-                'i_one_u_trans':i_one_u_trans
+                'i_one_u_trans':i_one_u_trans, 'u_total':u_total, 'u_pnd':u_pnd
                 }
     return render(request, 'account/dashboard.html', context)
 

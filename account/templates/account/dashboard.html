@@ -22,7 +22,7 @@
       <div class="d-none d-lg-block col-lg-2 text-light p-0 py-3 bg101 sideLinks position-fixed" style="z-index:99999;height:100vh;">
         <a href="{% url 'dashboard' %}" class="dboard"><i class="fas fa-chalkboard-teacher"></i> &nbsp; Dashboard</a>
         {% if request.user.is_admin %}<a href="{% url 'users' %}" class="usrs"><i class="fas fa-users"></i> &nbsp; Users</a>{% endif %}
-        <a href="{% url 'packages' %}" class="pkgs"><i class="fas fa-cubes"></i> &nbsp; {% if request.user.is_admin %}Packages{% else %} Investments{% endif %}</a>
+        <a href="{% if request.user.is_admin %}{% url 'packages' %}{% else %}{% url 'users_investment' %}{% endif %}" class="pkgs"><i class="fas fa-cubes"></i> &nbsp; {% if request.user.is_admin %}Packages{% else %} Investments{% endif %}</a>
         {% if request.user.is_admin %}<a href="{% url 'gateway' %}" class="gtwy"><i class="fas fa-money-check-alt"></i> &nbsp; Gateway</a>{% endif %}
         <a href="{% url 'transactions' %}" class="trnsc"><i class="fas fa-hand-holding-usd"></i> &nbsp;Transactions</a>
         <a href="{% url 'message' %}" class="msgs"><i class="fas fa-mail-bulk"></i> &nbsp; Messages</a>
@@ -36,7 +36,7 @@
         {% if request.user.is_admin %}
         <div class="bg101">
           <script defer src="https://www.livecoinwatch.com/static/lcw-widget.js"></script> 
-          <div class="livecoinwatch-widget-5" lcw-base="USD" lcw-color-tx="#999999" lcw-marquee-1="coins" lcw-marquee-2="movers" lcw-marquee-items="10" ></div>
+          <div class="livecoinwatch-widget-5" lcw-base="USD" lcw-color-tx="#fff" lcw-marquee-1="coins" lcw-marquee-2="movers" lcw-marquee-items="10" ></div>
         </div>
           <h4  class="fs-3 text-center fw-bold my-4">General Data</h4>
           <div class="row">
@@ -200,84 +200,108 @@
         </div>
           <h4  class="fs-3 text-center fw-bold my-4">My Dashboard</h4>
           <div class="row m-auto mb-2">
-            <div class="col-12 col-sm-6 col-md-4 mb-3">
-              <div class="d-flex align-items-center justify-content-center shadow w-100 m-auto" style="padding:48px 15px;" >
+            <div class="col-12 col-sm-6 col-md-4 mb-4">
+              <div class="d-flex align-items-center justify-content-center shadow w-100 m-auto position-relative" style="padding:48px 15px;" >
                 <div class="ms-0 me-3">
-                  <img width="80" src="https://img.icons8.com/papercut/80/coins.png" alt="coins"/>
+                  <img src="https://img.icons8.com/papercut/70/coins.png" alt="coins"/>
                 </div>
                 <div>
                   <h5 class="text-center fs-4">Total balance</h5>
-                  <p class="text-center fs-4">$ <span class="fw-bold fs-2">0</span></p>
+                  <p class="text-center fs-4">$ <span class="fw-bold fs-2" id="totalBal">{{ u_total }}</span></p>
+                </div>
+                <div class="position-absolute text-center text-danger ifm" style="bottom:5px;">
+                  <p class="lh-sm m-0 p-0 fw-bold">Insufficient funds</p>
+                  <p class="lh-sm m-0 p-0 fw-bold">min withdrawal is 500</p>
                 </div>
               </div>
             </div>
             <div class="col-12 col-sm-6 col-md-4 mb-3">
-              <table class="table table-striped package_reload package_reload2">
-                <thead>
-                  <tr class="text-center">
-                    <th scope="col" colspan="2" class="border text-center fs-5">My investments</th>
-                  </tr>
-                </thead>
-                <tbody class="text-center">
-                  <tr class="userList position-relative">
-                    <th scope="row" class="border-right">Active</th>
-                    <td class="border-right">{{ a_one_ui }}</td>
-                  </tr>
-
-                  <tr class="userList position-relative">
-                    <th scope="row" class="border-right">Inactive</th>
-                    <td class="border-right">{{ i_one_ui }}</td>
-                  </tr>
-
-                  <tr class="userList position-relative">
-                    <th scope="row" class="border-right">Total</th>
-                    <td class="border-right">{{ one_ui }}</td>
-                  </tr>
-                </tbody>
-              </table>
+              <div class="d-flex align-items-center justify-content-center shadow w-100 m-auto position-relative" style="padding:48px 15px;" >
+                <div class="ms-0 me-3">
+                  <img src="https://img.icons8.com/external-itim2101-flat-itim2101/70/external-money-business-and-financial-itim2101-flat-itim2101-1.png" alt="external-money-business-and-financial-itim2101-flat-itim2101-1"/>
+                </div>
+                <div>
+                  <h5 class="text-center fs-4">Investment profits</h5>
+                  <p class="text-center fs-4">$ <span class="fw-bold fs-2" id="profitBal">0</span></p>
+                </div>
+                <div class="position-absolute text-center text-danger ifm" style="bottom:5px;">
+                  <p class="lh-sm m-0 p-0 fw-bold">Insufficient funds</p>
+                  <p class="lh-sm m-0 p-0 fw-bold">min withdrawal is 500</p>
+                </div>
+              </div>
             </div>
             <div class="col-12 col-sm-6 col-md-4 mb-3">
-              <table class="table table-striped package_reload package_reload2">
-                <thead>
-                  <tr class="text-center">
-                    <th scope="col" colspan="2" class="border text-center fs-5">My transactions</th>
-                  </tr>
-                </thead>
-                <tbody class="text-center">
-                  {% comment %} {% for user in users %} {% endcomment %}
+              <div class="d-flex align-items-center justify-content-center shadow w-100 m-auto" style="padding:48px 15px;" >
+                <div class="ms-0 me-3">
+                  <img src="https://img.icons8.com/external-nawicon-flat-nawicon/70/external-transfer-finance-nawicon-flat-nawicon.png" alt="external-transfer-finance-nawicon-flat-nawicon"/>
+                </div>
+                <div>
+                  <h5 class="text-center fs-4">Pending...</h5>
+                  <p class="text-center fs-4">$ <span class="fw-bold fs-2">{{ u_pnd }}</span></p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+            <div class="row m-auto">
+              <div class="col-12 col-sm-6 col-md-4 mb-3">
+                <div class="mx-auto text-center">
+                  <button class="btn btn-primary btn-round btn-lg mb-4 shadow" id="wft">Withdraw from TOTAL</button>
+                  <button class="btn btn-primary btn-round btn-lg shadow" id="wfp">Withdraw from PROFIT</button>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6 col-md-4 mb-3">
+                <table class="table table-striped package_reload package_reload2">
+                  <thead>
+                    <tr class="text-center">
+                      <th scope="col" colspan="2" class="border text-center fs-5">My investments</th>
+                    </tr>
+                  </thead>
+                  <tbody class="text-center">
                     <tr class="userList position-relative">
-                      <th scope="row" class="border-right">Confirmed</th>
-                      <td class="border-right">{{ a_one_u_trans }}</td>
+                      <th scope="row" class="border-right">Active</th>
+                      <td class="border-right">{{ a_one_ui }}</td>
                     </tr>
 
                     <tr class="userList position-relative">
-                      <th scope="row" class="border-right">Pending</th>
-                      <td class="border-right">{{ i_one_u_trans }}</td>
+                      <th scope="row" class="border-right">Inactive</th>
+                      <td class="border-right">{{ i_one_ui }}</td>
                     </tr>
 
                     <tr class="userList position-relative">
                       <th scope="row" class="border-right">Total</th>
-                      <td class="border-right">{{ one_u_trans }}</td>
+                      <td class="border-right">{{ one_ui }}</td>
                     </tr>
-                  {% comment %} {% endfor %} {% endcomment %}
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div class="row m-auto">
-            <div class="col-12 col-sm-6 col-md-4 mb-3">
-              <div class="d-flex align-items-center justify-content-center shadow w-100 m-auto" style="padding:48px 15px;" >
-                <div class="ms-0 me-3">
-                  <img width="80" src="https://img.icons8.com/external-itim2101-flat-itim2101/80/external-money-business-and-financial-itim2101-flat-itim2101-1.png" alt="external-money-business-and-financial-itim2101-flat-itim2101-1"/>
-                </div>
-                <div>
-                  <h5 class="text-center fs-4">Investment profits</h5>
-                  <p class="text-center fs-4">$ <span class="fw-bold fs-2">0</span></p>
-                </div>
+                  </tbody>
+                </table>
               </div>
-            </div>
-            <div class="col-12 col-sm-6 col-md-8 mb-3">
-            </div>
+              <div class="col-12 col-sm-6 col-md-4 mb-3">
+                <table class="table table-striped package_reload package_reload2">
+                  <thead>
+                    <tr class="text-center">
+                      <th scope="col" colspan="2" class="border text-center fs-5">My transactions</th>
+                    </tr>
+                  </thead>
+                  <tbody class="text-center">
+                    {% comment %} {% for user in users %} {% endcomment %}
+                      <tr class="userList position-relative">
+                        <th scope="row" class="border-right">Confirmed</th>
+                        <td class="border-right">{{ a_one_u_trans }}</td>
+                      </tr>
+
+                      <tr class="userList position-relative">
+                        <th scope="row" class="border-right">Pending</th>
+                        <td class="border-right">{{ i_one_u_trans }}</td>
+                      </tr>
+
+                      <tr class="userList position-relative">
+                        <th scope="row" class="border-right">Total</th>
+                        <td class="border-right">{{ one_u_trans }}</td>
+                      </tr>
+                    {% comment %} {% endfor %} {% endcomment %}
+                  </tbody>
+                </table>
+              </div>
           </div>
         {% endif %}
       </div>
@@ -285,7 +309,65 @@
     </div>
   </div>
 
-  {% block modal %}{% endblock %}
+  {% block modal %}
+  {% if not request.user.is_admin %}
+  <div id="myModal1" class="mymodal" style="padding-top:70px;">
+    <!-- Modal content -->
+    <div class="mymodal-content p-1">
+      <div class="mymodal-header mb-3">
+        <span id="closeModal" class=" close fs-3">&times;</span>
+        <h4 class="fs-5 border-bottom fw-bold pt-4 pb-2 px-4 withdrawFrom">Withdraw</h4>
+      </div>
+      <div class="mymodal-body px-4 pb-4 pt-0">
+        <form method="POST" id="withdrawalForm">
+          {% csrf_token %}
+          <div class="mb-4">
+            <div class="mb-4 d-flex justify-content-around">
+              <div class="me-5">
+                <input type="radio" id="ww" name="wdc" value="Wallet" checked id="rb1">
+                <label for="ww" class="ps-1 mb-0">Wallet</label>
+              </div>
+              <div>
+                <input type="radio" id="bw" name="wdc" value="Bank Account">
+                <label for="bw" class="ps-1 mb-0">Bank Account</label>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="chkme">Wallet </label><br>
+              <input type="text" class="w-100 p-2" value="" id="wmethd" name="wpay_method" placeholder="enter payment method" required>
+            </div>
+  
+            <div class="mb-3">
+              <label class="chkme">Address/Username </label><br>
+              <input type="text" class="w-100 p-2" value="" id="waddr" name="wpay_address" placeholder="enter payment address" required>
+            </div>
+
+            <div class="mb-3">
+              <label>Amount </label><br>
+              <input type="number" class="w-100 p-2" value="" id="wamnt" name="wpay_address" placeholder="enter amount" required>
+              <span class="fs-6 text-danger minAmnt">min=500 &nbsp; &nbsp; &nbsp; max=100,000</span>
+            </div>
+  
+            <div class="single_billing_inp mx-auto mb-3">
+              <div class="">
+                <p class="p-0 m-0 fs-6 text-warning lh-sm">Make sure the above information is correct. 
+                  The transfer is authomatic and Affluence Investment Company
+                  will not be responsibly for lost of funds due to the provision
+                  of wrong payment details.
+                </p>
+              </div>
+            </div>
+  
+            <div class="mb-3 mt-4 text-center">
+              <button class="invest-bg101 border-0 outline-0 w-100 cfmw">Confirm Withrawal</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  {% endblock %}
   {% block modal3 %}{% endblock %}
   {% block footer %}{% endblock footer %}
 {% endblock content %}

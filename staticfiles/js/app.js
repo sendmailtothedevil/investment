@@ -433,7 +433,6 @@
         })
     })
 
-
     $('.delui').click(function(e){
         e.preventDefault()      
         var ui_id1 = $(this).closest('.uiList').find('.ui_id').val()
@@ -486,6 +485,62 @@
     })
 
 
+    let ifm = $('.ifm')
+    let wf = $('.withdrawFrom')
+    $('#wft').click(function() {
+        wf[0].innerHTML = "Withdraw from TOTAL"
+        if($('#totalBal').text() < 500){
+            $(ifm[0]).css({ display: 'block' })
+            $(ifm[0]).fadeOut(20000)
+        } else {
+            $('#myModal1').css({ display: 'block' })
+            $(ifm[0]).css({ display: 'none' })
+        }
+    })
+
+    $('#wfp').click(function() {
+        wf[0].innerHTML = "Withdraw from PROFIT"
+        if($('#profitBal').text() < 500){
+            $(ifm[1]).css({ display: 'block' })
+            $(ifm[1]).fadeOut(20000)
+        } else {
+            $('#myModal1').css({ display: 'block' })
+            $(ifm[1]).css({ display: 'none' })
+        }
+    })
+
+    let minAmnt = $('.minAmnt')
+    minAmnt[0].innerHTML = ''
+    let totalBal1 = $('#totalBal').text()
+    $('#wamnt').on('input', function(){
+
+        let totalBal = parseFloat(totalBal1.replace(/,/g, ''));
+
+        if($('#wamnt').val() < 500) {
+            minAmnt[0].innerHTML = 'min=500,   max=100,000'
+            $('.cfmw').css({ display: 'none' })
+            return false
+        } else if($('#wamnt').val() > totalBal){
+            minAmnt[0].innerHTML = 'Insufficient funds'
+            $('.cfmw').css({ display: 'none' })
+        } else {
+            minAmnt[0].innerHTML = ''
+            $('.cfmw').css({ display: 'block' })
+        }
+    })
+
+    $("input:radio").change(function () {
+        if ($('#bw').is(":checked")) {
+            document.getElementsByClassName('chkme')[0].innerHTML = 'Bank name'
+            document.getElementsByClassName('chkme')[1].innerHTML = 'Account number'
+        } else {
+            document.getElementsByClassName('chkme')[0].innerHTML = 'Wallet'
+            document.getElementsByClassName('chkme')[1].innerHTML = 'Address/Username'
+
+        }
+    });
+
+
 
 
 
@@ -532,6 +587,7 @@
         $('#myModal2').css({ display: 'none' })
         $('#myModal4').css({ display: 'none' })
         $('#myModal5').css({ display: 'none' })
+        $('#myModal1').css({ display: 'none' })
     })
 
 
@@ -543,6 +599,10 @@
 
         if (e.target.id === 'myModal4') {
             $('#myModal4').css({ display: 'none' })
+        }
+
+        if (e.target.id === 'myModal1') {
+            $('#myModal1').css({ display: 'none' })
         }
 
         // for (let p = 0; p < pkgmodal.length; p++) {
