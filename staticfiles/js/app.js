@@ -484,6 +484,51 @@
         })
     })
 
+    $('.delwitdrw').click(function(e){
+        e.preventDefault()      
+        var wd_id1 = $(this).closest('.witdrawalsList').find('.wd_id').val()
+        var token = $('input[name=csrfmiddlewaretoken]').val()
+        let wd_id = Number(wd_id1)
+
+        console.log('hello')
+
+        $.ajax({
+            method: 'POST',
+            url: '/account/delete-withdrawals/',
+            data: {'wd_id':wd_id, csrfmiddlewaretoken: token},
+            success: function(response) {
+                alertify.message(response.status)
+                window.location.reload()
+            }
+        })
+    })
+
+
+    let totalBal = $('#totalBal').text()
+    let bplan = document.getElementById('bPlan').value
+    let sPlan = document.getElementById('sPlan').value
+    let pPlan = document.getElementById('pPlan').value
+    let uPlan = document.getElementById('uPlan').value
+    
+    console.log(totalBal)
+    console.log(bplan)
+    console.log(pPlan)
+    console.log(uPlan)
+
+
+
+
+    
+    
+    
+
+
+
+
+
+
+
+
 
     let ifm = $('.ifm')
     let wf = $('.withdrawFrom')
@@ -539,6 +584,8 @@
 
         }
     });
+
+    
 
 
 

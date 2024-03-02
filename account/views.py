@@ -112,55 +112,90 @@ def signup_signin(request):
 
 @login_required(login_url='login')
 def dashboard(request):
-    users = User.objects.all().count()
-    a_users = User.objects.filter(is_active=True).count()
-    i_users = User.objects.filter(is_active=False).count()
-    packages = Package.objects.filter().count()
-    a_packages = Package.objects.filter(status=True).count()
-    i_packages = Package.objects.filter(status=False).count()
-    user_packages = UserPackage.objects.all().count()
-    a_user_packages = UserPackage.objects.filter(status=True).count()
-    i_user_packages = UserPackage.objects.filter(status=False).count()
-    gateways = Gateway.objects.filter().count()
-    a_gateways = Gateway.objects.filter(status=True).count()
-    i_gateways = Gateway.objects.filter(status=False).count()
-    trans = Transaction.objects.filter().count()
-    a_trans = Transaction.objects.filter(status=True).count()
-    i_trans = Transaction.objects.filter(status=False).count()
-    message = ContactUsMessage.objects.filter().count()
-    
-    one_ui = UserPackage.objects.filter(user=request.user).count()
-    a_one_ui = UserPackage.objects.filter(user=request.user, status=True).count()
-    i_one_ui = UserPackage.objects.filter(user=request.user, status=False).count()
-    one_u_trans = Transaction.objects.filter(user=request.user).count()
-    a_one_u_trans = Transaction.objects.filter(user=request.user, status=True).count()
-    i_one_u_trans = Transaction.objects.filter(user=request.user, status=False).count()
-    
-    one_ui_blnc = UserPackage.objects.filter(user=request.user, status=True)
-    one_ui_pnd = UserPackage.objects.filter(user=request.user, status=False)
-    
-    u_total = 0
-    for u in one_ui_blnc:
-        u_amount = int(u.amount[1:])
-        u_total += u_amount
-    
-    u_pnd = 0
-    for u in one_ui_pnd:
-        u_amount = int(u.amount[1:])
-        u_pnd += u_amount
-        f'{u_pnd:,}'.replace('.',',')
+    if request.method == "POST":
+        user = request.user
+        wpay_method = request.POST.get('wdc')
+        wpay_name = request.POST.get('wpay_method')
+        wpay_address = request.POST.get('wpay_address')
+        wpay_amount = request.POST.get('wpay_amount')
+        
+        new_widrawals = Withdrawal.objects.create(
+            user = user,
+            w_method = wpay_method,
+            w_method_name = wpay_name,
+            w_method_address = wpay_address,
+            w_amount = wpay_amount
+        )
+        new_widrawals.save()
+        
+        messages.success(request, "Withrawal request Successfull")
+        return redirect('withdrawals')
+    else:
+        users = User.objects.all().count()
+        a_users = User.objects.filter(is_active=True).count()
+        i_users = User.objects.filter(is_active=False).count()
+        packages = Package.objects.filter().count()
+        a_packages = Package.objects.filter(status=True).count()
+        i_packages = Package.objects.filter(status=False).count()
+        user_packages = UserPackage.objects.all().count()
+        a_user_packages = UserPackage.objects.filter(status=True).count()
+        i_user_packages = UserPackage.objects.filter(status=False).count()
+        gateways = Gateway.objects.filter().count()
+        a_gateways = Gateway.objects.filter(status=True).count()
+        i_gateways = Gateway.objects.filter(status=False).count()
+        trans = Transaction.objects.filter().count()
+        a_trans = Transaction.objects.filter(status=True).count()
+        i_trans = Transaction.objects.filter(status=False).count()
+        message = ContactUsMessage.objects.filter().count()
+        
+        one_ui = UserPackage.objects.filter(user=request.user).count()
+        a_one_ui = UserPackage.objects.filter(user=request.user, status=True).count()
+        i_one_ui = UserPackage.objects.filter(user=request.user, status=False).count()
+        one_u_trans = Transaction.objects.filter(user=request.user).count()
+        a_one_u_trans = Transaction.objects.filter(user=request.user, status=True).count()
+        i_one_u_trans = Transaction.objects.filter(user=request.user, status=False).count()
+        
+        one_ui_blnc = UserPackage.objects.filter(user=request.user, status=True)
+        one_ui_pnd = UserPackage.objects.filter(user=request.user, status=False)
+        
+        u_total = 0
+        u_total2 = 0
+        new_t_bal = 0
+        for u in one_ui_blnc:
+            u_amount = int(u.amount[1:])
+            u_total += u_amount
+            u_total2 += u_amount
+        
+        u_pnd = 0
+        u_pnd2 = 0
+        for u in one_ui_pnd:
+            u_amount = int(u.amount[1:])
+            u_pnd += u_amount
+            u_pnd2 += u_amount
 
-    u_total = f'{u_total:,}'.replace('.',',')
-    u_pnd = f'{u_pnd:,}'.replace('.',',')
+        u_total = f'{u_total:,}'.replace('.',',')
+        u_pnd = f'{u_pnd:,}'.replace('.',',')
+        
+        
+        one_w_amount = Withdrawal.objects.filter(user=request.user)
+        auw = 0
+        for w in one_w_amount:
+            uw = int(w.w_amount)
+            auw += uw
+        
+        if u_total2 != 0:
+            new_t_bal = int(u_total2) - int(auw)
+        new_t_bal = f'{new_t_bal:,}'.replace('.',',')
+
     
-    context = {'users':users, 'packages':packages, 'gateways':gateways, 'trans':trans, 'message':message,
-                'a_users':a_users, 'i_users':i_users, 'a_packages':a_packages, 'i_packages':i_packages, 
-                'user_packages':user_packages, 'a_user_packages':a_user_packages, 'i_user_packages':i_user_packages,
-                'a_gateways':a_gateways, 'i_gateways':i_gateways, 'a_trans':a_trans, 'i_trans':i_trans, 'one_ui':one_ui,
-                'a_one_ui':a_one_ui, 'i_one_ui':i_one_ui, 'one_u_trans':one_u_trans, 'a_one_u_trans':a_one_u_trans,
-                'i_one_u_trans':i_one_u_trans, 'u_total':u_total, 'u_pnd':u_pnd
-                }
-    return render(request, 'account/dashboard.html', context)
+        context = {'users':users, 'packages':packages, 'gateways':gateways, 'trans':trans, 'message':message,
+                    'a_users':a_users, 'i_users':i_users, 'a_packages':a_packages, 'i_packages':i_packages, 
+                    'user_packages':user_packages, 'a_user_packages':a_user_packages, 'i_user_packages':i_user_packages,
+                    'a_gateways':a_gateways, 'i_gateways':i_gateways, 'a_trans':a_trans, 'i_trans':i_trans, 'one_ui':one_ui,
+                    'a_one_ui':a_one_ui, 'i_one_ui':i_one_ui, 'one_u_trans':one_u_trans, 'a_one_u_trans':a_one_u_trans,
+                    'i_one_u_trans':i_one_u_trans, 'u_total':u_total, 'u_pnd':u_pnd, 'new_t_bal':new_t_bal
+                    }
+        return render(request, 'account/dashboard.html', context)
 
 
 @login_required(login_url='login')
@@ -363,6 +398,25 @@ def deactivate_ui(request):
             ui.save()
         
             return JsonResponse({'status':"Investment deactivated successfully"})
+        else:
+            return JsonResponse({'status':"An error occured"})
+
+
+@login_required(login_url='login')
+def withdrawals(request):
+    withdrawals = Withdrawal.objects.all()
+
+    context = {'withdrawals':withdrawals}
+    return render(request, 'account/withdrawals.html', context)
+
+
+def delete_withdrawals(request):
+    if request.user.is_admin:
+        if request.method == 'POST':
+            wd_id = request.POST.get('wd_id')
+            Withdrawal.objects.get(pk=wd_id).delete()
+            
+            return JsonResponse({'status':"Withdrawals deleted successfully"})
         else:
             return JsonResponse({'status':"An error occured"})
 

@@ -25,8 +25,8 @@
         <a href="{% if request.user.is_admin %}{% url 'packages' %}{% else %}{% url 'users_investment' %}{% endif %}" class="pkgs"><i class="fas fa-cubes"></i> &nbsp; {% if request.user.is_admin %}Packages{% else %} Investments{% endif %}</a>
         {% if request.user.is_admin %}<a href="{% url 'gateway' %}" class="gtwy"><i class="fas fa-money-check-alt"></i> &nbsp; Gateway</a>{% endif %}
         <a href="{% url 'transactions' %}" class="trnsc"><i class="fas fa-hand-holding-usd"></i> &nbsp;Transactions</a>
+        <a href="{% url 'withdrawals' %}" class="wdr"><i class="fas fa-wallet"></i> &nbsp; Withdrawals</a>
         <a href="{% url 'message' %}" class="msgs"><i class="fas fa-mail-bulk"></i> &nbsp; Messages</a>
-        <a href="{% url 'settings' %}" class="stgs"><i class="fas fa-cogs"></i> &nbsp; Settings</a>
         <a href="{% url 'logout' %}" class=""><i class="fas fa-sign-out-alt"></i> &nbsp; Logout</a>
       </div>
       
@@ -207,7 +207,7 @@
                 </div>
                 <div>
                   <h5 class="text-center fs-4">Total balance</h5>
-                  <p class="text-center fs-4">$ <span class="fw-bold fs-2" id="totalBal">{{ u_total }}</span></p>
+                  <p class="text-center fs-4">$ <span class="fw-bold fs-2" id="totalBal">{% if new_t_bal == 0 %}{{ u_total }}{% else %}{{ new_t_bal }}{% endif %}</span></p>
                 </div>
                 <div class="position-absolute text-center text-danger ifm" style="bottom:5px;">
                   <p class="lh-sm m-0 p-0 fw-bold">Insufficient funds</p>
@@ -243,66 +243,70 @@
             </div>
           </div>
 
-            <div class="row m-auto">
-              <div class="col-12 col-sm-6 col-md-4 mb-3">
-                <div class="mx-auto text-center">
-                  <button class="btn btn-primary btn-round btn-lg mb-4 shadow" id="wft">Withdraw from TOTAL</button>
-                  <button class="btn btn-primary btn-round btn-lg shadow" id="wfp">Withdraw from PROFIT</button>
-                </div>
+          <div class="row m-auto">
+            <div class="col-12 col-sm-6 col-md-4 mb-3">
+              <div class="mx-auto text-center">
+                <button class="btn btn-primary btn-round btn-lg mb-4 shadow" id="wft">Withdraw from TOTAL</button>
+                <button class="btn btn-primary btn-round btn-lg shadow" id="wfp">Withdraw from PROFIT</button>
               </div>
-              <div class="col-12 col-sm-6 col-md-4 mb-3">
-                <table class="table table-striped package_reload package_reload2">
-                  <thead>
-                    <tr class="text-center">
-                      <th scope="col" colspan="2" class="border text-center fs-5">My investments</th>
-                    </tr>
-                  </thead>
-                  <tbody class="text-center">
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 mb-3">
+              <table class="table table-striped package_reload package_reload2">
+                <thead>
+                  <tr class="text-center">
+                    <th scope="col" colspan="2" class="border text-center fs-5">My investments</th>
+                  </tr>
+                </thead>
+                <tbody class="text-center">
+                  <tr class="userList position-relative">
+                    <th scope="row" class="border-right">Active</th>
+                    <td class="border-right">{{ a_one_ui }}</td>
+                  </tr>
+
+                  <tr class="userList position-relative">
+                    <th scope="row" class="border-right">Inactive</th>
+                    <td class="border-right">{{ i_one_ui }}</td>
+                  </tr>
+
+                  <tr class="userList position-relative">
+                    <th scope="row" class="border-right">Total</th>
+                    <td class="border-right">{{ one_ui }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 mb-3">
+              <table class="table table-striped package_reload package_reload2">
+                <thead>
+                  <tr class="text-center">
+                    <th scope="col" colspan="2" class="border text-center fs-5">My transactions</th>
+                  </tr>
+                </thead>
+                <tbody class="text-center">
+                  {% comment %} {% for user in users %} {% endcomment %}
                     <tr class="userList position-relative">
-                      <th scope="row" class="border-right">Active</th>
-                      <td class="border-right">{{ a_one_ui }}</td>
+                      <th scope="row" class="border-right">Confirmed</th>
+                      <td class="border-right">{{ a_one_u_trans }}</td>
                     </tr>
 
                     <tr class="userList position-relative">
-                      <th scope="row" class="border-right">Inactive</th>
-                      <td class="border-right">{{ i_one_ui }}</td>
+                      <th scope="row" class="border-right">Pending</th>
+                      <td class="border-right">{{ i_one_u_trans }}</td>
                     </tr>
 
                     <tr class="userList position-relative">
                       <th scope="row" class="border-right">Total</th>
-                      <td class="border-right">{{ one_ui }}</td>
+                      <td class="border-right">{{ one_u_trans }}</td>
                     </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="col-12 col-sm-6 col-md-4 mb-3">
-                <table class="table table-striped package_reload package_reload2">
-                  <thead>
-                    <tr class="text-center">
-                      <th scope="col" colspan="2" class="border text-center fs-5">My transactions</th>
-                    </tr>
-                  </thead>
-                  <tbody class="text-center">
-                    {% comment %} {% for user in users %} {% endcomment %}
-                      <tr class="userList position-relative">
-                        <th scope="row" class="border-right">Confirmed</th>
-                        <td class="border-right">{{ a_one_u_trans }}</td>
-                      </tr>
-
-                      <tr class="userList position-relative">
-                        <th scope="row" class="border-right">Pending</th>
-                        <td class="border-right">{{ i_one_u_trans }}</td>
-                      </tr>
-
-                      <tr class="userList position-relative">
-                        <th scope="row" class="border-right">Total</th>
-                        <td class="border-right">{{ one_u_trans }}</td>
-                      </tr>
-                    {% comment %} {% endfor %} {% endcomment %}
-                  </tbody>
-                </table>
-              </div>
-          </div>
+                  {% comment %} {% endfor %} {% endcomment %}
+                </tbody>
+              </table>
+            </div>
+            <input value="1.03" id="bPlan">
+            <input value="1.09" id="sPlan">
+            <input value="1.16" id="pPlan">
+            <input value="1.25" id="uPlan">
+        </div>
         {% endif %}
       </div>
       {% endblock %}
@@ -345,7 +349,7 @@
 
             <div class="mb-3">
               <label>Amount </label><br>
-              <input type="number" class="w-100 p-2" value="" id="wamnt" name="wpay_address" placeholder="enter amount" required>
+              <input type="number" class="w-100 p-2" value="" id="wamnt" name="wpay_amount" placeholder="enter amount" required>
               <span class="fs-6 text-danger minAmnt">min=500 &nbsp; &nbsp; &nbsp; max=100,000</span>
             </div>
   

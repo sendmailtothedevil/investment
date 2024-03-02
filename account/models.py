@@ -104,7 +104,7 @@ class Transaction(models.Model):
 class Withdrawal(models.Model):
     slug = AutoSlugField(populate_from='w_method', unique=True, null=False, default=None)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    w_method = models.CharField(max_length=200, null=False, blank=False)
+    w_method = models.CharField(max_length=200, null=True, blank=True)
     w_method_name = models.CharField(max_length=200, null=False, blank=False)
     w_method_address = models.CharField(max_length=200, null=False, blank=False)
     w_amount = models.CharField(max_length=200, null=False, blank=False)

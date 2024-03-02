@@ -1,0 +1,64 @@
+{% extends "account/dashboard.html" %}
+{% block css %}
+  <style>
+    .wdr {background-color:#1c07da;}
+  </style>
+{% endblock %}
+
+{% block data %}
+  <div class="d-none d-lg-block col-lg-2"></div>
+  <div class="col-12 col-lg-10 pt-0 mt-3 mt-lg-0">
+    <div class="SHOW">
+      <div class="position-relative ">
+        <h4  class="fs-3 text-center fw-bold mb-5">{% if request.user.is_admin %}Withdrawals Data{% else %}My Withdrawals{% endif %}</h4>
+        <table class="table table-striped package_reload">
+          <thead>
+            <tr class="text-center">
+              <th scope="col" class="border">#</th>
+              <th scope="col" class="border">User</th>
+              <th scope="col" class="border">Withdraw method</th>
+              <th scope="col" class="border">Wallet/Bank</th>
+              <th scope="col" class="border">Account/Address</th>
+              <th scope="col" class="border">Amount</th>
+              <th scope="col" class="border">Status</th>
+              {% if request.user.is_admin %}<th scope="col" class="border" colspan="2">Action buttons</th>{% endif %}
+            </tr>
+          </thead>
+          <tbody class="text-center">
+            {% for witdrw in withdrawals %}
+            {% csrf_token %}
+                {% if request.user.is_admin or request.user == witdrw.user %}
+                  <tr class="witdrawalsList position-relative" style="height:40px;">
+                    <th scope="row" class="pb-0 border-right">{{ forloop.counter }}</th>
+                    <td class="pb-0 border-right">{{witdrw.user}}</td>
+                    <td class="pb-0 border-right">{{witdrw.w_method}}</td>
+                    <td class="pb-0 border-right">{{witdrw.w_method_name}}</td>
+                    <td class="pb-0 border-right">{{witdrw.w_method_address}}</td>
+                    <td class="pb-0 border-right">${{witdrw.w_amount}}</td>
+                    <td class="pb-0 border-right">{% if witdrw.status %}Confirmed{% else %}Pending...{% endif %}</td>
+                    {% if request.user.is_admin %}
+                      <td class="text-center actbtn pe-0 pb-0 border-right">
+                        {% comment %} <span><i class=" fas fa-check-circle text-active fs-5 mb-3 me-2 confirmwitdrw"></i></span> {% endcomment %}
+                        <span><i class=" fas fa-trash-alt text-danger fs-5 mb-3 delwitdrw"></i></span>
+                      </td>
+                      <td class="position-absolute border-0 pb-0" style="left:0;top:0;"><input type="hidden" value="{{ witdrw.id }}" class="wd_id"></td>
+                    {% endif %}
+                  </tr>
+                {% endif %}
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block modal %}
+
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}
+

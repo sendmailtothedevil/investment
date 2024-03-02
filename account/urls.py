@@ -14,6 +14,7 @@ urlpatterns = [
     path('dashboard/users', views.users, name='users'),
     path('dashboard/gateway', views.gateway, name='gateway'),
     path('dashboard/transactions', views.transactions, name='transactions'),
+    path('dashboard/withdrawals', views.withdrawals, name='withdrawals'),
     path('dashboard/settings', views.settings, name='settings'),
 
     path('delete-user/', views.delete_user, name='delete_user'),
@@ -26,6 +27,7 @@ urlpatterns = [
     path('delete-ui/', views.delete_ui, name='delete_ui'),
     path('activate-ui/', views.activate_ui, name='activate_ui'),
     path('deactivate-ui/', views.deactivate_ui, name='deactivate_ui'),
+    path('delete-withdrawals/', views.delete_withdrawals, name='delete_withdrawals'),
 ]
 
 
