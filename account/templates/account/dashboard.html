@@ -222,7 +222,7 @@
                 </div>
                 <div>
                   <h5 class="text-center fs-4">Investment profits</h5>
-                  <p class="text-center fs-4">$ <span class="fw-bold fs-2" id="profitBal">0</span></p>
+                  <p class="text-center fs-4">$ <span class="fw-bold fs-2" id="profitBal">{% if new_ip == 0 %}{{ tip }}{% else %}{{ new_ip }}{% endif %}</span></p>
                 </div>
                 <div class="position-absolute text-center text-danger ifm" style="bottom:5px;">
                   <p class="lh-sm m-0 p-0 fw-bold">Insufficient funds</p>
@@ -302,10 +302,6 @@
                 </tbody>
               </table>
             </div>
-            <input value="1.03" id="bPlan">
-            <input value="1.09" id="sPlan">
-            <input value="1.16" id="pPlan">
-            <input value="1.25" id="uPlan">
         </div>
         {% endif %}
       </div>
@@ -324,6 +320,8 @@
       </div>
       <div class="mymodal-body px-4 pb-4 pt-0">
         <form method="POST" id="withdrawalForm">
+          <button type=submit onclick="return false;" style="display:none;"></button>
+          <input type="hidden" value="" id="wfpt" name="wfpt">
           {% csrf_token %}
           <div class="mb-4">
             <div class="mb-4 d-flex justify-content-around">

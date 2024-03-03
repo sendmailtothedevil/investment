@@ -16,6 +16,7 @@
             <tr class="text-center">
               <th scope="col" class="border">#</th>
               <th scope="col" class="border">User</th>
+              <th scope="col" class="border">Withdraw from</th>
               <th scope="col" class="border">Withdraw method</th>
               <th scope="col" class="border">Wallet/Bank</th>
               <th scope="col" class="border">Account/Address</th>
@@ -31,6 +32,7 @@
                   <tr class="witdrawalsList position-relative" style="height:40px;">
                     <th scope="row" class="pb-0 border-right">{{ forloop.counter }}</th>
                     <td class="pb-0 border-right">{{witdrw.user}}</td>
+                    <td class="pb-0 border-right">{% if witdrw.wfpt == 'PROFIT' %}Profit{% else %}Total{% endif %}</td>
                     <td class="pb-0 border-right">{{witdrw.w_method}}</td>
                     <td class="pb-0 border-right">{{witdrw.w_method_name}}</td>
                     <td class="pb-0 border-right">{{witdrw.w_method_address}}</td>

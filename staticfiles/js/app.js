@@ -504,16 +504,16 @@
     })
 
 
-    let totalBal = $('#totalBal').text()
-    let bplan = document.getElementById('bPlan').value
-    let sPlan = document.getElementById('sPlan').value
-    let pPlan = document.getElementById('pPlan').value
-    let uPlan = document.getElementById('uPlan').value
-    
-    console.log(totalBal)
-    console.log(bplan)
-    console.log(pPlan)
-    console.log(uPlan)
+    // let totalBal = $('#totalBal').text()
+    // let bplan = document.getElementById('bPlan').value
+    // let sPlan = document.getElementById('sPlan').value
+    // let pPlan = document.getElementById('pPlan').value
+    // let uPlan = document.getElementById('uPlan').value
+
+    // console.log(totalBal)
+    // console.log(bplan)
+    // console.log(pPlan)
+    // console.log(uPlan)
 
 
 
@@ -539,6 +539,7 @@
             $(ifm[0]).fadeOut(20000)
         } else {
             $('#myModal1').css({ display: 'block' })
+            document.getElementById('wfpt').value = ''
             $(ifm[0]).css({ display: 'none' })
         }
     })
@@ -550,6 +551,7 @@
             $(ifm[1]).fadeOut(20000)
         } else {
             $('#myModal1').css({ display: 'block' })
+            document.getElementById('wfpt').value = 'PROFIT'
             $(ifm[1]).css({ display: 'none' })
         }
     })
@@ -557,12 +559,16 @@
     let minAmnt = $('.minAmnt')
     minAmnt[0].innerHTML = ''
     let totalBal1 = $('#totalBal').text()
-    $('#wamnt').on('input', function(){
+    let profitBal1 = $('#profitBal').text()
+    let profitBal2 = profitBal1.toString();
+    let profitBal3 = profitBal2.slice(0, -3);
+    let profitBal4 = parseInt(profitBal3);
 
+    $('#wamnt').on('input', function(){
         let totalBal = parseFloat(totalBal1.replace(/,/g, ''));
 
         if($('#wamnt').val() < 500) {
-            minAmnt[0].innerHTML = 'min=500,   max=100,000'
+            minAmnt[0].innerHTML = 'min=500,   max=500,000'
             $('.cfmw').css({ display: 'none' })
             return false
         } else if($('#wamnt').val() > totalBal){
@@ -571,6 +577,17 @@
         } else {
             minAmnt[0].innerHTML = ''
             $('.cfmw').css({ display: 'block' })
+        }
+
+        let wfpt = document.getElementById('wfpt').value
+        if(wfpt == 'PROFIT') {
+            if($('#wamnt').val() > profitBal4){
+                minAmnt[0].innerHTML = 'Insufficient funds'
+                $('.cfmw').css({ display: 'none' })
+            } else {
+                minAmnt[0].innerHTML = ''
+                $('.cfmw').css({ display: 'block' })
+            }
         }
     })
 

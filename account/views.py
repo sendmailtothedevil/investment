@@ -118,13 +118,15 @@ def dashboard(request):
         wpay_name = request.POST.get('wpay_method')
         wpay_address = request.POST.get('wpay_address')
         wpay_amount = request.POST.get('wpay_amount')
+        wfpt = request.POST.get('wfpt')
         
         new_widrawals = Withdrawal.objects.create(
             user = user,
             w_method = wpay_method,
             w_method_name = wpay_name,
             w_method_address = wpay_address,
-            w_amount = wpay_amount
+            w_amount = wpay_amount,
+            wfpt = wfpt
         )
         new_widrawals.save()
         
@@ -165,6 +167,25 @@ def dashboard(request):
             u_amount = int(u.amount[1:])
             u_total += u_amount
             u_total2 += u_amount
+            
+        def percentage(percent, whole):
+            return (percent * whole) / 100.0
+
+        sip = 0
+        tip = 0
+        csip = 0
+        tip2 = 0
+        new_ip = 0
+        new_ip2 = 0
+        for ip in one_ui_blnc:
+            sip = ip.profit
+            i_amt = ip.amount
+            new_sip = float(sip[:4])
+            new_i_amt = int(i_amt[1:])
+            csip = percentage(new_sip, new_i_amt)
+            tip2 += csip
+            tip = round(tip2, 2)       
+        
         
         u_pnd = 0
         u_pnd2 = 0
@@ -179,13 +200,37 @@ def dashboard(request):
         
         one_w_amount = Withdrawal.objects.filter(user=request.user)
         auw = 0
+        auw2 = 0
+        wfip = ''
         for w in one_w_amount:
             uw = int(w.w_amount)
-            auw += uw
+            if w.wfpt != 'PROFIT':
+                auw += uw
+            else:
+                auw2 += uw
+            # wfip = w.wfpt
         
+        
+        # if wfip != 'PROFIT':
         if u_total2 != 0:
             new_t_bal = int(u_total2) - int(auw)
         new_t_bal = f'{new_t_bal:,}'.replace('.',',')
+            
+        # if wfip == 'PROFIT':
+        if tip != 0:
+            auw2 = float(auw2)
+            new_ip2 = float(tip) - float(auw2)
+            new_ip = round(new_ip2, 2)
+
+        
+        
+        print('===================')
+        print(wfip)
+        print(u_total2)
+        print(auw)
+        print(tip)
+        print(auw2)
+        print('===================')
 
     
         context = {'users':users, 'packages':packages, 'gateways':gateways, 'trans':trans, 'message':message,
@@ -193,7 +238,8 @@ def dashboard(request):
                     'user_packages':user_packages, 'a_user_packages':a_user_packages, 'i_user_packages':i_user_packages,
                     'a_gateways':a_gateways, 'i_gateways':i_gateways, 'a_trans':a_trans, 'i_trans':i_trans, 'one_ui':one_ui,
                     'a_one_ui':a_one_ui, 'i_one_ui':i_one_ui, 'one_u_trans':one_u_trans, 'a_one_u_trans':a_one_u_trans,
-                    'i_one_u_trans':i_one_u_trans, 'u_total':u_total, 'u_pnd':u_pnd, 'new_t_bal':new_t_bal
+                    'i_one_u_trans':i_one_u_trans, 'u_total':u_total, 'u_pnd':u_pnd, 'new_t_bal':new_t_bal, 'tip':tip,
+                    'new_ip':new_ip,
                     }
         return render(request, 'account/dashboard.html', context)
 

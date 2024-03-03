@@ -108,6 +108,7 @@ class Withdrawal(models.Model):
     w_method_name = models.CharField(max_length=200, null=False, blank=False)
     w_method_address = models.CharField(max_length=200, null=False, blank=False)
     w_amount = models.CharField(max_length=200, null=False, blank=False)
+    wfpt = models.CharField(max_length=200, null=True, blank=True)
     recent = models.DateField(auto_now=True)
     status = models.BooleanField(default=False)
 
