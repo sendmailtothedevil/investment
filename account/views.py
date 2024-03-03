@@ -201,36 +201,23 @@ def dashboard(request):
         one_w_amount = Withdrawal.objects.filter(user=request.user)
         auw = 0
         auw2 = 0
-        wfip = ''
         for w in one_w_amount:
             uw = int(w.w_amount)
             if w.wfpt != 'PROFIT':
                 auw += uw
             else:
                 auw2 += uw
-            # wfip = w.wfpt
         
         
-        # if wfip != 'PROFIT':
         if u_total2 != 0:
             new_t_bal = int(u_total2) - int(auw)
         new_t_bal = f'{new_t_bal:,}'.replace('.',',')
             
-        # if wfip == 'PROFIT':
         if tip != 0:
             auw2 = float(auw2)
             new_ip2 = float(tip) - float(auw2)
             new_ip = round(new_ip2, 2)
 
-        
-        
-        print('===================')
-        print(wfip)
-        print(u_total2)
-        print(auw)
-        print(tip)
-        print(auw2)
-        print('===================')
 
     
         context = {'users':users, 'packages':packages, 'gateways':gateways, 'trans':trans, 'message':message,
