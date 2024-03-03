@@ -29,6 +29,19 @@
         <a href="{% url 'message' %}" class="msgs"><i class="fas fa-mail-bulk"></i> &nbsp; Messages</a>
         <a href="{% url 'logout' %}" class=""><i class="fas fa-sign-out-alt"></i> &nbsp; Logout</a>
       </div>
+
+      <div class="d-block d-lg-none col-lg-2 text-light p-0 py-3 bg101 sideLinks position-absolute mobileSide" style="z-index:99999;height:100vh;">
+        <a href="{% url 'dashboard' %}" class="dboard"><i class="fas fa-chalkboard-teacher"></i> &nbsp; Dashboard</a>
+        {% if request.user.is_admin %}<a href="{% url 'users' %}" class="usrs"><i class="fas fa-users"></i> &nbsp; Users</a>{% endif %}
+        <a href="{% if request.user.is_admin %}{% url 'packages' %}{% else %}{% url 'users_investment' %}{% endif %}" class="pkgs"><i class="fas fa-cubes"></i> &nbsp; {% if request.user.is_admin %}Packages{% else %} Investments{% endif %}</a>
+        {% if request.user.is_admin %}<a href="{% url 'gateway' %}" class="gtwy"><i class="fas fa-money-check-alt"></i> &nbsp; Gateway</a>{% endif %}
+        <a href="{% url 'transactions' %}" class="trnsc"><i class="fas fa-hand-holding-usd"></i> &nbsp;Transactions</a>
+        <a href="{% url 'withdrawals' %}" class="wdr"><i class="fas fa-wallet"></i> &nbsp; Withdrawals</a>
+        <a href="{% url 'message' %}" class="msgs"><i class="fas fa-mail-bulk"></i> &nbsp; Messages</a>
+        <a href="{% url 'logout' %}" class=""><i class="fas fa-sign-out-alt"></i> &nbsp; Logout</a>
+      </div>
+
+      
       
       {% block data %}
       <div class="d-none d-lg-block col-lg-2"></div>
@@ -246,8 +259,13 @@
           <div class="row m-auto">
             <div class="col-12 col-sm-6 col-md-4 mb-3">
 
-
-                <div class="container mx-auto">
+              <span class="text-center d-block">{% if wTime %}Withdrawal date(s){% endif %}</span>
+              <div class="text-center">
+                {% for wt in wTime %}
+                  <p class="fw-bold fs-6 lh-sm text-warning d-inline p-0 m-0">{{ wt }}, &nbsp;</p>
+                {% endfor %}
+              </div>
+                {% comment %} <div class="container mx-auto">
                   <div id="countdown">
                     <ul>
                       <li><span id="days"></span>days</li>
@@ -256,10 +274,10 @@
                       <li><span id="seconds"></span>sec</li>
                     </ul>
                   </div>
-                </div>
+                </div> {% endcomment %}
 
 
-              <div class="mx-auto text-center">
+              <div class="mx-auto text-center mt-2">
                 <button class="btn btn-primary btn-round btn-lg mb-4 shadow" id="wft">Withdraw from TOTAL</button>
                 <button class="btn btn-primary btn-round btn-lg shadow" id="wfp">Withdraw from PROFIT</button>
               </div>

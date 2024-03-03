@@ -46,7 +46,9 @@
                     <span><i class="mx-1 py-2 fas fa-trash-alt text-danger fs-5 mb-3 delui"></i></span>
                   </td>
                   {% endif %}
-                  <td class="position-absolute border-0 pb-0" style="left:0;top:0;"><input type="hidden" value="{{ pk.id }}" class="ui_id"></td>
+                  <td class="position-absolute border-0 pb-0 bg-light" style="left:0;top:0;"><input type="hidden" value="{{ pk.id }}" class="ui_id"></td>
+                  <td class="position-absolute border-0 pb-0 bg-light" style="left:0;top:0;"><input type="hidden" value="" class="startDate"></td>
+                  <td class="position-absolute border-0 pb-0 bg-light" style="left:0;top:0;"><input type="hidden" value="" class="stopDate"></td>
                 </tr>
               {% endif %}
             {% endfor %}

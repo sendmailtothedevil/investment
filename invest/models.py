@@ -33,7 +33,8 @@ class UserPackage(models.Model):
     bonus = models.CharField(max_length=200, null=False, blank=False)
     amount = models.CharField(max_length=200, null=False, blank=False)    
     post_date = models.DateField(auto_now_add=True)
-    recent = models.DateField(auto_now=True)
+    recent = models.DateField(null=True, blank=True)
+    wdrw_date = models.DateField(null=True, blank=True)
     status = models.BooleanField(default=False)
 
     class Meta:

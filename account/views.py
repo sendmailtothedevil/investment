@@ -11,6 +11,8 @@ from django.http import JsonResponse
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 import json
+import datetime as dt
+from datetime import datetime
 from urllib.request import urlopen
 from django.contrib.auth import update_session_auth_hash
 from .forms import MyChangePasswordForm, PasswordResetForm, SetPasswordForm
@@ -217,8 +219,32 @@ def dashboard(request):
             auw2 = float(auw2)
             new_ip2 = float(tip) - float(auw2)
             new_ip = round(new_ip2, 2)
+        
 
-
+        wTimes = UserPackage.objects.filter(user=request.user, status=True)
+        
+        wTime = []
+        for wt in wTimes:
+            wTime.append(wt.wdrw_date.strftime('%Y-%m-%d'))
+        
+        todayd0 = datetime.today()
+        todayd = todayd0.strftime('%Y-%m-%d')
+        tomoro0 = todayd0 + dt.timedelta(days=1)
+        tomoro = tomoro0.strftime('%Y-%m-%d')
+        for wd in wTime:
+            nwd = wd
+            if todayd < nwd:
+                if todayd < tomoro:
+                    new_sip2 = str(sip)[:3]
+                    new_sip = float(new_sip2)
+                    new_ip += new_sip
+                    tip += new_sip
+                else:
+                    tip = tip
+                    new_ip =new_ip
+            else:
+                print('Print, you can withdraw')
+        
     
         context = {'users':users, 'packages':packages, 'gateways':gateways, 'trans':trans, 'message':message,
                     'a_users':a_users, 'i_users':i_users, 'a_packages':a_packages, 'i_packages':i_packages, 
@@ -226,7 +252,7 @@ def dashboard(request):
                     'a_gateways':a_gateways, 'i_gateways':i_gateways, 'a_trans':a_trans, 'i_trans':i_trans, 'one_ui':one_ui,
                     'a_one_ui':a_one_ui, 'i_one_ui':i_one_ui, 'one_u_trans':one_u_trans, 'a_one_u_trans':a_one_u_trans,
                     'i_one_u_trans':i_one_u_trans, 'u_total':u_total, 'u_pnd':u_pnd, 'new_t_bal':new_t_bal, 'tip':tip,
-                    'new_ip':new_ip,
+                    'new_ip':new_ip, 'wTime':wTime
                     }
         return render(request, 'account/dashboard.html', context)
 
@@ -415,6 +441,12 @@ def activate_ui(request):
                 id = request.POST.get("ui_id")
                 ui = UserPackage.objects.get(pk=id)
                 ui.status = True
+                ui.recent = str(datetime.today().strftime('%Y-%m-%d'))
+                                
+                date_1 = datetime.strptime(ui.recent, '%Y-%m-%d')
+                end_date = date_1 + dt.timedelta(days=29)
+                
+                ui.wdrw_date = end_date
                 ui.save()
             
             return JsonResponse({'status':"Investment activated successfully"})

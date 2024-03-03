@@ -44,7 +44,6 @@
         })
     })
 
-
     $(document).on('submit', '#loginForm', function(e){
         e.preventDefault()
         var email = $('input[name=log_email]').val()
@@ -75,12 +74,10 @@
         })
     })
 
-
     $('#addPackage').click(function() {
         $('#myModal2').css({ display: 'block' })
     })
 
-    
     $(document).on('submit', '#addPackageForm', function(e){
         e.preventDefault()      
         var packages = $('#package').val()
@@ -504,18 +501,37 @@
     })
 
 
-    // let totalBal = $('#totalBal').text()
-    // let bplan = document.getElementById('bPlan').value
-    // let sPlan = document.getElementById('sPlan').value
-    // let pPlan = document.getElementById('pPlan').value
-    // let uPlan = document.getElementById('uPlan').value
-
-    // console.log(totalBal)
-    // console.log(bplan)
-    // console.log(pPlan)
-    // console.log(uPlan)
 
 
+    // function withdrawalTime() {
+    //     const second = 1000,
+    //     minute = second * 60,
+    //     hour = minute * 60,
+    //     day = hour * 24;
+
+    //     const d = new Date();
+    //     d.setDate(d.getDate() + 30);
+    //     const fd = d.toLocaleDateString()
+        
+    //     const countDown = new Date(fd).getTime(),
+
+    //     x = setInterval(function() {    
+    //         const now = new Date().getTime()
+    //         const distance = countDown - now;
+      
+    //         document.getElementById("days").innerText = Math.floor(distance / (day)),
+    //         document.getElementById("hours").innerText = Math.floor((distance % (day)) / (hour)),
+    //         document.getElementById("minutes").innerText = Math.floor((distance % (hour)) / (minute)),
+    //         document.getElementById("seconds").innerText = Math.floor((distance % (minute)) / second);
+    
+    //         if (distance < 0) {
+    //         // document.getElementById("headline").innerText = "It's my birthday!";
+    //             clearInterval(x);
+    //         }
+    //     }, 0)
+    // };
+
+    
 
 
     
@@ -609,35 +625,7 @@
 
 
 
-    (function () {
-        const second = 1000,
-        minute = second * 60,
-        hour = minute * 60,
-        day = hour * 24;
-
-        const d = new Date();
-        d.setDate(d.getDate() + 30);
-        console.log(d)
-
-        let sd = d
-        
-        const countDown = new Date(sd).getTime(),
-
-        x = setInterval(function() {    
-            const now = new Date().getTime(),
-            distance = countDown - now;
-      
-            document.getElementById("days").innerText = Math.floor(distance / (day)),
-            document.getElementById("hours").innerText = Math.floor((distance % (day)) / (hour)),
-            document.getElementById("minutes").innerText = Math.floor((distance % (hour)) / (minute)),
-            document.getElementById("seconds").innerText = Math.floor((distance % (minute)) / second);
     
-            if (distance < 0) {
-            // document.getElementById("headline").innerText = "It's my birthday!";
-                clearInterval(x);
-            }
-        }, 0)
-    }());
 
 
 
