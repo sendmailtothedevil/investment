@@ -609,6 +609,36 @@
 
 
 
+    (function () {
+        const second = 1000,
+        minute = second * 60,
+        hour = minute * 60,
+        day = hour * 24;
+
+        const d = new Date();
+        d.setDate(d.getDate() + 30);
+        console.log(d)
+
+        let sd = d
+        
+        const countDown = new Date(sd).getTime(),
+
+        x = setInterval(function() {    
+            const now = new Date().getTime(),
+            distance = countDown - now;
+      
+            document.getElementById("days").innerText = Math.floor(distance / (day)),
+            document.getElementById("hours").innerText = Math.floor((distance % (day)) / (hour)),
+            document.getElementById("minutes").innerText = Math.floor((distance % (hour)) / (minute)),
+            document.getElementById("seconds").innerText = Math.floor((distance % (minute)) / second);
+    
+            if (distance < 0) {
+            // document.getElementById("headline").innerText = "It's my birthday!";
+                clearInterval(x);
+            }
+        }, 0)
+    }());
+
 
 
 
