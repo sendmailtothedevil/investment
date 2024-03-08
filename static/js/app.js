@@ -1,6 +1,5 @@
 (function($) {
     "use strict"
-    $('#creatingAccountloader').hide()
     $(document).on('submit', '#registerForm', function(e){
         e.preventDefault()
         var full_name = $('input[name=full_name]').val()

@@ -1383,3 +1383,7 @@ Label the data
 #creatingAccountloader {
   display: none;
 }
+
+#btc, #paypal, #eth {
+  display: none;
+}

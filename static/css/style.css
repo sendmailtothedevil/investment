@@ -1379,3 +1379,11 @@ Label the data
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+#creatingAccountloader {
+  display: none;
+}
+
+#btc, #paypal, #eth {
+  display: none;
+}

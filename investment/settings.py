@@ -17,7 +17,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '*']
 
@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'django_cleanup.apps.CleanupConfig',
     'widget_tweaks',
+    'cloudinary',
 
     'account.apps.AccountConfig',
     'home.apps.HomeConfig',
@@ -136,11 +137,12 @@ STATIC_URL = 'static/'
 
 if not DEBUG:
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 else:
     STATICFILES_DIRS = [os.path.join(BASE_DIR, 'staticfiles')]
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = BASE_DIR / 'media'
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 # Default primary key field type
@@ -155,3 +157,11 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587 
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')
+
+
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'doknmxtoc',
+    'API_KEY': '836372856382379',
+    'API_SECRET': '0CLo7DxQCVIOLLDaIClk6U8SCE0',
+}
