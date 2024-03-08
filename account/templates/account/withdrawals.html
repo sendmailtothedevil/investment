@@ -11,45 +11,97 @@
     <div class="SHOW">
       <div class="position-relative ">
         <h4  class="fs-3 text-center fw-bold mb-5">{% if request.user.is_admin %}Withdrawals Data{% else %}My Withdrawals{% endif %}</h4>
-        <table class="table table-striped package_reload">
-          <thead>
-            <tr class="text-center">
-              <th scope="col" class="border">#</th>
-              <th scope="col" class="border">User</th>
-              <th scope="col" class="border">Withdraw from</th>
-              <th scope="col" class="border">Withdraw method</th>
-              <th scope="col" class="border">Wallet/Bank</th>
-              <th scope="col" class="border">Account/Address</th>
-              <th scope="col" class="border">Amount</th>
-              <th scope="col" class="border">Status</th>
-              {% if request.user.is_admin %}<th scope="col" class="border" colspan="2">Action buttons</th>{% endif %}
-            </tr>
-          </thead>
-          <tbody class="text-center">
-            {% for witdrw in withdrawals %}
-            {% csrf_token %}
-                {% if request.user.is_admin or request.user == witdrw.user %}
-                  <tr class="witdrawalsList position-relative" style="height:40px;">
-                    <th scope="row" class="pb-0 border-right">{{ forloop.counter }}</th>
-                    <td class="pb-0 border-right">{{witdrw.user}}</td>
-                    <td class="pb-0 border-right">{% if witdrw.wfpt == 'PROFIT' %}Profit{% else %}Total{% endif %}</td>
-                    <td class="pb-0 border-right">{{witdrw.w_method}}</td>
-                    <td class="pb-0 border-right">{{witdrw.w_method_name}}</td>
-                    <td class="pb-0 border-right">{{witdrw.w_method_address}}</td>
-                    <td class="pb-0 border-right">${{witdrw.w_amount}}</td>
-                    <td class="pb-0 border-right">{% if witdrw.status %}Confirmed{% else %}Pending...{% endif %}</td>
-                    {% if request.user.is_admin %}
-                      <td class="text-center actbtn pe-0 pb-0 border-right">
-                        {% comment %} <span><i class=" fas fa-check-circle text-active fs-5 mb-3 me-2 confirmwitdrw"></i></span> {% endcomment %}
+        <div class="d-none d-md-block">
+          <table class="table table-striped package_reload">
+            <thead>
+              <tr class="text-center">
+                <th scope="col" class="border">#</th>
+                <th scope="col" class="border">User</th>
+                <th scope="col" class="border">Withdraw from</th>
+                <th scope="col" class="border">Withdraw method</th>
+                <th scope="col" class="border">Wallet/Bank</th>
+                <th scope="col" class="border">Account/Address</th>
+                <th scope="col" class="border">Amount</th>
+                <th scope="col" class="border">Status</th>
+                {% if request.user.is_admin %}<th scope="col" class="border" colspan="2">Action buttons</th>{% endif %}
+              </tr>
+            </thead>
+            <tbody class="text-center">
+              {% for witdrw in withdrawals %}
+              {% csrf_token %}
+                  {% if request.user.is_admin or request.user == witdrw.user %}
+                    <tr class="witdrawalsList position-relative" style="height:40px;">
+                      <th scope="row" class="pb-0 border-right">{{ forloop.counter }}</th>
+                      <td class="pb-0 border-right">{{witdrw.user.full_name}}</td>
+                      <td class="pb-0 border-right">{% if witdrw.wfpt == 'PROFIT' %}Profit{% else %}Total{% endif %}</td>
+                      <td class="pb-0 border-right">{{witdrw.w_method}}</td>
+                      <td class="pb-0 border-right">{{witdrw.w_method_name}}</td>
+                      <td class="pb-0 border-right">{{witdrw.w_method_address}}</td>
+                      <td class="pb-0 border-right">${{witdrw.w_amount}}</td>
+                      <td class="pb-0 border-right">{% if witdrw.status %}Confirmed{% else %}Pending...{% endif %}</td>
+                      {% if request.user.is_admin %}
+                        <td class="text-center actbtn pe-0 pb-0 border-right">
+                          <span><i class=" fas fa-check-circle text-active fs-5 mb-3 me-2 confirmwitdrw"></i></span>
+                          <span><i class=" fas fa-trash-alt text-danger fs-5 mb-3 delwitdrw"></i></span>
+                        </td>
+                        <td class="position-absolute border-0 pb-0" style="left:0;top:0;"><input type="hidden" value="{{ witdrw.id }}" class="wd_id"></td>
+                      {% endif %}
+                    </tr>
+                  {% endif %}
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Display Mobile -->
+        <div class="col-12 mx-auto d-md-none ms-4 ps-0" style="overflow:scroll;">
+          {% for witdrw in withdrawals %}
+          {% csrf_token %}
+            {% if request.user.is_admin or request.user == witdrw.user %}
+              <div class="py-3 px-3 d-flex align-items-center border-bottom witdrawalsList">
+                  <div class="sn+ font-heavy px-0 me-1">
+                    <b>{{ forloop.counter }}</b>
+                  </div>
+                  <div class="px-3 item_list_mobile w-100">
+                    <div class="d-flex">
+                      <h4 class="m-0 p-0 fs-6 fw-bold">User: &nbsp; </h4> 
+                      <p>{{witdrw.user.full_name}}</p>
+                    </div>
+                    <div class="d-flex">
+                      <h4 class="m-0 p-0 fs-6 fw-bold">Withdraw from: &nbsp; </h4>
+                      <p> {% if witdrw.wfpt == 'PROFIT' %}Profit{% else %}Total{% endif %}</p>
+                    </div>
+                    <div class="d-flex">
+                      <h4 class="m-0 p-0 fs-6 fw-bold">Withdraw method: &nbsp; </h4>
+                      <p class="lh-sm"> {{witdrw.w_method}}</p>
+                    </div>
+                    <div class="d-flex">
+                      <h4 class="m-0 p-0 fs-6 fw-bold">Wallet/Bank: &nbsp; </h4>
+                      <p class="lh-sm "> {{witdrw.w_method_name}}</p>
+                    </div>
+                    <div class="d-flex">
+                      <h4 class="m-0 p-0 fs-6 fw-bold">Account/Address: &nbsp; </h4>
+                      <p class="lh-sm "> {{witdrw.w_method_address}}</p>
+                    </div>
+                    <div class="d-flex">
+                      <h4 class="m-0 p-0 fs-6 fw-bold">Amount: &nbsp; </h4>
+                      <p class="lh-sm "> ${{witdrw.w_amount}}</p>
+                    </div>
+                    <div class="d-flex">
+                      <h4 class="m-0 p-0 fs-6 fw-bold">Status: &nbsp; </h4>
+                      <p> {% if witdrw.status %}Confirmed{% else %}Pending...{% endif %}</p>
+                    </div>
+                    <div class="d-flex">
+                      {% if request.user.is_admin %}
                         <span><i class=" fas fa-trash-alt text-danger fs-5 mb-3 delwitdrw"></i></span>
-                      </td>
-                      <td class="position-absolute border-0 pb-0" style="left:0;top:0;"><input type="hidden" value="{{ witdrw.id }}" class="wd_id"></td>
-                    {% endif %}
-                  </tr>
-                {% endif %}
-            {% endfor %}
-          </tbody>
-        </table>
+                        <input type="hidden" value="{{ witdrw.id }}" class="wd_id">
+                      {% endif %}
+                    </div>
+                  </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
       </div>
     </div>
   </div>

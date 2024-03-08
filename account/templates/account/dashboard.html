@@ -4,7 +4,7 @@
 
 {% block css1 %}
   <style>
-    .custom_nav-container .navbar-nav .nav-item .dashLink {color:#00bbf0;}
+    .custom_nav-container .navbar-nav .dashLink {background-color: #1909a4;}
   </style>
 {% endblock %}
 
@@ -30,7 +30,7 @@
         <a href="{% url 'logout' %}" class=""><i class="fas fa-sign-out-alt"></i> &nbsp; Logout</a>
       </div>
 
-      <div class="d-block d-lg-none col-lg-2 text-light p-0 py-3 bg101 sideLinks position-absolute mobileSide" style="z-index:99999;height:100vh;">
+      <div class="mobileSide d-lg-none  text-light p-0 bg101 sideLinks position-absolute" style="width:250px;z-index:999;height:100vh;">   
         <a href="{% url 'dashboard' %}" class="dboard"><i class="fas fa-chalkboard-teacher"></i> &nbsp; Dashboard</a>
         {% if request.user.is_admin %}<a href="{% url 'users' %}" class="usrs"><i class="fas fa-users"></i> &nbsp; Users</a>{% endif %}
         <a href="{% if request.user.is_admin %}{% url 'packages' %}{% else %}{% url 'users_investment' %}{% endif %}" class="pkgs"><i class="fas fa-cubes"></i> &nbsp; {% if request.user.is_admin %}Packages{% else %} Investments{% endif %}</a>
@@ -234,7 +234,7 @@
                   <img src="https://img.icons8.com/external-itim2101-flat-itim2101/70/external-money-business-and-financial-itim2101-flat-itim2101-1.png" alt="external-money-business-and-financial-itim2101-flat-itim2101-1"/>
                 </div>
                 <div>
-                  <h5 class="text-center fs-4">Investment profits</h5>
+                  <h5 class="text-center fs-4">Profits</h5>
                   <p class="text-center fs-4">$ <span class="fw-bold fs-2" id="profitBal">{% if new_ip == 0 %}{{ tip }}{% else %}{{ new_ip }}{% endif %}</span></p>
                 </div>
                 <div class="position-absolute text-center text-danger ifm" style="bottom:5px;">
@@ -277,7 +277,7 @@
                 </div> {% endcomment %}
 
 
-              <div class="mx-auto text-center mt-2">
+              <div class="mx-auto text-center my-2">
                 <button class="btn btn-primary btn-round btn-lg mb-4 shadow" id="wft">Withdraw from TOTAL</button>
                 <button class="btn btn-primary btn-round btn-lg shadow" id="wfp">Withdraw from PROFIT</button>
               </div>
@@ -406,23 +406,22 @@
   {% block footer %}{% endblock footer %}
 {% endblock content %}
 
-{% block js %}
-<script>
-  
-  $('.oms').click(function() {
-    $('.mobileSide').show("slide", { direction: "left" }, 500);
-    $('.cms').show()
-    $('.oms').hide()
-  })
+{% block js2 %}
+  <script>
+    
+    $('.oms').click(function() {
+      $('.mobileSide').show("slide", { direction: "left" }, 500);
+      $('.cms').show()
+      $('.oms').hide()
+    })
 
-  $('.cms').click(function() {
-    $('.mobileSide').hide("slide", { direction: "left" }, 500);
-    $('.oms').show()
-    $('.cms').hide()
-  })  
-  
-</script>
-
+    $('.cms').click(function() {
+      $('.mobileSide').hide("slide", { direction: "left" }, 500);
+      $('.oms').show()
+      $('.cms').hide()
+    })  
+    
+  </script>
 {% endblock %}
 
 

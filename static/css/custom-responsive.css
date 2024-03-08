@@ -30,7 +30,6 @@
     margin: 5px 0;
   }
 
-
 }
 
 @media (max-width: 768px) {
@@ -69,7 +68,7 @@
 
 @media (max-width: 480px) {
   .slider_section .detail-box h1 {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
 
   .track_section form {

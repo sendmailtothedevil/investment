@@ -26,23 +26,23 @@ from .tokens import account_activation_token
 
 
 
-# def activate(request, uidb64, token):
-#     # user = User()
-#     try:
-#         uid = force_str(urlsafe_base64_decode(uidb64))
-#         user = User.objects.get(pk=uid)
-#     except(TypeError, ValueError, OverflowError, User.DoesNotExist):
-#         user = None
+def activate(request, uidb64, token):
+    # user = User()
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
 
-#     if user is not None and account_activation_token.check_token(user, token):
-#         user.is_active = True
-#         user.save()
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
 
-#         messages.success(request, 'Thank you! Your email is verified.')
-#         return redirect('login')
-#     else:
-#         messages.error(request, 'Activation link is invalid!')
-#     return redirect('index')
+        messages.success(request, 'Thank you! Your email is verified.')
+        return redirect('login')
+    else:
+        messages.error(request, 'Activation link is invalid!')
+    return redirect('index')
 
 # User Register
 def register(request):
@@ -55,21 +55,21 @@ def register(request):
             return JsonResponse({'status':"Email already exist, try another..."})
 
         
-        user = User.objects.create_user(full_name=full_name, email=email, password=password,)
+        user = User.objects.create_user(full_name=full_name, email=email, password=password, is_active=False)
         
         user.save()
-        # verification_email = EmailMessage(
-        #     subject = 'Verify your email',
-        #     body = render_to_string('account/verify-email.html', {
-        #         'user': user.full_name,
-        #         'domain': get_current_site(request).domain,
-        #         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-        #         'token': account_activation_token.make_token(user),
-        #         'protocol': 'https' if request.is_secure() else 'http'
-        #     }),
-        #     to = [email],
-        # )
-        # verification_email.send()
+        verification_email = EmailMessage(
+            subject = 'Verify your email',
+            body = render_to_string('account/verify-email.html', {
+                'user': user.full_name,
+                'domain': get_current_site(request).domain,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'token': account_activation_token.make_token(user),
+                'protocol': 'https' if request.is_secure() else 'http'
+            }),
+            to = [email],
+        )
+        verification_email.send()
         
         return JsonResponse({"data": email})
     else:
@@ -366,10 +366,13 @@ def deactivate_gateway(request):
 
 @login_required(login_url='login')
 def message(request):
-    message = ContactUsMessage.objects.all()
+    if request.user.is_admin:
+        message = ContactUsMessage.objects.all()
 
-    context = {'message':message}
-    return render(request, 'account/message.html', context)
+        context = {'message':message}
+        return render(request, 'account/message.html', context)
+    else:
+        return redirect('dashboard')
 
 
 def delete_message(request):
@@ -474,6 +477,20 @@ def withdrawals(request):
     context = {'withdrawals':withdrawals}
     return render(request, 'account/withdrawals.html', context)
 
+
+def confirm_withdrawals(request):
+    if request.user.is_admin:
+        if request.method == 'POST':
+            if request.user.is_admin:
+                id = request.POST.get("wd_id")
+                wd = Withdrawal.objects.get(pk=id)
+                wd.status = True
+                wd.save()
+            
+            return JsonResponse({'status':"Withdrawals confirm successfully"})
+        else:
+            return JsonResponse({'status':"An error occured"})
+    
 
 def delete_withdrawals(request):
     if request.user.is_admin:

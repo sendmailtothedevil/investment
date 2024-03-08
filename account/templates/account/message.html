@@ -11,34 +11,72 @@
     <div class="SHOW">
       <div class="position-relative ">
         <h4  class="fs-3 text-center fw-bold mb-5">Messages</h4>
-        <table class="table table-striped package_reload">
-          <thead>
-            <tr class="text-center">
-              <th scope="col" class="border">#</th>
-              <th scope="col" class="border">Sender email</th>
-              <th scope="col" class="border">Subject</th>
-              <th scope="col" class="border">Message</th>
-              <th scope="col" class="border">sent_date</th>
-              <th scope="col" class="border" colspan="2">Delete</th>
-            </tr>
-          </thead>
-          <tbody class="text-center">
-            {% for msg in message %}
-            {% csrf_token %}
-              <tr class="messageList position-relative">
-                <th scope="row" class="pb-0 border-right">{{ forloop.counter }}</th>
-                <td class="pb-0 border-right">{{msg.sender_email}}</td>
-                <td class="pb-0 border-right">{{msg.subject}}</td>
-                <td class="pb-0 border-right">{{msg.message}}</td>
-                <td class="pb-0 border-right">{{msg.sent_date}}</td>
-                <td class="text-center actbtn pe-0 pb-0 border-right">
-                  <span><i class=" fas fa-trash-alt text-danger fs-5 mb-3 mx-1 delmsg"></i></span>
-                </td>
-                <td class="position-absolute border-0 pb-0" style="left:0;top:0;"><input type="hidden" value="{{ msg.id }}" class="msg_id"></td>
+        <div class="d-none d-md-block">
+          <table class="table table-striped">
+            <thead>
+              <tr class="text-center">
+                <th scope="col" class="border">#</th>
+                <th scope="col" class="border">Sender email</th>
+                <th scope="col" class="border">Subject</th>
+                <th scope="col" class="border">Message</th>
+                <th scope="col" class="border">sent_date</th>
+                <th scope="col" class="border" colspan="2">Delete</th>
               </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+            </thead>
+            <tbody class="text-center">
+              {% for msg in message %}
+              {% csrf_token %}
+                <tr class="messageList position-relative">
+                  <th scope="row" class="pb-0 border-right">{{ forloop.counter }}</th>
+                  <td class="pb-0 border-right">{{msg.sender_email}}</td>
+                  <td class="pb-0 border-right">{{msg.subject}}</td>
+                  <td class="pb-0 border-right">{{msg.message}}</td>
+                  <td class="pb-0 border-right">{{msg.sent_date}}</td>
+                  <td class="text-center actbtn pe-0 pb-0 border-right">
+                    <span><i class=" fas fa-trash-alt text-danger fs-5 mb-3 mx-1 delmsg"></i></span>
+                  </td>
+                  <td class="position-absolute border-0 pb-0" style="left:0;top:0;"><input type="hidden" value="{{ msg.id }}" class="msg_id"></td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Display Mobile -->
+        <div class="col-12 mx-auto d-md-none ms-4 ps-0" style="overflow:scroll;">
+          {% for msg in message %}
+          {% csrf_token %}
+          <div class="py-3 px-3 d-flex align-items-center border-bottom transactionList">
+              <div class="sn+ font-heavy px-0 me-1">
+                <b>{{msg.sender_email}}</b>
+              </div>
+              <div class="px-3 item_list_mobile w-100">
+                <div class="d-flex">
+                  <h4 class="m-0 p-0 fs-6 fw-bold">Sender email: &nbsp; </h4> 
+                  <p>{{msg.subject}}</p>
+                </div>
+                <div class="d-flex">
+                  <h4 class="m-0 p-0 fs-6 fw-bold">Subject: &nbsp; </h4>
+                  <p> {{msg.message}}</p>
+                </div>
+                <div class="d-flex">
+                  <h4 class="m-0 p-0 fs-6 fw-bold">Message: &nbsp; </h4>
+                  <p class="lh-sm"> {{msg.sent_date}}</p>
+                </div>
+                <div class="d-flex">
+                  <h4 class="m-0 p-0 fs-6 fw-bold">sent_date: &nbsp; </h4>
+                  <p class="lh-sm "> {{msg.sent_date}}</p>
+                </div>
+                <div class="d-flex">
+                  {% if request.user.is_admin %}
+                    <span><i class=" fas fa-trash-alt text-danger fs-5 mb-3 mx-1 delmsg"></i></span>
+                  {% endif %}
+                  <input type="hidden" value="{{ msg.id }}" class="msg_id">
+                </div>
+              </div>
+          </div>
+          {% endfor %}
+        </div>
       </div>
     </div>
   </div>

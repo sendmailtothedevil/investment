@@ -46,7 +46,8 @@
           </div>
 
           <div class="mb-4 text-center">
-            <button class="invest-bg101 border-0 outline-0 w-100">Create Account</button>
+            <button class="invest-bg101 border-0 outline-0 w-100" id="createAccountBtn">Create Account</button>
+            <button class="invest-bg101 border-0 outline-0 px-5" id="creatingAccountloader"><div class="loader"></div></button>
           </div>
 
           <div class="">
@@ -85,7 +86,7 @@
 
           <div class="d-flex justify-content-around">
             <p>No account? <span class="color101 fs-6 toSignUp" style="cursor:pointer;"> Signup</span></p>
-            <a class="fs-6 d-block" style="cursor:pointer;color:#170996;"> Forgotten password</a>
+            <a href="{% url 'contact' %}" class="fs-6 d-block" style="cursor:pointer;color:#170996;"> Forgotten password</a>
           </div>    
         </form>
       </div>
@@ -105,7 +106,8 @@
         <p class="lh-sm fs-5">
           An email with a verification link have been sent to
           <b id="reg_email"></b>, please check your email and click on the
-          link to complete your registration.
+          link to complete your registration. <br> If you don't recieve the
+          email in your inbox, also check your <b>Spam</b> folder.
         </p>
       </div>
     </div>

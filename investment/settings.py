@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -127,11 +128,15 @@ USE_TZ = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/') 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'staticfiles')]
 
+if not DEBUG:
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+else:
+    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'staticfiles')]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -146,3 +151,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # EMAIL_USE_SSL = True
 # EMAIL_USE_TLS = False
 # DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp-mail.outlook.com'
+EMAIL_HOST_USER = "anchorinvestment@hotmail.com"
+EMAIL_HOST_PASSWORD = "tothedevil@009"
+EMAIL_PORT = 587 
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = "anchorinvestment@hotmail.com"

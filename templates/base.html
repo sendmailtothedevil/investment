@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no" />
         <meta name="description" content="Investment Invest and get a reasonable percentage for your money, let your money work for you">
         <meta name="author" content="Investment Developers">
-        <title>Affluence Investment Company</title>
+        <title>Anchor Investment Company</title>
         <link rel="shortcut icon" href="{{baseUrl}}/{{'logo.png'}}" type="image/x-icon">
 
         <!-- all css -->
@@ -101,7 +101,7 @@
         
                 <!-- header section strats -->
                 <header class="header_section py-1">
-                    <div class="container-fluid">
+                    <div class="container-fluid position-relative pe-0 pe-lg-4">
                         <nav class="navbar navbar-expand-lg custom_nav-container ">
                         <a class="navbar-brand" href="{% url 'index' %}">
                             <div class="aic_logo">
@@ -110,34 +110,60 @@
                             </div>
                         </a>
                 
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class=""> </span>
-                        </button>
+                        <div class="position-absolute d-block d-lg-none py-0" style="top:10px; right:25px; z-index:99999;">
+                            <span class="text-light fs-1 omm" ><i class="fas fa-bars"></i> </span>
+                            <span class="text-light fs-1 cmm" ><i class="fas fa-times"></i> </span>
+                        </div>
                 
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <div class="d-none d-lg-block position-absolute" style="z-index:99999;top:25px;right:0;">
                             <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link homeLink" href="{% url 'index' %}">Home <span class="sr-only">(current)</span></a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link investLink" href="{% url 'investment_plan' %}"> Invest</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link aboutLink" href="{% url 'about' %}"> About</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link contactLink" href="{% url 'contact' %}">Contact</a>
-                            </li>
-                            <li class="nav-item">
-                              {% if request.user.is_authenticated %}
-                                <a class="nav-link dashLink pb-0" href="{% url 'dashboard' %}"> <i class="fa fa-user"></i> dashboard</a>
-                                <p class="text-center text-light p-0 m-0 position-absolute" style="right:30px;bottom:10px;">Hi, <b>{{ request.user.full_name }}</b></p>
-                              {% else %}
-                                <a class="nav-link ssLink" href="{% url 'signup_signin' %}"> <i class="fa fa-user" aria-hidden="true"></i> Signup / Login</a>
-                              {% endif %}
-                            </li>
+                              <li class="nav-item">
+                                  <a class="nav-link homeLink" href="{% url 'index' %}">Home <span class="sr-only">(current)</span></a>
+                              </li>
+                              <li class="nav-item">
+                                  <a class="nav-link investLink" href="{% url 'investment_plan' %}"> Invest</a>
+                              </li>
+                              <li class="nav-item">
+                                  <a class="nav-link aboutLink" href="{% url 'about' %}"> About</a>
+                              </li>
+                              <li class="nav-item">
+                                  <a class="nav-link contactLink" href="{% url 'contact' %}">Contact</a>
+                              </li>
+                              <li class="nav-item">
+                                {% if request.user.is_authenticated %}
+                                  <a class="nav-link dashLink pb-0" href="{% url 'dashboard' %}"> <i class="fa fa-user"></i> dashboard</a>
+                                  <p class="text-center color101 m-0 lh-sm position-absolute bg-light" style="right:15px;bottom:-23px;padding:2px 10px;border-radius:3px;">Hi, <b>{{ request.user.full_name }}</b></p>
+                                {% else %}
+                                  <a class="nav-link ssLink" href="{% url 'signup_signin' %}"> <i class="fa fa-user" aria-hidden="true"></i> Signup / Login</a>
+                                {% endif %}
+                              </li>
                             </ul>
                         </div>
+
+                        <div class="mobileNav d-lg-none bg102 text-primary position-absolute" id="" style="z-index:9999;top:0;right:0;width:280px;height:100vh;">
+                          <ul class="navbar-nav pt-5 text-left position-relative">
+                            <li class="w-100 py-3 mt-4 mb-3 ps-5 dashLink">
+                              {% if request.user.is_authenticated %}
+                                <p class="text-center color101 m-0 lh-sm position-absolute bg-light" style="left:10px;top:0;padding:2px 10px;border-radius:3px;">Hi, <b>{{ request.user.full_name }}</b></p>
+                                <a class="m-nav-link text-light fs-5 text-decoration-none pb-0" href="{% url 'dashboard' %}"> <i class="fa fa-user"></i> &nbsp; dashboard</a>
+                              {% else %}
+                                <a class="m-nav-link text-light fs-5 text-decoration-none ssLink" href="{% url 'signup_signin' %}"> <i class="fa fa-user" aria-hidden="true"></i> &nbsp; Signup / Login</a>
+                              {% endif %}
+                            </li>
+                            <li class="w-100 py-3 mb-3 ps-5 homeLink">
+                                <a class="m-nav-link text-light fs-5 text-decoration-none" href="{% url 'index' %}"><i class="fa fa-home"></i> &nbsp; Home <span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="w-100 py-3 mb-3 ps-5 investLink">
+                                <a class="m-nav-link text-light fs-5 text-decoration-none text-light fs-5 text-decoration-none" href="{% url 'investment_plan' %}"><i class="fas fa-dollar-sign"></i> &nbsp; Invest</a>
+                            </li>
+                            <li class="w-100 py-3 mb-3 ps-5 aboutLink">
+                                <a class="m-nav-link text-light fs-5 text-decoration-none" href="{% url 'about' %}"><i class="fas fa-users"></i> &nbsp; About</a>
+                            </li>
+                            <li class="w-100 py-3 mb-3 ps-5 contactLink">
+                                <a class="m-nav-link text-light fs-5 text-decoration-none" href="{% url 'contact' %}"><i class="fas fa-headset"></i> &nbsp; Contact</a>
+                            </li>
+                          </ul>
+                      </div>
                         </nav>
                     </div>
                 </header>
@@ -150,7 +176,7 @@
                         <div class="col-md-6 ">
                         <div class="detail-box pb-4">
                             <h1 class="fs-1">
-                            Affluence<br>
+                            Anchor<br>
                             Investment Company
                             </h1>
                             <p>
@@ -183,6 +209,9 @@
               <div class="row">
                 <div class="col-md-6 col-lg-3 info_col">
                   <div class="info_contact">
+                    <div class="mb-4">
+                      <img width="70" src="{{ baseUrl }}/{{ 'logo.png' }}">
+                    </div>
                     <h4>
                       Address
                     </h4>
@@ -193,16 +222,16 @@
                           Texas, United States
                         </span>
                     </p>
-                      <p>
+                      {% comment %} <p>
                         <i class="fa fa-phone" aria-hidden="true"></i>
                         <span>
                           Call +01 1234567890
                         </span>
-                    </p>
+                    </p> {% endcomment %}
                       <p>
                         <i class="fa fa-envelope" aria-hidden="true"></i>
                         <span>
-                          support@affluenceIC.com
+                          support@anchorinvestment.com
                         </span>
                     </p>
                     </div>
@@ -288,6 +317,25 @@
         <script src="{% static 'js/app.js' %} "></script>
         
         {% block js %}
+        {% endblock %}
+
+        {% block js2 %}
+        {% endblock %}
+
+        {% block js5 %}
+          <script>
+            $('.omm').click(function() {
+              $('.mobileNav').show("slide", { direction: "right" }, 500);
+              $('.cmm').show()
+              $('.omm').hide()
+            })
+          
+            $('.cmm').click(function() {
+              $('.mobileNav').hide("slide", { direction: "right" }, 500);
+              $('.omm').show()
+              $('.cmm').hide()
+            }) 
+          </script>
         {% endblock %}
     </body>
 

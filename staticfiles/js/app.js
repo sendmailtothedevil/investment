@@ -1,6 +1,6 @@
 (function($) {
     "use strict"
-
+    $('#creatingAccountloader').hide()
     $(document).on('submit', '#registerForm', function(e){
         e.preventDefault()
         var full_name = $('input[name=full_name]').val()
@@ -9,19 +9,18 @@
         var password2 = $('input[name=password2]').val()
         var token = $('input[name=csrfmiddlewaretoken]').val()
 
+        $('#createAccountBtn').hide()
+        $('#creatingAccountloader').fadeIn()
+
         if(password2 != password) {
             $('.pass').css({ border: '1px, solid, red',})
             document.getElementById('passerr2').innerHTML = 'Password do not match'
+            $('#createAccountBtn').fadeIn()
+            $('#creatingAccountloader').hide()
             return false
         } else {
             document.getElementById('passerr2').innerHTML = ''
         }
-
-        console.log(full_name)
-        console.log(email)
-        console.log(password)
-        console.log(password2)
-        console.log(token)
 
         $.ajax({
             method: 'POST',
@@ -35,6 +34,8 @@
                 if (response.status == 'Email already exist, try another...') {
                     $('.reloademail').load(location.href + " .reloademail")
                     document.getElementById('emerr').innerHTML = 'Email already exist, try another...'
+                    $('#createAccountBtn').fadeIn()
+                    $('#creatingAccountloader').hide()
                 } else {
                     $('#signUpForm').load(location.href + " #signUpForm")
                     $('#myModal').css({ display: 'block' })
@@ -336,7 +337,7 @@
 
 
     $('.copiedInfo').css({ display: 'none' })
-    $('.iHavePaid').css({ display: 'none' })
+    $('.iHavePaid').hide()
     var input
     $('.copyAddr').click(function() {
         var gw_pay_addr = $(this).closest('.copyAddrList').find('.toCopy').val()
@@ -356,7 +357,7 @@
             $(gw_addr_copied).css({ display: 'block' })
           }
 
-          $('.iHavePaid').css({ display: 'block' })
+          $('.iHavePaid').fadeIn(2000)
           $('.iPaid').css({ display: 'none' })
     }) 
 
@@ -399,7 +400,8 @@
         var token = $('input[name=csrfmiddlewaretoken]').val()
         let trans_id = Number(trans_id1)
 
-        console.log(trans_id)
+        // console.log(trans_id1)
+        // // console.log(trans_id)
 
         $.ajax({
             method: 'POST',
@@ -481,6 +483,23 @@
         })
     })
 
+    $('.confirmwitdrw').click(function(e){
+        e.preventDefault()      
+        var wd_id1 = $(this).closest('.witdrawalsList').find('.wd_id').val()
+        var token = $('input[name=csrfmiddlewaretoken]').val()
+        let wd_id = Number(wd_id1)
+
+        $.ajax({
+            method: 'POST',
+            url: '/account/confirm-withdrawals/',
+            data: {'wd_id':wd_id, csrfmiddlewaretoken: token},
+            success: function(response) {
+                alertify.message(response.status)
+                window.location.reload()
+            }
+        })
+    })
+
     $('.delwitdrw').click(function(e){
         e.preventDefault()      
         var wd_id1 = $(this).closest('.witdrawalsList').find('.wd_id').val()
@@ -533,6 +552,18 @@
 
     
 
+    // ===============Notifications===============
+    alertify.set('notifier','position', 'top-center');
+
+    // === SUCCESS/ERROR MSG ===
+    $('.msgs_info').fadeIn().delay(10000).fadeOut();
+    $('.dj_err_msg').fadeIn().delay(10000).fadeOut();
+
+    $('.close_error').click(function () {
+        $('.msgs_info').hide()
+        $('.dj_err_msg').hide()
+    })
+
 
     
     
@@ -573,7 +604,6 @@
     })
 
     let minAmnt = $('.minAmnt')
-    minAmnt[0].innerHTML = ''
     let totalBal1 = $('#totalBal').text()
     let profitBal1 = $('#profitBal').text()
     let profitBal2 = profitBal1.toString();
@@ -582,11 +612,11 @@
 
     $('#wamnt').on('input', function(){
         let totalBal = parseFloat(totalBal1.replace(/,/g, ''));
+        minAmnt[0].innerHTML = ''
 
         if($('#wamnt').val() < 500) {
             minAmnt[0].innerHTML = 'min=500,   max=500,000'
             $('.cfmw').css({ display: 'none' })
-            return false
         } else if($('#wamnt').val() > totalBal){
             minAmnt[0].innerHTML = 'Insufficient funds'
             $('.cfmw').css({ display: 'none' })

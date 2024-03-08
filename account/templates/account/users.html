@@ -9,38 +9,80 @@
       <div class="d-none d-lg-block col-lg-2"></div>
       <div class="col-12 col-lg-10 pt-0 mt-3 mt-lg-0">
         <div class="SHOW">
-          <div class="position-relative ">
+          <div class="position-relative">
             <h4  class="fs-3 text-center fw-bold mb-5">Users Management</h4>
-            <table class="table table-striped package_reload package_reload2">
-              <thead>
-                <tr class="text-center">
-                  <th scope="col" class="border">#</th>
-                  <th scope="col" class="border">Name</th>
-                  <th scope="col" class="border">Email</th>
-                  <th scope="col" class="border">Status</th>
-                  <th scope="col" class="border">Active package</th>
-                  <th scope="col" class="border">Inactive Package</th>
-                  <th scope="col" class="border" colspan="2">Delete</th>
-                </tr>
-              </thead>
-              <tbody class="text-center">
-                {% for user in users %}
-                  {% csrf_token %}
-                  <tr class="userList position-relative">
-                    <th scope="row" class="border-right">{{ forloop.counter }}</th>
-                    <td class="border-right">{{user.full_name}}</td>
-                    <td class="border-right">{{user.email}}</td>
-                    <td class="border-right">{% if user.is_active %}Active{% else %}Inactive{% endif %}</td>
-                    <td class="border-right">{% for pkg in pkgs %}{% if pkg.user == user and pkg.status %}{{ pkg.title }}, {% endif %}{% endfor %}</td>
-                    <td class="border-right">{% for pkg in pkgs %}{% if pkg.user == user and not pkg.status %}{{ pkg.title }}, {% endif %}{% endfor %}</td>
-                    <td class="text-center actbtn ps-0 border-right">
-                      <span><i class="d-block fas fa-trash-alt text-danger fs-5 mb-3 deluser"></i></span>
-                    </td>
-                    <td class="position-absolute border-0" style="left:0;top:0;"><input type="hidden" value="{{ user.id }}" class="user_id"></td>
+            <div class="d-none d-md-block">
+              <table class="table table-striped">
+                <thead>
+                  <tr class="text-center">
+                    <th scope="col" class="border">#</th>
+                    <th scope="col" class="border">Name</th>
+                    <th scope="col" class="border">Email</th>
+                    <th scope="col" class="border">Status</th>
+                    <th scope="col" class="border">Active package</th>
+                    <th scope="col" class="border">Inactive Package</th>
+                    <th scope="col" class="border" colspan="2">Delete</th>
                   </tr>
-                {% endfor %}
-              </tbody>
-            </table>
+                </thead>
+                <tbody class="text-center">
+                  {% for user in users %}
+                    {% csrf_token %}
+                    <tr class="userList position-relative">
+                      <th scope="row" class="border-right">{{ forloop.counter }}</th>
+                      <td class="border-right">{{user.full_name}}</td>
+                      <td class="border-right">{{user.email}}</td>
+                      <td class="border-right">{% if user.is_active %}Active{% else %}Inactive{% endif %}</td>
+                      <td class="border-right">{% for pkg in pkgs %}{% if pkg.user == user and pkg.status %}{{ pkg.title }}, {% endif %}{% endfor %}</td>
+                      <td class="border-right">{% for pkg in pkgs %}{% if pkg.user == user and not pkg.status %}{{ pkg.title }}, {% endif %}{% endfor %}</td>
+                      <td class="text-center actbtn ps-0 border-right">
+                        <span><i class="d-block fas fa-trash-alt text-danger fs-5 mb-3 deluser"></i></span>
+                      </td>
+                      <td class="position-absolute border-0" style="left:0;top:0;"><input type="hidden" value="{{ user.id }}" class="user_id"></td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+            
+            <!-- Display Mobile -->
+            <div class="col-12 mx-auto d-md-none ms-4 ps-0" style="overflow:scroll;">
+              {% for user in users %}
+              {% csrf_token %}
+              <div class="py-3 px-3 d-flex align-items-center border-bottom userList">
+                  <div class="sn+ font-heavy px-0 me-1">
+                    <b>{{ forloop.counter }}</b>
+                  </div>
+                  <div class="px-3 item_list_mobile w-100">
+                    <div class="d-flex">
+                      <h4 class="m-0 p-0 fs-6 fw-bold">Name: &nbsp; </h4> 
+                      <p>{{user.full_name}}</p>
+                    </div>
+                    <div class="d-flex">
+                      <h4 class="m-0 p-0 fs-6 fw-bold">Email: &nbsp; </h4>
+                      <p> {{user.email}}</p>
+                    </div>
+                    <div class="d-flex">
+                      <h4 class="m-0 p-0 fs-6 fw-bold">Status: &nbsp; </h4>
+                      <p class="lh-sm"> {% if user.is_active %}Active{% else %}Inactive{% endif %}</p>
+                    </div>
+                    <div class="d-flex">
+                      <h4 class="m-0 p-0 fs-6 fw-bold">Active package: &nbsp; </h4>
+                      <p class="lh-sm "> {% for pkg in pkgs %}{% if pkg.user == user and pkg.status %}{{ pkg.title }}, {% endif %}{% endfor %}</p>
+                    </div>
+                    <div class="d-flex">
+                      <h4 class="m-0 p-0 fs-6 fw-bold">Inactive package: &nbsp; </h4>
+                      <p class="lh-sm "> {% for pkg in pkgs %}{% if pkg.user == user and not pkg.status %}{{ pkg.title }}, {% endif %}{% endfor %}</p>
+                    </div>
+                    <div class="d-flex">
+                      {% if request.user.is_admin %}
+                      <span><i class="d-block fas fa-trash-alt text-danger fs-5 mb-3 deluser"></i></span>
+                      <input type="hidden" value="{{ user.id }}" class="user_id">
+                      {% endif %}
+                    </div>
+                  </div>
+              </div>
+              {% endfor %}
+            </div>
           </div>
         </div>
       </div>

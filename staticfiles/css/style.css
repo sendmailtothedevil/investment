@@ -149,6 +149,10 @@ a:focus {
   background-color: #170996;
 }
 
+.bg102 {
+  background: linear-gradient(130deg, #170d75, #1909a4);
+}
+
 .invest-bg101 {
   color: #fff;
   padding-top: 10px;
@@ -1243,4 +1247,135 @@ input[type="file"] {
   display: none;
 }
 
+.cmm {
+  display: none;
+}
 
+.mobileNav {
+  display: none;
+}
+
+
+
+
+
+
+/* ============ Alert messages start  ================ */
+.msgs_info {
+  position: fixed;
+  top: 0;
+  background: linear-gradient(130deg, #190f6e, #170996);
+  width: 100%;
+  z-index: 999999;
+}
+
+.msgs_info p {
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+  text-align: center;
+  color: rgb(255, 255, 255);
+  padding: 10px 0;
+}
+
+.alertify-notifier {
+  z-index: 99999;
+}
+
+.alertify-notifier .ajs-message {
+  color: #ffffff;
+  text-align: center;
+  border: none;
+  border-radius: 5px;
+  padding: 2px;
+  line-height: 16px;
+  background: linear-gradient(130deg, #190f6e, #170996);
+}
+.alertify-notifier .ajs-message.ajs-success {
+  color: #fff;
+  background: linear-gradient(130deg, #190f6e, #170996);
+}
+.alertify-notifier .ajs-message.ajs-error {
+  color: #fff;
+  background: #fe4221;
+}
+.alertify-notifier .ajs-message.ajs-warning {
+  background: linear-gradient(130deg, #190f6e, #170996);
+  border-color: #999;
+}
+/* ============ Alert messages end ================ */
+
+
+@media only screen and (max-width: 800px) {
+    
+  /* Force table to not be like tables anymore */
+#no-more-tables table, 
+#no-more-tables thead, 
+#no-more-tables tbody, 
+#no-more-tables th, 
+#no-more-tables td, 
+#no-more-tables tr { 
+  display: block; 
+}
+
+/* Hide table headers (but not display: none;, for accessibility) */
+#no-more-tables thead tr { 
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+}
+
+#no-more-tables tr { border: 1px solid #ccc; }
+
+#no-more-tables td { 
+  /* Behave  like a "row" */
+  border: none;
+  border-bottom: 1px solid #eee; 
+  position: relative;
+  padding-left: 50%; 
+  white-space: normal;
+  text-align:left;
+}
+
+#no-more-tables td:before { 
+  /* Now like a table header */
+  position: absolute;
+  /* Top/left values mimic padding */
+  top: 6px;
+  left: 6px;
+  width: 45%; 
+  padding-right: 10px; 
+  white-space: nowrap;
+  text-align:left;
+  font-weight: bold;
+}
+
+/*
+Label the data
+*/
+#no-more-tables td:before { content: attr(data-title); }
+}
+
+.loader {
+  border: 2px solid #f3f3f3;
+  border-radius:50%;
+  border-top: 3px solid #00fbff;
+  border-right: 3px solid #00fbff;
+  border-bottom: none;
+  border-left: none;
+  width: 30px;
+  height: 30px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

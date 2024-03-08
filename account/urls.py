@@ -28,6 +28,9 @@ urlpatterns = [
     path('activate-ui/', views.activate_ui, name='activate_ui'),
     path('deactivate-ui/', views.deactivate_ui, name='deactivate_ui'),
     path('delete-withdrawals/', views.delete_withdrawals, name='delete_withdrawals'),
+    path('confirm-withdrawals/', views.confirm_withdrawals, name='confirm_withdrawals'),
+    
+    path('activate/<uidb64>/<token>', views.activate, name='activate'),
 ]
 
 
