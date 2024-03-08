@@ -54,7 +54,7 @@
         </div>
 
         <!-- Display Mobile -->
-        <div class="col-12 mx-auto d-md-none ms-4 ps-0" style="overflow:scroll;">
+        <div class="col-12 mx-auto d-md-none ms-4 ps-0" style="overflow-x:scroll;">
           {% for witdrw in withdrawals %}
           {% csrf_token %}
             {% if request.user.is_admin or request.user == witdrw.user %}
