@@ -53,40 +53,42 @@
         <div class="col-12 mx-auto d-md-none ms-4 ps-0" style="overflow:scroll;">
           {% for trans in transactions %}
           {% csrf_token %}
-          <div class="py-3 px-3 d-flex align-items-center border-bottom transactionList">
-              <div class="sn+ font-heavy px-0 me-1">
-                <b>{{ forloop.counter }}</b>
+            {% if request.user.is_admin or request.user == trans.user %}
+              <div class="py-3 px-3 d-flex align-items-center border-bottom transactionList">
+                  <div class="sn+ font-heavy px-0 me-1">
+                    <b>{{ forloop.counter }}</b>
+                  </div>
+                  <div class="px-3 item_list_mobile w-100">
+                    <div class="d-flex">
+                      <h4 class="m-0 p-0 fs-6 fw-bold">User: &nbsp; </h4> 
+                      <p>{{trans.user}}</p>
+                    </div>
+                    <div class="d-flex">
+                      <h4 class="m-0 p-0 fs-6 fw-bold">Plan: &nbsp; </h4>
+                      <p> {{trans.trans_plan}}</p>
+                    </div>
+                    <div class="d-flex">
+                      <h4 class="m-0 p-0 fs-6 fw-bold">Amount: &nbsp; </h4>
+                      <p class="lh-sm"> {{ trans.trans_amount }}</p>
+                    </div>
+                    <div class="d-flex">
+                      <h4 class="m-0 p-0 fs-6 fw-bold">Info: &nbsp; </h4>
+                      <p class="lh-sm "> {{ trans.trans_paid }}</p>
+                    </div>
+                    <div class="d-flex">
+                      <h4 class="m-0 p-0 fs-6 fw-bold">Status: &nbsp; </h4>
+                      <p> {% if trans.status %}Confirmed{% else %}Pending...{% endif %}</p>
+                    </div>
+                    <div class="d-flex">
+                      {% if request.user.is_admin %}
+                        <span><i class=" fas fa-check-circle text-active fs-5 mb-3 me-2 confirmtrans"></i></span>
+                        <span><i class=" fas fa-trash-alt text-danger fs-5 mb-3 ms-2 deltrans"></i></span>
+                        <input type="hidden" value="{{ trans.id }}" class="trans_id">
+                      {% endif %}
+                    </div>
+                  </div>
               </div>
-              <div class="px-3 item_list_mobile w-100">
-                <div class="d-flex">
-                  <h4 class="m-0 p-0 fs-6 fw-bold">User: &nbsp; </h4> 
-                  <p>{{trans.user}}</p>
-                </div>
-                <div class="d-flex">
-                  <h4 class="m-0 p-0 fs-6 fw-bold">Plan: &nbsp; </h4>
-                  <p> {{trans.trans_plan}}</p>
-                </div>
-                <div class="d-flex">
-                  <h4 class="m-0 p-0 fs-6 fw-bold">Amount: &nbsp; </h4>
-                  <p class="lh-sm"> {{ trans.trans_amount }}</p>
-                </div>
-                <div class="d-flex">
-                  <h4 class="m-0 p-0 fs-6 fw-bold">Info: &nbsp; </h4>
-                  <p class="lh-sm "> {{ trans.trans_paid }}</p>
-                </div>
-                <div class="d-flex">
-                  <h4 class="m-0 p-0 fs-6 fw-bold">Status: &nbsp; </h4>
-                  <p> {% if trans.status %}Confirmed{% else %}Pending...{% endif %}</p>
-                </div>
-                <div class="d-flex">
-                  {% if request.user.is_admin %}
-                    <span><i class=" fas fa-check-circle text-active fs-5 mb-3 me-2 confirmtrans"></i></span>
-                    <span><i class=" fas fa-trash-alt text-danger fs-5 mb-3 ms-2 deltrans"></i></span>
-                    <input type="hidden" value="{{ trans.id }}" class="trans_id">
-                  {% endif %}
-                </div>
-              </div>
-          </div>
+            {% endif %}
           {% endfor %}
         </div>
       </div>
