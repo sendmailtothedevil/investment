@@ -80,12 +80,17 @@ WSGI_APPLICATION = 'investment.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if not DEBUG:
+    DATABASES = {
+        'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 # DATABASES = {
 #         'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
@@ -143,19 +148,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
-# EMAIL_HOST = 'smtp.zoho.com'
-# EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-# EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-# EMAIL_PORT = 465
-# EMAIL_USE_SSL = True
-# EMAIL_USE_TLS = False
-# DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp-mail.outlook.com'
-EMAIL_HOST_USER = "anchorinvestment@hotmail.com"
-EMAIL_HOST_PASSWORD = "tothedevil@009"
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587 
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = "anchorinvestment@hotmail.com"
+DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')
