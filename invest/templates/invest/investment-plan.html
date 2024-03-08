@@ -38,7 +38,7 @@
                 {% if request.user.is_authenticated %}
                   <button class="w-100 invest-bg101 border-0 outline-0 mt-3 fw-bold selectPlan">Select plan</button>
                 {% else %}
-                  <a href="{% url 'signup_signin' %}"><button class="w-100 invest-bg101 border-0 outline-0 mt-3 fw-bold selectPlan">Select plan</button></a>
+                  <div class="my-3"><a href="{% url 'signup_signin' %}">Register</a> OR <a href="{% url 'signup_signin' %}">Login</a> to invest</div>
                 {% endif %}
               </div>
             </div>
